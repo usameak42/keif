@@ -88,6 +88,11 @@ Keif is a physics-based coffee extraction simulation engine delivered as a cross
 | All inputs required, grinder lookup preferred with manual micron fallback (DECISION-008) | Grinder DB gives PSD shape, not just median size | — Pending |
 | Liang 2021 K=0.717 equilibrium scaling post-process (BREWOS-TODO-001) | Moroney ODE overpredicts EY ~16% without re-adsorption; linear scaling preserves kinetic shape | ⚠️ Revisit — proper fix is re-adsorption term |
 | Package name stays `brewos` despite project rename to Keif | Renaming would break imports and test paths; cosmetic change | — Pending |
+| Espresso uses percolation.py not pressure.py (DECISION-010) | Moroney 2015 PDE + MOL is valid at 9 bar with different params; no new physics framework needed | — Pending |
+| Moka Pot uses pressure.py = Moroney 2016 ODE + thermal coupling (DECISION-010) | Steam pressure requires thermodynamic coupling not in other solvers; 6 ODEs, <100ms | — Pending |
+| Channeling (Lee 2023) is post-processing overlay, not embedded in core solver (DECISION-010) | Validated against one grinder only — qualitative score, not precise probability | — Pending |
+| CO2 bloom model = bi-exponential decay + multiplicative modifier on mass-transfer coefficient (DECISION-010) | Zero structural changes to Moroney ODE; beta suppression values are first-order estimates (no published non-espresso data) | — Pending |
+| Grudeva 2025 multiscale espresso model skipped (DECISION-010) | Lacks validated parameters; anomalous Table 1 value; adds complexity without accuracy gain | — Pending |
 
 ## Evolution
 
