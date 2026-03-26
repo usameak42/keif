@@ -38,7 +38,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   5. CO2 bloom modifier (Smrke 2018 bi-exponential) applies multiplicative correction to mass-transfer coefficient during bloom window; parameterized by roast level; roast=medium correction verified against expected tau values
 
 Plans:
-- [ ] 01-01: Immersion solver accurate mode (Moroney 2016 3-ODE) + Liang K=0.717 scaling + bound clipping [0, c_sat]
+- [x] 01-01: Immersion solver accurate mode (Moroney 2016 3-ODE) + Liang K=0.717 scaling + bound clipping [0, c_sat]
 - [ ] 01-02: CO2 bloom modifier (Smrke 2018 bi-exponential) + Maille 2021 fast mode + French Press method config
 - [ ] 01-03: Grinder DB loader + Comandante C40 preset + generic log-normal fallback + 7-output assembly + VAL-01 pytest suite
 
@@ -137,7 +137,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Immersion Solver + Core Engine | 0/3 | Not started | - |
+| 1. Immersion Solver + Core Engine | 1/3 | In Progress|  |
 | 2. Percolation Solver | 0/2 | Not started | - |
 | 3. Pressure Solver | 0/2 | Not started | - |
 | 4. Extended Outputs + Grinder Presets | 0/2 | Not started | - |

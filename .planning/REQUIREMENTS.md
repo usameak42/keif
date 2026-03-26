@@ -7,14 +7,14 @@
 
 ### Engine — Solvers
 
-- [ ] **SOLV-01**: Immersion solver (Moroney 2016 3-ODE system) integrated with SimulationInput/Output contract — accurate mode
+- [x] **SOLV-01**: Immersion solver (Moroney 2016 3-ODE system) integrated with SimulationInput/Output contract — accurate mode
 - [ ] **SOLV-02**: Immersion solver fast mode: Maille 2021 biexponential kinetics (< 1ms), Liang 2021 equilibrium anchor
 - [ ] **SOLV-03**: Percolation solver (Moroney 2015 1D Darcy PDE + double-porosity, Method of Lines) — accurate mode for V60, Kalita, Espresso
 - [ ] **SOLV-04**: Percolation solver fast mode: Maille 2021 biexponential kinetics with percolation-specific lambda calibration
 - [ ] **SOLV-05**: Pressure solver (Moroney 2016 ODE + thermal coupling, 6 ODEs) — accurate mode for Moka Pot
 - [ ] **SOLV-06**: Pressure solver fast mode: Maille 2021 biexponential with moka-specific lambda calibration
-- [ ] **SOLV-07**: Liang 2021 equilibrium scaling (K=0.717) applied post-solve in all accurate-mode solvers
-- [ ] **SOLV-08**: All solvers clip state variables to physical bounds [0, c_sat] to prevent NaN propagation
+- [x] **SOLV-07**: Liang 2021 equilibrium scaling (K=0.717) applied post-solve in all accurate-mode solvers
+- [x] **SOLV-08**: All solvers clip state variables to physical bounds [0, c_sat] to prevent NaN propagation
 
 ### Engine — Methods
 
@@ -141,10 +141,10 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| SOLV-01 | Phase 1 | Pending |
+| SOLV-01 | Phase 1 | Complete |
 | SOLV-02 | Phase 1 | Pending |
-| SOLV-07 | Phase 1 | Pending |
-| SOLV-08 | Phase 1 | Pending |
+| SOLV-07 | Phase 1 | Complete |
+| SOLV-08 | Phase 1 | Complete |
 | METH-01 | Phase 1 | Pending |
 | OUT-01 | Phase 1 | Pending |
 | OUT-02 | Phase 1 | Pending |
