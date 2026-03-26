@@ -39,7 +39,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 Plans:
 - [x] 01-01: Immersion solver accurate mode (Moroney 2016 3-ODE) + Liang K=0.717 scaling + bound clipping [0, c_sat]
-- [ ] 01-02: CO2 bloom modifier (Smrke 2018 bi-exponential) + Maille 2021 fast mode + French Press method config
+- [x] 01-02: CO2 bloom modifier (Smrke 2018 bi-exponential) + Maille 2021 fast mode + French Press method config
 - [ ] 01-03: Grinder DB loader + Comandante C40 preset + generic log-normal fallback + 7-output assembly + VAL-01 pytest suite
 
 ### Phase 2: Percolation Solver

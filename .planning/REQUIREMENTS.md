@@ -8,7 +8,7 @@
 ### Engine — Solvers
 
 - [x] **SOLV-01**: Immersion solver (Moroney 2016 3-ODE system) integrated with SimulationInput/Output contract — accurate mode
-- [ ] **SOLV-02**: Immersion solver fast mode: Maille 2021 biexponential kinetics (< 1ms), Liang 2021 equilibrium anchor
+- [x] **SOLV-02**: Immersion solver fast mode: Maille 2021 biexponential kinetics (< 1ms), Liang 2021 equilibrium anchor
 - [ ] **SOLV-03**: Percolation solver (Moroney 2015 1D Darcy PDE + double-porosity, Method of Lines) — accurate mode for V60, Kalita, Espresso
 - [ ] **SOLV-04**: Percolation solver fast mode: Maille 2021 biexponential kinetics with percolation-specific lambda calibration
 - [ ] **SOLV-05**: Pressure solver (Moroney 2016 ODE + thermal coupling, 6 ODEs) — accurate mode for Moka Pot
@@ -18,7 +18,7 @@
 
 ### Engine — Methods
 
-- [ ] **METH-01**: French Press method: configures immersion solver with filter geometry, standard steep parameters
+- [x] **METH-01**: French Press method: configures immersion solver with filter geometry, standard steep parameters
 - [ ] **METH-02**: V60 method: configures percolation solver with cone geometry, bloom timing, flow rate
 - [ ] **METH-03**: Kalita Wave method: configures percolation solver with flat-bed geometry, 3-hole restricted flow
 - [ ] **METH-04**: Espresso method: configures percolation solver with 9-bar params, fine grind, thin-bed MOL discretization
@@ -35,7 +35,7 @@
 - [ ] **OUT-06**: Simulation returns warnings list (over-extraction, channeling risk, out-of-range ratio)
 - [ ] **OUT-07**: Simulation returns extraction uniformity index (0–1) derived from flow variance in 1D model (Moroney PLOS One 2019)
 - [ ] **OUT-08**: Simulation returns channeling risk score for espresso (Lee 2023 two-pathway model — post-processing overlay)
-- [ ] **OUT-09**: Simulation returns CO2 degassing estimate during bloom phase: bi-exponential decay (Smrke 2018) applied as multiplicative modifier on mass-transfer coefficient during bloom window; parameterized by roast level (light/medium/dark) and bean age; zero structural changes to Moroney ODE
+- [x] **OUT-09**: Simulation returns CO2 degassing estimate during bloom phase: bi-exponential decay (Smrke 2018) applied as multiplicative modifier on mass-transfer coefficient during bloom window; parameterized by roast level (light/medium/dark) and bean age; zero structural changes to Moroney ODE
 - [ ] **OUT-10**: Simulation returns water temperature decay curve T(t) using Newton's Law of Cooling parameterized by vessel type
 - [ ] **OUT-11**: Simulation returns SCA brew chart position — (EY%, TDS%) plotted against SCA ideal zone
 - [ ] **OUT-12**: Simulation returns puck/bed resistance estimate for espresso (pressure drop, shot time prediction)
@@ -142,17 +142,17 @@
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | SOLV-01 | Phase 1 | Complete |
-| SOLV-02 | Phase 1 | Pending |
+| SOLV-02 | Phase 1 | Complete |
 | SOLV-07 | Phase 1 | Complete |
 | SOLV-08 | Phase 1 | Complete |
-| METH-01 | Phase 1 | Pending |
+| METH-01 | Phase 1 | Complete |
 | OUT-01 | Phase 1 | Pending |
 | OUT-02 | Phase 1 | Pending |
 | OUT-03 | Phase 1 | Pending |
 | OUT-04 | Phase 1 | Pending |
 | OUT-05 | Phase 1 | Pending |
 | OUT-06 | Phase 1 | Pending |
-| OUT-09 | Phase 1 | Pending |
+| OUT-09 | Phase 1 | Complete |
 | GRND-01 | Phase 1 | Pending |
 | GRND-02 | Phase 1 | Pending |
 | GRND-11 | Phase 1 | Pending |
