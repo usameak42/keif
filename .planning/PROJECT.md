@@ -20,13 +20,14 @@ Keif is a physics-based coffee extraction simulation engine delivered as a cross
 ### Active
 
 **Engine (M1 + M2)**
-- [ ] Immersion solver (Moroney 2016 ODE) fully integrated into engine with SimulationInput/Output contract
+- [x] Immersion solver (Moroney 2016 ODE) fully integrated into engine with SimulationInput/Output contract — Validated in Phase 01: immersion-solver-core-engine
+- [x] Fast mode: Maille 2021 biexponential kinetics (< 1ms) for immersion — Validated in Phase 01 (0.267ms median, calibrated via curve_fit)
+- [x] Accurate mode: ODE/PDE via scipy.solve_ivp for immersion — Validated in Phase 01 (Radau, EY=21.51% ±0%)
+- [x] All 7 simulation outputs: TDS%, EY%, extraction curve, PSD curve, flavor profile, brew ratio rec, warnings — Validated in Phase 01 (French Press end-to-end)
 - [ ] Percolation solver (Moroney 2015 1D Darcy PDE) implemented for V60 and Kalita Wave
 - [ ] Pressure solver implemented for Espresso and Moka Pot
 - [ ] AeroPress standalone hybrid solver (immersion steep → pressure push)
-- [ ] Fast mode: Maille 2021 biexponential kinetics (< 1ms) for all methods
-- [ ] Accurate mode: ODE/PDE via scipy.solve_ivp (< 4s) for all methods
-- [ ] All 7 simulation outputs: TDS%, EY%, extraction curve, PSD curve, flavor profile, brew ratio rec, warnings
+- [ ] Fast mode: Maille 2021 biexponential kinetics (< 1ms) for all remaining methods
 - [ ] Extended outputs: channeling risk, CO2 degassing, water temp decay, SCA chart position, EUI, puck resistance, caffeine estimate
 - [ ] Grinder database: minimum 10 presets (Comandante C40, Mavo, Timemore C2/C3, 1Zpresso, Niche Zero, DF64, Eureka, Fellow Ode, Baratza Encore, Kinu)
 
@@ -97,6 +98,8 @@ Keif is a physics-based coffee extraction simulation engine delivered as a cross
 ## Evolution
 
 This document evolves at phase transitions and milestone boundaries.
+
+Last updated: 2026-03-26
 
 **After each phase transition** (via `/gsd:transition`):
 1. Requirements invalidated? → Move to Out of Scope with reason
