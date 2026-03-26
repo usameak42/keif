@@ -258,21 +258,25 @@ def biexponential_ey(t: np.ndarray, ey_eq: float,
 
 ### CO2 Bloom Modifier (Smrke 2018 pattern)
 ```python
-# Pattern for CO2 bloom -- to be implemented
-# CO2 degassing: f(t) = A_fast * exp(-t/tau_fast) + A_slow * exp(-t/tau_slow)
-# Extraction suppression: kB_eff(t) = kB * (1 - beta * f(t))
+# Pattern for CO2 bloom -- IMPLEMENTED in brewos/utils/co2_bloom.py
+# Two-stage model (corrected during Phase 1 execution):
+#   Stage 1 (shelf aging): residual CO2 fraction at bean_age_days post-roast
+#     age_s    = bean_age_days * 86400
+#     residual = A_fast * exp(-age_s / tau_fast) + A_slow * exp(-age_s / tau_slow)
+#   Stage 2 (brew-time bloom): bloom_decay = exp(-t / 15.0)  (15s characteristic time)
+#   Suppression: kB_eff(t) = kB * max(0.0, 1.0 - beta * residual * bloom_decay)
 #
-# Roast-dependent tau values (estimated from Smrke 2018):
+# Roast-dependent shelf-aging tau values (corrected to day-scale, Smrke 2018):
 CO2_PARAMS = {
-    "light":  {"tau_fast": 1800, "tau_slow": 86400, "A_fast": 0.4, "A_slow": 0.6, "beta": 0.15},
-    "medium": {"tau_fast": 900,  "tau_slow": 43200, "A_fast": 0.5, "A_slow": 0.5, "beta": 0.20},
-    "dark":   {"tau_fast": 300,  "tau_slow": 14400, "A_fast": 0.6, "A_slow": 0.4, "beta": 0.25},
+    "light":  {"tau_fast": 2*86400, "tau_slow": 10*86400, "A_fast": 0.4, "A_slow": 0.6, "beta": 0.15},
+    "medium": {"tau_fast": 3*86400, "tau_slow": 14*86400, "A_fast": 0.5, "A_slow": 0.5, "beta": 0.20},
+    "dark":   {"tau_fast": 5*86400, "tau_slow": 21*86400, "A_fast": 0.6, "A_slow": 0.4, "beta": 0.25},
 }
-# Note: These tau values are on the timescale of post-roast degassing (hours/days).
-# For BREW-TIME bloom (first 30-60s of pour), use a separate bloom_window
-# where trapped CO2 in the grinds physically blocks water contact.
-# The bloom suppression factor during brew is the residual CO2 fraction
-# at bean_age_days post-roast, decaying over the bloom_time window.
+# tau values are shelf-degassing timescales in seconds (2–21 day range).
+# Dark roast retains CO2 longest (higher initial CO2 content per Wang & Lim 2014).
+# Brew-time bloom decay is a separate constant: _BLOOM_DECAY_TAU = 15.0 s in co2_bloom.py.
+# CORRECTION NOTE: original draft had tau_fast: 1800/900/300 s (subhour scale),
+# which caused complete degassing within minutes. Corrected to day-scale during Phase 1.
 ```
 
 ### Grinder Database Loader
@@ -331,9 +335,9 @@ def generate_lognormal_psd(median_um: float, sigma: float = 0.5,
    - Recommendation: Run accurate mode for the standard scenario (15g/250g/93C/medium/240s), fit biexponential via `scipy.optimize.curve_fit`, store fitted defaults. Verify fast mode is within +/-2% of accurate at t=240s.
 
 2. **CO2 Bloom Beta Values**
-   - What we know: Smrke 2018 quantifies CO2 volume by roast level. Darker roasts degas faster (tau_fast ~ 5 min for dark vs ~30 min for light).
-   - What's unclear: The extraction suppression factor beta (how much CO2 actually blocks extraction) is an estimate. STATE.md notes this as LOW confidence.
-   - Recommendation: Implement with conservative defaults (beta = 0.15-0.25 range). Verify bloom modifier reduces EY by < 2% absolute for medium roast. Flag for post-v1 calibration.
+   - What we know: Smrke 2018 quantifies CO2 volume by roast level. Darker roasts have higher total CO2 content (Wang & Lim 2014: 15.5 mg/g dark vs 6.5 mg/g light) and retain CO2 longer in the implementation (tau_fast 5d dark vs 2d light). Brew-time bloom decay uses a fixed 15s constant.
+   - What's unclear: The extraction suppression factor beta is an estimate (0.15/0.20/0.25 for light/medium/dark). No published data directly links CO2 volume to extraction rate suppression for non-espresso methods.
+   - Recommendation: Implemented with conservative defaults (beta = 0.15–0.25). Bloom modifier reduces EY by < 2% absolute for medium roast at 7 days. Flag for post-v1 calibration against refractometer data.
 
 3. **Comandante C40 PSD Data**
    - What we know: ~30 microns/click, range 0-1090um, bimodal distribution (fines peak + main peak). Coffee ad Astra 2023 analysis confirms bimodal/trimodal structure for conical burr grinders.

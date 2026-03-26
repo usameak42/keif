@@ -1,0 +1,42 @@
+# Local Claude Code config (machine-specific, no secrets but not portable)
+.claude/
+.mcp.json
+
+# Local memory / session context (personal notes, not project artifacts)
+.memory/
+
+# Research papers and local reference documents (copyright, binary bloat)
+Sources/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test artifacts
+.pytest_cache/
+.coverage
+htmlcov/
