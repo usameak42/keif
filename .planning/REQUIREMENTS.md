@@ -27,12 +27,12 @@
 
 ### Engine — Outputs
 
-- [ ] **OUT-01**: Simulation returns TDS% and EY% for final brew state
-- [ ] **OUT-02**: Simulation returns time-resolved extraction curve: [{t: seconds, ey: percent}, ...]
-- [ ] **OUT-03**: Simulation returns particle size distribution curve from grinder preset or generic log-normal
-- [ ] **OUT-04**: Simulation returns flavor profile estimate {sour, sweet, bitter} normalized 0–1 (SCA extraction order: acids first, sugars, bitters)
-- [ ] **OUT-05**: Simulation returns brew ratio used and recommendation if outside optimal range
-- [ ] **OUT-06**: Simulation returns warnings list (over-extraction, channeling risk, out-of-range ratio)
+- [x] **OUT-01**: Simulation returns TDS% and EY% for final brew state
+- [x] **OUT-02**: Simulation returns time-resolved extraction curve: [{t: seconds, ey: percent}, ...]
+- [x] **OUT-03**: Simulation returns particle size distribution curve from grinder preset or generic log-normal
+- [x] **OUT-04**: Simulation returns flavor profile estimate {sour, sweet, bitter} normalized 0–1 (SCA extraction order: acids first, sugars, bitters)
+- [x] **OUT-05**: Simulation returns brew ratio used and recommendation if outside optimal range
+- [x] **OUT-06**: Simulation returns warnings list (over-extraction, channeling risk, out-of-range ratio)
 - [ ] **OUT-07**: Simulation returns extraction uniformity index (0–1) derived from flow variance in 1D model (Moroney PLOS One 2019)
 - [ ] **OUT-08**: Simulation returns channeling risk score for espresso (Lee 2023 two-pathway model — post-processing overlay)
 - [x] **OUT-09**: Simulation returns CO2 degassing estimate during bloom phase: bi-exponential decay (Smrke 2018) applied as multiplicative modifier on mass-transfer coefficient during bloom window; parameterized by roast level (light/medium/dark) and bean age; zero structural changes to Moroney ODE
@@ -43,15 +43,15 @@
 
 ### Engine — Grinder Database
 
-- [ ] **GRND-01**: Grinder database loader: looks up median particle size AND full PSD from grinder JSON given grinder_name + grinder_setting
-- [ ] **GRND-02**: Comandante C40 MK4 grinder preset complete (setting-to-micron mapping, bimodal PSD params, source documented)
+- [x] **GRND-01**: Grinder database loader: looks up median particle size AND full PSD from grinder JSON given grinder_name + grinder_setting
+- [x] **GRND-02**: Comandante C40 MK4 grinder preset complete (setting-to-micron mapping, bimodal PSD params, source documented)
 - [ ] **GRND-05**: 1Zpresso (at least one model) preset complete
 - [ ] **GRND-10**: Baratza Encore preset complete
-- [ ] **GRND-11**: Generic log-normal PSD fallback when only grind_size (μm) is provided manually
+- [x] **GRND-11**: Generic log-normal PSD fallback when only grind_size (μm) is provided manually
 
 ### Engine — Validation
 
-- [ ] **VAL-01**: Accurate-mode immersion solver reproduces Liang 2021 / Melrose 2021 EY% within ±1.5% RMSE for standard test scenario (15g/250g/93°C/medium roast)
+- [x] **VAL-01**: Accurate-mode immersion solver reproduces Liang 2021 / Melrose 2021 EY% within ±1.5% RMSE for standard test scenario (15g/250g/93°C/medium roast)
 - [ ] **VAL-02**: Accurate-mode percolation solver validated against Batali 2020 pour-over dataset (EY% within ±1.5% RMSE)
 - [ ] **VAL-03**: Fast mode outputs within ±2% EY of accurate mode for standard parameters (documented tolerance)
 - [ ] **VAL-04**: pytest suite green: all solvers, all methods, equilibrium scaling, grinder lookup
@@ -146,17 +146,17 @@
 | SOLV-07 | Phase 1 | Complete |
 | SOLV-08 | Phase 1 | Complete |
 | METH-01 | Phase 1 | Complete |
-| OUT-01 | Phase 1 | Pending |
-| OUT-02 | Phase 1 | Pending |
-| OUT-03 | Phase 1 | Pending |
-| OUT-04 | Phase 1 | Pending |
-| OUT-05 | Phase 1 | Pending |
-| OUT-06 | Phase 1 | Pending |
+| OUT-01 | Phase 1 | Complete |
+| OUT-02 | Phase 1 | Complete |
+| OUT-03 | Phase 1 | Complete |
+| OUT-04 | Phase 1 | Complete |
+| OUT-05 | Phase 1 | Complete |
+| OUT-06 | Phase 1 | Complete |
 | OUT-09 | Phase 1 | Complete |
-| GRND-01 | Phase 1 | Pending |
-| GRND-02 | Phase 1 | Pending |
-| GRND-11 | Phase 1 | Pending |
-| VAL-01 | Phase 1 | Pending |
+| GRND-01 | Phase 1 | Complete |
+| GRND-02 | Phase 1 | Complete |
+| GRND-11 | Phase 1 | Complete |
+| VAL-01 | Phase 1 | Complete |
 | SOLV-03 | Phase 2 | Pending |
 | SOLV-04 | Phase 2 | Pending |
 | METH-02 | Phase 2 | Pending |

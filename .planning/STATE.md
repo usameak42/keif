@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready to execute
-stopped_at: Completed 01-immersion-solver-core-engine/01-02-PLAN.md
-last_updated: "2026-03-26T14:26:05.930Z"
+status: Phase complete — ready for verification
+stopped_at: Completed 01-immersion-solver-core-engine/01-03-PLAN.md
+last_updated: "2026-03-26T14:33:01.971Z"
 progress:
   total_phases: 7
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 3
-  completed_plans: 2
+  completed_plans: 3
 ---
 
 # Project State
@@ -48,6 +48,7 @@ Plan: 3 of 3
 *Updated after each plan completion*
 | Phase 01-immersion-solver-core-engine P01 | 15 | 1 tasks | 4 files |
 | Phase 01-immersion-solver-core-engine P02 | 5 | 2 tasks | 5 files |
+| Phase 01-immersion-solver-core-engine P03 | 4 | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -62,6 +63,9 @@ Recent decisions affecting current work:
 - [Phase 01-immersion-solver-core-engine]: bean_age_days added to SimulationInput now to avoid future breaking changes when CO2 bloom implemented in Plan 01-02
 - [Phase 01-immersion-solver-core-engine]: CO2_PARAMS tau values use day-scale timescales: dark 5d/21d, medium 3d/14d, light 2d/10d — darker roasts retain CO2 longer (physically: more CO2 produced, slower release)
 - [Phase 01-immersion-solver-core-engine]: Biexponential constants calibrated via curve_fit: A1=0.6201, tau1=3.14s, tau2=103.02s — plan defaults exceeded 2% EY tolerance
+- [Phase 01-immersion-solver-core-engine]: PSD resolution in _resolve_psd() inside immersion.py; french_press.py stays pure dispatcher
+- [Phase 01-immersion-solver-core-engine]: Click interpolation: exact preset uses JSON median_um; all other clicks use setting * microns_per_click
+- [Phase 01-immersion-solver-core-engine]: Flavor piecewise model with 5 zones at EY 16/18/22/24% anchored to SCA extraction order
 
 ### Pending Todos
 
@@ -75,6 +79,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-26T14:26:05.927Z
-Stopped at: Completed 01-immersion-solver-core-engine/01-02-PLAN.md
+Last session: 2026-03-26T14:33:01.968Z
+Stopped at: Completed 01-immersion-solver-core-engine/01-03-PLAN.md
 Resume file: None

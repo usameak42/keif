@@ -16,7 +16,7 @@ Keif delivers a physics-based coffee extraction simulation engine across three t
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Immersion Solver + Core Engine** - Moroney 2016 ODE + Maille fast mode, French Press method, 7 core outputs, CO2 bloom modifier, grinder DB infrastructure, VAL-01
+- [x] **Phase 1: Immersion Solver + Core Engine** - Moroney 2016 ODE + Maille fast mode, French Press method, 7 core outputs, CO2 bloom modifier, grinder DB infrastructure, VAL-01 (completed 2026-03-26)
 - [ ] **Phase 2: Percolation Solver** - Moroney 2015 PDE via MOL, V60 + Kalita + Espresso methods, channeling overlay (Lee 2023), VAL-02
 - [ ] **Phase 3: Pressure Solver** - Moka Pot thermo-fluid ODE + AeroPress hybrid solver, phase-specific validation
 - [ ] **Phase 4: Extended Outputs + Grinder Presets** - All 6 extended outputs across all methods, 1Zpresso + Baratza Encore presets
@@ -40,7 +40,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 Plans:
 - [x] 01-01: Immersion solver accurate mode (Moroney 2016 3-ODE) + Liang K=0.717 scaling + bound clipping [0, c_sat]
 - [x] 01-02: CO2 bloom modifier (Smrke 2018 bi-exponential) + Maille 2021 fast mode + French Press method config
-- [ ] 01-03: Grinder DB loader + Comandante C40 preset + generic log-normal fallback + 7-output assembly + VAL-01 pytest suite
+- [x] 01-03: Grinder DB loader + Comandante C40 preset + generic log-normal fallback + 7-output assembly + VAL-01 pytest suite
 
 ### Phase 2: Percolation Solver
 **Goal**: The engine simulates V60, Kalita Wave, and Espresso extractions using the Moroney 2015 1D PDE with MOL discretization; Lee 2023 channeling overlay produces a risk score for espresso
@@ -137,7 +137,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Immersion Solver + Core Engine | 1/3 | In Progress|  |
+| 1. Immersion Solver + Core Engine | 3/3 | Complete   | 2026-03-26 |
 | 2. Percolation Solver | 0/2 | Not started | - |
 | 3. Pressure Solver | 0/2 | Not started | - |
 | 4. Extended Outputs + Grinder Presets | 0/2 | Not started | - |
