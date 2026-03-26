@@ -139,17 +139,79 @@
 
 ## Traceability
 
-*(Populated during roadmap creation)*
-
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| — | — | — |
+| SOLV-01 | Phase 1 | Pending |
+| SOLV-02 | Phase 1 | Pending |
+| SOLV-03 | Phase 2 | Pending |
+| SOLV-04 | Phase 2 | Pending |
+| SOLV-05 | Phase 3 | Pending |
+| SOLV-06 | Phase 3 | Pending |
+| SOLV-07 | Phase 1 | Pending |
+| SOLV-08 | Phase 1 | Pending |
+| METH-01 | Phase 1 | Pending |
+| METH-02 | Phase 2 | Pending |
+| METH-03 | Phase 2 | Pending |
+| METH-04 | Phase 2 | Pending |
+| METH-05 | Phase 3 | Pending |
+| METH-06 | Phase 3 | Pending |
+| OUT-01 | Phase 1 | Pending |
+| OUT-02 | Phase 1 | Pending |
+| OUT-03 | Phase 1 | Pending |
+| OUT-04 | Phase 1 | Pending |
+| OUT-05 | Phase 1 | Pending |
+| OUT-06 | Phase 1 | Pending |
+| OUT-07 | Phase 3 | Pending |
+| OUT-08 | Phase 3 | Pending |
+| OUT-09 | Phase 3 | Pending |
+| OUT-10 | Phase 3 | Pending |
+| OUT-11 | Phase 3 | Pending |
+| OUT-12 | Phase 3 | Pending |
+| OUT-13 | Phase 3 | Pending |
+| GRND-01 | Phase 1 | Pending |
+| GRND-02 | Phase 1 | Pending |
+| GRND-05 | Phase 3 | Pending |
+| GRND-10 | Phase 3 | Pending |
+| GRND-11 | Phase 1 | Pending |
+| VAL-01 | Phase 1 | Pending |
+| VAL-02 | Phase 2 | Pending |
+| VAL-03 | Phase 4 | Pending |
+| VAL-04 | Phase 4 | Pending |
+| API-01 | Phase 4 | Pending |
+| API-02 | Phase 4 | Pending |
+| API-03 | Phase 4 | Pending |
+| API-04 | Phase 4 | Pending |
+| API-05 | Phase 4 | Pending |
+| MOB-01 | Phase 5 | Pending |
+| MOB-02 | Phase 5 | Pending |
+| MOB-03 | Phase 5 | Pending |
+| MOB-04 | Phase 5 | Pending |
+| MOB-05 | Phase 5 | Pending |
+| MOB-06 | Phase 5 | Pending |
+| MOB-07 | Phase 5 | Pending |
+| MOB-08 | Phase 5 | Pending |
+| MOB-09 | Phase 6 | Pending |
+| MOB-10 | Phase 6 | Pending |
+| MOB-11 | Phase 6 | Pending |
+| MOB-12 | Phase 6 | Pending |
+| MOB-13 | Phase 6 | Pending |
+| MOB-14 | Phase 6 | Pending |
+| MOB-15 | Phase 6 | Pending |
+| MOB-16 | Phase 6 | Pending |
 
 **Coverage:**
-- v1 requirements: 41 total
-- Mapped to phases: 0
-- Unmapped: 41 ⚠️ (pending roadmap)
+- v1 requirements: 57 total
+- Mapped to phases: 57
+- Unmapped: 0
+
+**By phase:**
+- Phase 1 (Immersion Solver + Core Engine): 15 requirements
+- Phase 2 (Percolation Solver): 6 requirements
+- Phase 3 (Pressure Solver + Extended Outputs): 13 requirements
+- Phase 4 (Validation + FastAPI Backend): 7 requirements
+- Phase 5 (Mobile Core Screens): 8 requirements
+- Phase 6 (Mobile Extended + Run History): 8 requirements
 
 ---
 *Requirements defined: 2026-03-26*
-*Last updated: 2026-03-26 after initial definition*
+*Last updated: 2026-03-26 after roadmap creation*
