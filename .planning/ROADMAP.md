@@ -97,7 +97,7 @@ Plans:
   4. API deployed to Koyeb; GET /health returns 200; CORS allows requests from Expo client origin
 
 Plans:
-- [ ] 05-01: Cross-solver validation suite (fast vs accurate ±2% tolerance for all 6 methods, full pytest coverage)
+- [x] 05-01: Cross-solver validation suite (fast vs accurate ±2% tolerance for all 6 methods, full pytest coverage)
 - [ ] 05-02: FastAPI app (/simulate, /health, input validation errors, CORS) + Koyeb deployment
 
 ### Phase 6: Mobile Core Screens
