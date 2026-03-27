@@ -24,8 +24,8 @@ Keif is a physics-based coffee extraction simulation engine delivered as a cross
 - [x] Fast mode: Maille 2021 biexponential kinetics (< 1ms) for immersion — Validated in Phase 01 (0.267ms median, calibrated via curve_fit)
 - [x] Accurate mode: ODE/PDE via scipy.solve_ivp for immersion — Validated in Phase 01 (Radau, EY=21.51% ±0%)
 - [x] All 7 simulation outputs: TDS%, EY%, extraction curve, PSD curve, flavor profile, brew ratio rec, warnings — Validated in Phase 01 (French Press end-to-end)
-- [ ] Percolation solver (Moroney 2015 1D Darcy PDE) implemented for V60 and Kalita Wave
-- [ ] Pressure solver implemented for Espresso and Moka Pot
+- [x] Percolation solver (Moroney 2015 1D Darcy PDE) implemented for V60, Kalita Wave, and Espresso — Validated in Phase 02 (EY=20.0% Batali 2020, fast mode 0.185ms, Lee 2023 channeling overlay)
+- [ ] Pressure solver implemented for Moka Pot
 - [ ] AeroPress standalone hybrid solver (immersion steep → pressure push)
 - [ ] Fast mode: Maille 2021 biexponential kinetics (< 1ms) for all remaining methods
 - [ ] Extended outputs: channeling risk, CO2 degassing, water temp decay, SCA chart position, EUI, puck resistance, caffeine estimate
@@ -59,6 +59,8 @@ Keif is a physics-based coffee extraction simulation engine delivered as a cross
 **Research complete (Phases 3–6):** All core papers read and documented — Moroney 2015/2016/2019, Melrose/Liang 2021, Cameron/Lee 2022, Maille 2021, Batali 2020. Physics decisions locked in architecture_spec.md.
 
 **PoC validated (Phase 8):** Moroney 2016 immersion ODE passes internal consistency check: EY=21.51%, TDS=1.291%. Caveats: validation is circular (scaling derived from Liang K), two params estimated (phi_v_inf=0.40, c_s=1050 kg/m³). Independent validation against Batali 2020 / Liang 2021 datasets still needed.
+
+**Phase 02 complete (2026-03-27):** Percolation solver (V60, Kalita Wave, Espresso) fully implemented. Both modes working: accurate mode (Moroney 2015 MOL, 30 nodes, Radau, EY=20.000% — Batali 2020 validation passes), fast mode (Maille 2021 biexponential, 0.185ms). Lee 2023 channeling overlay live for espresso (risk=0.434 vs pour-over 0.023). Method distinction confirmed: V60=20.0%, Kalita=19.5%, Espresso=20.5%. Shared output_helpers.py eliminates duplication. 64 tests passing.
 
 **Architecture locked (Phase 9):** 3 solver files + 6 method configs + AeroPress standalone. Fast/accurate as mode flag inside solver (not separate files). Fast=Maille 2021, Accurate=Moroney 2015/2016, shared Liang 2021 equilibrium anchor.
 
