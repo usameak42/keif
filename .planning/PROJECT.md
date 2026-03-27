@@ -25,9 +25,9 @@ Keif is a physics-based coffee extraction simulation engine delivered as a cross
 - [x] Accurate mode: ODE/PDE via scipy.solve_ivp for immersion — Validated in Phase 01 (Radau, EY=21.51% ±0%)
 - [x] All 7 simulation outputs: TDS%, EY%, extraction curve, PSD curve, flavor profile, brew ratio rec, warnings — Validated in Phase 01 (French Press end-to-end)
 - [x] Percolation solver (Moroney 2015 1D Darcy PDE) implemented for V60, Kalita Wave, and Espresso — Validated in Phase 02 (EY=20.0% Batali 2020, fast mode 0.185ms, Lee 2023 channeling overlay)
-- [ ] Pressure solver implemented for Moka Pot
-- [ ] AeroPress standalone hybrid solver (immersion steep → pressure push)
-- [ ] Fast mode: Maille 2021 biexponential kinetics (< 1ms) for all remaining methods
+- [x] Pressure solver implemented for Moka Pot — Validated in Phase 03 (Clausius-Clapeyron steam + Moroney extraction, 6-ODE Radau, EY=18% accurate mode, fast mode <1ms)
+- [x] AeroPress standalone hybrid solver (immersion steep → pressure push) — Validated in Phase 03 (hybrid EY exceeds steep-only by ≥1%, all 6 methods × 2 modes pass 98 tests)
+- [x] Fast mode: Maille 2021 biexponential kinetics (< 1ms) for all remaining methods — Validated in Phase 03
 - [ ] Extended outputs: channeling risk, CO2 degassing, water temp decay, SCA chart position, EUI, puck resistance, caffeine estimate
 - [ ] Grinder database: minimum 10 presets (Comandante C40, Mavo, Timemore C2/C3, 1Zpresso, Niche Zero, DF64, Eureka, Fellow Ode, Baratza Encore, Kinu)
 
@@ -61,6 +61,8 @@ Keif is a physics-based coffee extraction simulation engine delivered as a cross
 **PoC validated (Phase 8):** Moroney 2016 immersion ODE passes internal consistency check: EY=21.51%, TDS=1.291%. Caveats: validation is circular (scaling derived from Liang K), two params estimated (phi_v_inf=0.40, c_s=1050 kg/m³). Independent validation against Batali 2020 / Liang 2021 datasets still needed.
 
 **Phase 02 complete (2026-03-27):** Percolation solver (V60, Kalita Wave, Espresso) fully implemented. Both modes working: accurate mode (Moroney 2015 MOL, 30 nodes, Radau, EY=20.000% — Batali 2020 validation passes), fast mode (Maille 2021 biexponential, 0.185ms). Lee 2023 channeling overlay live for espresso (risk=0.434 vs pour-over 0.023). Method distinction confirmed: V60=20.0%, Kalita=19.5%, Espresso=20.5%. Shared output_helpers.py eliminates duplication. 64 tests passing.
+
+**Phase 03 complete (2026-03-27):** Pressure and hybrid solvers implemented — Moka Pot (6-ODE Clausius-Clapeyron steam + Moroney extraction, EY=18% accurate, <1ms fast) and AeroPress (immersion.solve_accurate/fast steep → 1-ODE Darcy push, hybrid EY exceeds steep-only by ≥1%). All 6 brew methods × 2 modes verified via 18-test parametrized smoke suite. 98 tests passing, zero regressions.
 
 **Architecture locked (Phase 9):** 3 solver files + 6 method configs + AeroPress standalone. Fast/accurate as mode flag inside solver (not separate files). Fast=Maille 2021, Accurate=Moroney 2015/2016, shared Liang 2021 equilibrium anchor.
 
