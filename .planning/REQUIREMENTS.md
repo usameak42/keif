@@ -9,7 +9,7 @@
 
 - [x] **SOLV-01**: Immersion solver (Moroney 2016 3-ODE system) integrated with SimulationInput/Output contract — accurate mode
 - [x] **SOLV-02**: Immersion solver fast mode: Maille 2021 biexponential kinetics (< 1ms), Liang 2021 equilibrium anchor
-- [ ] **SOLV-03**: Percolation solver (Moroney 2015 1D Darcy PDE + double-porosity, Method of Lines) — accurate mode for V60, Kalita, Espresso
+- [x] **SOLV-03**: Percolation solver (Moroney 2015 1D Darcy PDE + double-porosity, Method of Lines) — accurate mode for V60, Kalita, Espresso
 - [ ] **SOLV-04**: Percolation solver fast mode: Maille 2021 biexponential kinetics with percolation-specific lambda calibration
 - [ ] **SOLV-05**: Pressure solver (Moroney 2016 ODE + thermal coupling, 6 ODEs) — accurate mode for Moka Pot
 - [ ] **SOLV-06**: Pressure solver fast mode: Maille 2021 biexponential with moka-specific lambda calibration
@@ -52,7 +52,7 @@
 ### Engine — Validation
 
 - [x] **VAL-01**: Accurate-mode immersion solver reproduces Liang 2021 / Melrose 2021 EY% within ±1.5% RMSE for standard test scenario (15g/250g/93°C/medium roast)
-- [ ] **VAL-02**: Accurate-mode percolation solver validated against Batali 2020 pour-over dataset (EY% within ±1.5% RMSE)
+- [x] **VAL-02**: Accurate-mode percolation solver validated against Batali 2020 pour-over dataset (EY% within ±1.5% RMSE)
 - [ ] **VAL-03**: Fast mode outputs within ±2% EY of accurate mode for standard parameters (documented tolerance)
 - [ ] **VAL-04**: pytest suite green: all solvers, all methods, equilibrium scaling, grinder lookup
 
@@ -157,13 +157,13 @@
 | GRND-02 | Phase 1 | Complete |
 | GRND-11 | Phase 1 | Complete |
 | VAL-01 | Phase 1 | Complete |
-| SOLV-03 | Phase 2 | Pending |
+| SOLV-03 | Phase 2 | Complete |
 | SOLV-04 | Phase 2 | Pending |
 | METH-02 | Phase 2 | Pending |
 | METH-03 | Phase 2 | Pending |
 | METH-04 | Phase 2 | Pending |
 | OUT-08 | Phase 2 | Pending |
-| VAL-02 | Phase 2 | Pending |
+| VAL-02 | Phase 2 | Complete |
 | SOLV-05 | Phase 3 | Pending |
 | SOLV-06 | Phase 3 | Pending |
 | METH-05 | Phase 3 | Pending |

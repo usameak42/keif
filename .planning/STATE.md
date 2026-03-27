@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready to plan
-stopped_at: Completed 01-immersion-solver-core-engine/01-03-PLAN.md
-last_updated: "2026-03-26T14:37:38.244Z"
+status: Ready to execute
+stopped_at: Completed 02-percolation-solver/02-01-PLAN.md
+last_updated: "2026-03-27T00:41:26.380Z"
 progress:
   total_phases: 7
   completed_phases: 1
-  total_plans: 3
-  completed_plans: 3
+  total_plans: 5
+  completed_plans: 4
 ---
 
 # Project State
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-26)
 
 **Core value:** Physically accurate, real-time coffee extraction simulation -- predict TDS% and EY% from grinder settings, dose, and water parameters before brewing, across all 6 major brew methods.
-**Current focus:** Phase 01 — immersion-solver-core-engine
+**Current focus:** Phase 02 — percolation-solver
 
 ## Current Position
 
-Phase: 2
-Plan: Not started
+Phase: 02 (percolation-solver) — EXECUTING
+Plan: 2 of 2
 
 ## Performance Metrics
 
@@ -49,6 +49,7 @@ Plan: Not started
 | Phase 01-immersion-solver-core-engine P01 | 15 | 1 tasks | 4 files |
 | Phase 01-immersion-solver-core-engine P02 | 5 | 2 tasks | 5 files |
 | Phase 01-immersion-solver-core-engine P03 | 4 | 2 tasks | 6 files |
+| Phase 02-percolation-solver P01 | 5 | 2 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -66,6 +67,7 @@ Recent decisions affecting current work:
 - [Phase 01-immersion-solver-core-engine]: PSD resolution in _resolve_psd() inside immersion.py; french_press.py stays pure dispatcher
 - [Phase 01-immersion-solver-core-engine]: Click interpolation: exact preset uses JSON median_um; all other clicks use setting * microns_per_click
 - [Phase 01-immersion-solver-core-engine]: Flavor piecewise model with 5 zones at EY 16/18/22/24% anchored to SCA extraction order
+- [Phase 02-percolation-solver]: Percolation EY target = 20% (Batali 2020) instead of 21.51% (immersion Liang anchor); KB_PERCOLATION_FACTOR=3.0 for forced flow; method_defaults dict pattern for geometry/flow overrides
 
 ### Pending Todos
 
@@ -79,6 +81,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-26T14:33:01.968Z
-Stopped at: Completed 01-immersion-solver-core-engine/01-03-PLAN.md
+Last session: 2026-03-27T00:41:26.376Z
+Stopped at: Completed 02-percolation-solver/02-01-PLAN.md
 Resume file: None
