@@ -33,13 +33,13 @@
 - [x] **OUT-04**: Simulation returns flavor profile estimate {sour, sweet, bitter} normalized 0–1 (SCA extraction order: acids first, sugars, bitters)
 - [x] **OUT-05**: Simulation returns brew ratio used and recommendation if outside optimal range
 - [x] **OUT-06**: Simulation returns warnings list (over-extraction, channeling risk, out-of-range ratio)
-- [ ] **OUT-07**: Simulation returns extraction uniformity index (0–1) derived from flow variance in 1D model (Moroney PLOS One 2019)
+- [x] **OUT-07**: Simulation returns extraction uniformity index (0–1) derived from flow variance in 1D model (Moroney PLOS One 2019)
 - [x] **OUT-08**: Simulation returns channeling risk score for espresso (Lee 2023 two-pathway model — post-processing overlay)
 - [x] **OUT-09**: Simulation returns CO2 degassing estimate during bloom phase: bi-exponential decay (Smrke 2018) applied as multiplicative modifier on mass-transfer coefficient during bloom window; parameterized by roast level (light/medium/dark) and bean age; zero structural changes to Moroney ODE
-- [ ] **OUT-10**: Simulation returns water temperature decay curve T(t) using Newton's Law of Cooling parameterized by vessel type
-- [ ] **OUT-11**: Simulation returns SCA brew chart position — (EY%, TDS%) plotted against SCA ideal zone
-- [ ] **OUT-12**: Simulation returns puck/bed resistance estimate for espresso (pressure drop, shot time prediction)
-- [ ] **OUT-13**: Simulation returns caffeine concentration estimate (mg/mL) using empirical transfer function vs temperature and EY% (Taip et al. 2025)
+- [x] **OUT-10**: Simulation returns water temperature decay curve T(t) using Newton's Law of Cooling parameterized by vessel type
+- [x] **OUT-11**: Simulation returns SCA brew chart position — (EY%, TDS%) plotted against SCA ideal zone
+- [x] **OUT-12**: Simulation returns puck/bed resistance estimate for espresso (pressure drop, shot time prediction)
+- [x] **OUT-13**: Simulation returns caffeine concentration estimate (mg/mL) using empirical transfer function vs temperature and EY% (Taip et al. 2025)
 
 ### Engine — Grinder Database
 

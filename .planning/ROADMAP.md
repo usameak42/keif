@@ -83,7 +83,7 @@ Plans:
   5. 1Zpresso and Baratza Encore grinder presets return valid median particle size and bimodal PSD data from grinder lookup
 
 Plans:
-- [ ] 04-01: Extended outputs — EUI, water temp decay (Newton's Law of Cooling per vessel type), SCA chart position, puck resistance, caffeine (Taip 2025)
+- [x] 04-01: Extended outputs — EUI, water temp decay (Newton's Law of Cooling per vessel type), SCA chart position, puck resistance, caffeine (Taip 2025)
 - [ ] 04-02: 1Zpresso + Baratza Encore grinder presets + extended output integration tests (all 6 methods return complete 13-field output)
 
 ### Phase 5: Integration Tests + FastAPI Backend
@@ -140,7 +140,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | 1. Immersion Solver + Core Engine | 3/3 | Complete   | 2026-03-26 |
 | 2. Percolation Solver | 0/2 | Not started | - |
 | 3. Pressure Solver | 2/2 | Complete   | 2026-03-27 |
-| 4. Extended Outputs + Grinder Presets | 0/2 | Not started | - |
+| 4. Extended Outputs + Grinder Presets | 1/2 | In Progress | - |
 | 5. Integration Tests + FastAPI Backend | 0/2 | Not started | - |
 | 6. Mobile Core Screens | 0/2 | Not started | - |
 | 7. Mobile Extended + Run History | 0/2 | Not started | - |
