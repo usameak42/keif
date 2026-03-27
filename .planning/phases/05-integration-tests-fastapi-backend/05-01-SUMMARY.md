@@ -108,6 +108,13 @@ None - all test assertions use real simulation data.
 - Ready for Plan 05-02: FastAPI backend (`brewos/api.py` + `/simulate` + `/health` endpoints)
 - Deferred: Espresso fast-mode `TAU2_PERC` recalibration for standard 25s brew scenarios
 
+## Self-Check: PASSED
+
+- `brewos-engine/tests/test_cross_method_tolerance.py`: FOUND
+- `05-01-SUMMARY.md`: FOUND
+- Commit `2384ae8`: FOUND in brewos-engine git log
+- 170 tests pass, 1 pre-existing failure (test_aeropress_fast_speed)
+
 ---
 *Phase: 05-integration-tests-fastapi-backend*
 *Completed: 2026-03-28*
