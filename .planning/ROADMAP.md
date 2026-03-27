@@ -94,11 +94,11 @@ Plans:
   1. `pytest` green across all solvers, all methods, equilibrium scaling, grinder lookup, all 13 output fields — zero failures
   2. Fast mode EY% is within ±2% of accurate mode for all 6 methods with standard parameters (results logged in test output)
   3. POST /simulate with valid SimulationInput JSON returns 200 with complete SimulationOutput; invalid input returns 422 with human-readable error messages (not raw Pydantic traces)
-  4. API deployed to Railway or Fly.io; GET /health returns 200; CORS allows requests from Expo client origin
+  4. API deployed to Koyeb; GET /health returns 200; CORS allows requests from Expo client origin
 
 Plans:
 - [ ] 05-01: Cross-solver validation suite (fast vs accurate ±2% tolerance for all 6 methods, full pytest coverage)
-- [ ] 05-02: FastAPI app (/simulate, /health, input validation errors, CORS) + Railway/Fly.io deployment
+- [ ] 05-02: FastAPI app (/simulate, /health, input validation errors, CORS) + Koyeb deployment
 
 ### Phase 6: Mobile Core Screens
 **Goal**: A user can select a brew method, enter parameters, run a simulation via the API, and see TDS/EY/SCA chart results on their phone

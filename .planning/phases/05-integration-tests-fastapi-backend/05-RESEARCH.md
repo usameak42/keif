@@ -1,7 +1,7 @@
 # Phase 5: Integration Tests + FastAPI Backend — Research
 
 **Researched:** 2026-03-28
-**Domain:** pytest parametrization, FastAPI + Pydantic v2, Railway/Fly.io deployment
+**Domain:** pytest parametrization, FastAPI + Pydantic v2, Koyeb deployment
 **Confidence:** HIGH
 
 ---
@@ -17,7 +17,7 @@
 | API-02 | 422 with human-readable messages on invalid input (not raw Pydantic traces) | RequestValidationError exception handler pattern verified in FastAPI docs |
 | API-03 | CORS for React Native / Expo client | Native RN does not enforce CORS; CORSMiddleware needed only for Expo Web / browser-based debugging |
 | API-04 | GET /health endpoint (keep-alive ping) | Simple route returning {"status": "ok"} — no library needed |
-| API-05 | Deployable to Railway or Fly.io with documented deployment steps | Railway recommended (no cold starts, auto-detect Python, simpler config) |
+| API-05 | Deployable to Koyeb with documented deployment steps | Koyeb recommended (permanent free tier, scale-to-zero, Dockerfile-based deploy) |
 </phase_requirements>
 
 ---
@@ -26,9 +26,9 @@
 
 Phase 5 has two separable concerns. The first (VAL-03/VAL-04) is straightforward: the engine already has 164 passing tests but the cross-method fast-vs-accurate tolerance suite does not yet exist as a single parametrized file. One new test file (`tests/test_cross_method_tolerance.py`) with `@pytest.mark.parametrize` over all 6 method dispatch functions covers VAL-03 cleanly. The remaining VAL-04 work is verifying the full suite stays green after the API is added.
 
-The second concern (API-01 through API-05) requires adding FastAPI 0.115.x, uvicorn (already installed at 0.42.0), and httpx (already installed at 0.28.1) to the project. FastAPI's native Pydantic v2 integration means `SimulationInput` can be used directly as a POST body parameter with zero adapter code. Custom 422 formatting requires a single `@app.exception_handler(RequestValidationError)` function. Railway is the recommended deployment target due to no cold starts and auto-detection of Python projects.
+The second concern (API-01 through API-05) requires adding FastAPI 0.115.x, uvicorn (already installed at 0.42.0), and httpx (already installed at 0.28.1) to the project. FastAPI's native Pydantic v2 integration means `SimulationInput` can be used directly as a POST body parameter with zero adapter code. Custom 422 formatting requires a single `@app.exception_handler(RequestValidationError)` function. Koyeb is the recommended deployment target — permanent free tier with scale-to-zero and Dockerfile-based deployment.
 
-**Primary recommendation:** Add `fastapi>=0.115` to `pyproject.toml`, create `brewos/api.py` as the entry point, and a `Procfile` at the engine root for Railway. One new test file handles VAL-03; API tests use `fastapi.testclient.TestClient` with the existing `httpx` install.
+**Primary recommendation:** Add `fastapi>=0.115` to `pyproject.toml`, create `brewos/api.py` as the entry point, and a `Dockerfile` at the engine root for Koyeb. One new test file handles VAL-03; API tests use `fastapi.testclient.TestClient` with the existing `httpx` install.
 
 ---
 
@@ -86,7 +86,7 @@ brewos-engine/
 │   ├── test_cross_method_tolerance.py   # NEW — VAL-03
 │   ├── test_api.py                      # NEW — API-01 through API-04
 │   └── (existing 19 test files)
-├── Procfile              # Railway deployment: web: uvicorn brewos.api:app ...
+├── Dockerfile            # Koyeb deployment: FROM python:3.11-slim + uvicorn CMD
 ├── pyproject.toml        # Add fastapi dependency
 └── README.md
 ```
@@ -310,7 +310,7 @@ def test_health_returns_200():
 | 422 error formatting | Custom middleware that intercepts all responses | `@app.exception_handler(RequestValidationError)` | Scope-limited, tested, Pydantic-aware |
 | ASGI server | Twisted, gunicorn without uvicorn worker | uvicorn (already installed) | uvicorn is the standard ASGI server for FastAPI |
 | API tests | Spinning up a real server process | `fastapi.testclient.TestClient` | In-process, no port binding, fast |
-| Railway port binding | Hardcoded port | `$PORT` env var in Procfile | Railway injects `PORT` at runtime; hardcoded 8000 may conflict |
+| Koyeb port binding | Hardcoded port | Fixed port 8000 in Dockerfile CMD | Koyeb routes external traffic to the EXPOSEd port; no PORT env var needed |
 
 ---
 
@@ -346,19 +346,19 @@ def test_health_returns_200():
 
 **Warning signs:** Tests pass for high-EY methods but fail for low-EY methods, or vice versa.
 
-### Pitfall 4: Cold Starts on Railway Free Tier
+### Pitfall 4: Cold Starts on Koyeb Free Tier (Scale-to-Zero)
 
-**What goes wrong:** The Expo app sends a POST /simulate immediately on launch; the Railway instance is sleeping; the request times out.
+**What goes wrong:** The Expo app sends a POST /simulate immediately on launch; the Koyeb instance has scaled to zero; the request times out.
 
-**Why it happens:** Railway's free/hobby tier may sleep inactive services. The GET /health endpoint (API-04) is specifically designed as a keep-alive ping to wake the instance.
+**Why it happens:** Koyeb's free tier uses scale-to-zero — the service shuts down after inactivity and restarts on the next request (~2-5s cold start). The GET /health endpoint (API-04) is specifically designed as a keep-alive ping to wake the instance before the user hits /simulate.
 
-**How to avoid:** Implement `/health` first; the Expo app (Phase 6) should ping `/health` on app launch before showing the simulation UI. Railway also has an "Always On" toggle in service settings for paid plans.
+**How to avoid:** Implement `/health` first; the Expo app (Phase 6) should ping `/health` on app launch before showing the simulation UI.
 
 **Warning signs:** First request after idle period returns 504 Gateway Timeout.
 
 ### Pitfall 5: SciPy Import Time at API Startup
 
-**What goes wrong:** Railway cold start takes 15-30 seconds because scipy + numpy are imported at module load.
+**What goes wrong:** Koyeb cold start adds extra latency because scipy + numpy are imported at module load.
 
 **Why it happens:** scipy's first import is slow (~500ms-2s). All method modules import solvers, which import scipy.
 
@@ -449,9 +449,15 @@ async def simulate(body: SimulationInput) -> SimulationOutput:
 
 **Note:** This example assumes `method: BrewMethod` has been added to `SimulationInput`. Plan 05-01 or 05-02 must add this field before the API can dispatch.
 
-### Procfile (Railway deployment)
-```
-web: uvicorn brewos.api:app --host 0.0.0.0 --port ${PORT:-8000}
+### Dockerfile (Koyeb deployment)
+```dockerfile
+FROM python:3.11-slim
+WORKDIR /app
+COPY pyproject.toml .
+COPY brewos/ brewos/
+RUN pip install --no-cache-dir .
+EXPOSE 8000
+CMD ["uvicorn", "brewos.api:app", "--host", "0.0.0.0", "--port", "8000"]
 ```
 
 ### pyproject.toml additions
@@ -561,40 +567,49 @@ dev = ["pytest", "httpx"]
 
 ---
 
-## Deployment: Railway
+## Deployment: Koyeb
 
-### Why Railway over Fly.io
+### Why Koyeb
 
-| Factor | Railway | Fly.io |
-|--------|---------|--------|
-| Cold starts | None — always-on instances | Machines may pause (cold start delays) |
-| Setup complexity | GitHub push → auto-deploy | CLI-first (`fly launch`), steeper curve |
-| Python detection | Auto-detects Procfile + requirements.txt | Needs `fly launch` to generate fly.toml |
-| Pricing (2026) | $5/month subscription includes $5 usage | ~$3-4/month usage-based; waives invoices under $5 |
-| FastAPI template | One-click deploy available | `fly launch` generates configuration |
+| Factor | Koyeb | Railway | Fly.io |
+|--------|-------|---------|--------|
+| Free tier | Permanent free tier | No free tier ($5/month minimum) | Limited free allowance |
+| Scale-to-zero | Yes (scale-to-zero on free tier) | No (always-on, billed) | Yes (machines pause) |
+| Cold starts | ~2-5s from scale-to-zero | None | ~5-15s |
+| Deployment | Dockerfile or buildpack, GitHub push | Procfile + railpack auto-detect | `fly launch` CLI |
+| Pricing (2026) | Free tier sufficient for low-traffic portfolio API | $5/month minimum | ~$3-4/month |
 
-Railway is recommended: no cold starts means the `/health` ping works reliably, and auto-detection means the Procfile alone is sufficient config.
+Koyeb is recommended for this portfolio project: permanent free tier with scale-to-zero means $0/month for low traffic. The `/health` endpoint (API-04) serves as the keep-alive ping to wake the instance before the user hits /simulate.
 
-### Minimal Railway Deployment Config
+### Minimal Koyeb Deployment Config
 
-**File 1: `brewos-engine/Procfile`**
+**File 1: `brewos-engine/Dockerfile`**
+```dockerfile
+FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY pyproject.toml .
+COPY brewos/ brewos/
+
+RUN pip install --no-cache-dir .
+
+EXPOSE 8000
+
+CMD ["uvicorn", "brewos.api:app", "--host", "0.0.0.0", "--port", "8000"]
 ```
-web: uvicorn brewos.api:app --host 0.0.0.0 --port ${PORT:-8000}
-```
 
-**File 2: `brewos-engine/requirements.txt`** (Railway reads this OR pyproject.toml)
-
-Railway's railpack builder supports pyproject.toml natively — no separate requirements.txt needed if `fastapi` is added to `[project].dependencies`.
+Koyeb auto-detects the Dockerfile in the repo root. No additional config files needed.
 
 **Deployment steps:**
 1. Push `brewos-engine/` to a GitHub repository (or the submodule already is one)
-2. Create a new Railway project → "Deploy from GitHub repo"
+2. Go to app.koyeb.com → Create Service → GitHub
 3. Select the `brewos-engine` repository
-4. Railway auto-detects Python + Procfile
-5. Service URL is generated (e.g., `https://brewos-engine-production.up.railway.app`)
-6. Verify: `curl https://your-service.up.railway.app/health` returns `{"status":"ok"}`
+4. Koyeb detects the Dockerfile automatically
+5. Service URL is generated (e.g., `https://your-service.koyeb.app`)
+6. Verify: `curl https://your-service.koyeb.app/health` returns `{"status":"ok"}`
 
-**Environment variables to set in Railway dashboard:**
+**Environment variables to set in Koyeb dashboard:**
 - None required for basic operation
 - Optional: `PYTHONUNBUFFERED=1` for log streaming
 
@@ -625,7 +640,7 @@ Railway's railpack builder supports pyproject.toml natively — no separate requ
 **Confidence breakdown:**
 - Standard stack: HIGH — all versions verified against PyPI registry and local environment
 - Architecture patterns: HIGH — verified against official FastAPI docs
-- Deployment config: MEDIUM — Railway Procfile pattern verified; exact railpack behaviour not tested in this environment
+- Deployment config: MEDIUM — Koyeb Dockerfile pattern documented; exact Koyeb build behaviour not tested in this environment
 - Pitfalls: HIGH for starlette conflict (observed in environment); MEDIUM for Moka Pot tolerance (existing solver test passes but cross-method scenario untested)
 
 **Research date:** 2026-03-28

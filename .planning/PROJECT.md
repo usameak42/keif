@@ -34,7 +34,7 @@ Keif is a physics-based coffee extraction simulation engine delivered as a cross
 **Backend (M2)**
 - [ ] FastAPI wrapping engine with /simulate endpoint
 - [ ] Input validation, error handling, CORS for mobile
-- [ ] Deployable to Railway or Fly.io
+- [ ] Deployable to Koyeb
 
 **Mobile App (M4–M5)**
 - [ ] Expo/React Native input screens (brew method, grinder, dose, water, roast)

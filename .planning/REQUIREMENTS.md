@@ -62,7 +62,7 @@
 - [ ] **API-02**: Input validation errors return 422 with human-readable messages (not raw Pydantic stack traces)
 - [ ] **API-03**: CORS configured for React Native / Expo client
 - [ ] **API-04**: GET /health endpoint for keep-alive ping from mobile app on launch (mitigates cold start on free-tier hosting)
-- [ ] **API-05**: API deployable to Railway or Fly.io with documented deployment steps
+- [ ] **API-05**: API deployable to Koyeb with documented deployment steps
 
 ### Mobile — Core Screens
 
