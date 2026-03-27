@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready to plan
-stopped_at: Completed 02-percolation-solver/02-02-PLAN.md
-last_updated: "2026-03-27T00:57:27.886Z"
+status: Phase complete — ready for verification
+stopped_at: Completed 03-pressure-solver/03-02-PLAN.md
+last_updated: "2026-03-27T20:48:49.214Z"
 progress:
   total_phases: 7
-  completed_phases: 2
-  total_plans: 5
-  completed_plans: 5
+  completed_phases: 3
+  total_plans: 7
+  completed_plans: 7
 ---
 
 # Project State
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-26)
 
 **Core value:** Physically accurate, real-time coffee extraction simulation -- predict TDS% and EY% from grinder settings, dose, and water parameters before brewing, across all 6 major brew methods.
-**Current focus:** Phase 02 — percolation-solver
+**Current focus:** Phase 03 — pressure-solver
 
 ## Current Position
 
-Phase: 3
-Plan: Not started
+Phase: 03 (pressure-solver) — EXECUTING
+Plan: 2 of 2
 
 ## Performance Metrics
 
@@ -51,6 +51,8 @@ Plan: Not started
 | Phase 01-immersion-solver-core-engine P03 | 4 | 2 tasks | 6 files |
 | Phase 02-percolation-solver P01 | 5 | 2 tasks | 9 files |
 | Phase 02-percolation-solver P02 | 8 | 2 tasks | 11 files |
+| Phase 03-pressure-solver P01 | 6 | 2 tasks | 5 files |
+| Phase 03-pressure-solver P02 | 7 | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -72,6 +74,11 @@ Recent decisions affecting current work:
 - [Phase 02-percolation-solver]: Percolation biexponential: A1=0.55, tau1=2.0s, tau2=50.0s (shorter than immersion due to forced flow)
 - [Phase 02-percolation-solver]: Darcy velocity capped at 5mm/s; Kozeny-Carman overpredicts for fine espresso grind
 - [Phase 02-percolation-solver]: Method-specific ey_target_pct: V60=20.0%, Kalita=19.5%, Espresso=20.5% for distinct EY profiles
+- [Phase 03-pressure-solver]: M_cup (cup accumulation) used for EY instead of c_h (bed concentration) -- monotonically increasing, physically correct for pressure-driven extraction
+- [Phase 03-pressure-solver]: Wetting fraction w = V_ext/V_bed_pore gates extraction kinetics -- bed starts dry, extraction activates as water flows through
+- [Phase 03-pressure-solver]: EY_TARGET_MOKA_PCT = 18.0% (lower than immersion 21.51% due to shorter contact time, lower water-to-coffee ratio)
+- [Phase 03-pressure-solver]: AeroPress target scaling: raw combined EY scaled to 19% target, same pattern as moka pot 18% scaling
+- [Phase 03-pressure-solver]: Hybrid orchestration: steep delegates to immersion solver (DECISION-005), push runs 1-ODE Darcy washout, results combined
 
 ### Pending Todos
 
@@ -85,6 +92,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-27T00:52:46.186Z
-Stopped at: Completed 02-percolation-solver/02-02-PLAN.md
+Last session: 2026-03-27T20:48:49.211Z
+Stopped at: Completed 03-pressure-solver/03-02-PLAN.md
 Resume file: None

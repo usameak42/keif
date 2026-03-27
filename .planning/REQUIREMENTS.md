@@ -11,8 +11,8 @@
 - [x] **SOLV-02**: Immersion solver fast mode: Maille 2021 biexponential kinetics (< 1ms), Liang 2021 equilibrium anchor
 - [x] **SOLV-03**: Percolation solver (Moroney 2015 1D Darcy PDE + double-porosity, Method of Lines) — accurate mode for V60, Kalita, Espresso
 - [x] **SOLV-04**: Percolation solver fast mode: Maille 2021 biexponential kinetics with percolation-specific lambda calibration
-- [ ] **SOLV-05**: Pressure solver (Moroney 2016 ODE + thermal coupling, 6 ODEs) — accurate mode for Moka Pot
-- [ ] **SOLV-06**: Pressure solver fast mode: Maille 2021 biexponential with moka-specific lambda calibration
+- [x] **SOLV-05**: Pressure solver (Moroney 2016 ODE + thermal coupling, 6 ODEs) — accurate mode for Moka Pot
+- [x] **SOLV-06**: Pressure solver fast mode: Maille 2021 biexponential with moka-specific lambda calibration
 - [x] **SOLV-07**: Liang 2021 equilibrium scaling (K=0.717) applied post-solve in all accurate-mode solvers
 - [x] **SOLV-08**: All solvers clip state variables to physical bounds [0, c_sat] to prevent NaN propagation
 
@@ -22,8 +22,8 @@
 - [x] **METH-02**: V60 method: configures percolation solver with cone geometry, bloom timing, flow rate
 - [x] **METH-03**: Kalita Wave method: configures percolation solver with flat-bed geometry, 3-hole restricted flow
 - [x] **METH-04**: Espresso method: configures percolation solver with 9-bar params, fine grind, thin-bed MOL discretization
-- [ ] **METH-05**: Moka Pot method: configures pressure solver with steam pressure, stovetop geometry, default thermal params for common pot sizes
-- [ ] **METH-06**: AeroPress method: standalone hybrid solver — immersion steep phase followed by pressure push phase
+- [x] **METH-05**: Moka Pot method: configures pressure solver with steam pressure, stovetop geometry, default thermal params for common pot sizes
+- [x] **METH-06**: AeroPress method: standalone hybrid solver — immersion steep phase followed by pressure push phase
 
 ### Engine — Outputs
 
@@ -164,10 +164,10 @@
 | METH-04 | Phase 2 | Complete |
 | OUT-08 | Phase 2 | Complete |
 | VAL-02 | Phase 2 | Complete |
-| SOLV-05 | Phase 3 | Pending |
-| SOLV-06 | Phase 3 | Pending |
-| METH-05 | Phase 3 | Pending |
-| METH-06 | Phase 3 | Pending |
+| SOLV-05 | Phase 3 | Complete |
+| SOLV-06 | Phase 3 | Complete |
+| METH-05 | Phase 3 | Complete |
+| METH-06 | Phase 3 | Complete |
 | OUT-07 | Phase 4 | Pending |
 | OUT-10 | Phase 4 | Pending |
 | OUT-11 | Phase 4 | Pending |

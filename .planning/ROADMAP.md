@@ -18,7 +18,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Immersion Solver + Core Engine** - Moroney 2016 ODE + Maille fast mode, French Press method, 7 core outputs, CO2 bloom modifier, grinder DB infrastructure, VAL-01 (completed 2026-03-26)
 - [ ] **Phase 2: Percolation Solver** - Moroney 2015 PDE via MOL, V60 + Kalita + Espresso methods, channeling overlay (Lee 2023), VAL-02
-- [ ] **Phase 3: Pressure Solver** - Moka Pot thermo-fluid ODE + AeroPress hybrid solver, phase-specific validation
+- [x] **Phase 3: Pressure Solver** - Moka Pot thermo-fluid ODE + AeroPress hybrid solver, phase-specific validation (completed 2026-03-27)
 - [ ] **Phase 4: Extended Outputs + Grinder Presets** - All 6 extended outputs across all methods, 1Zpresso + Baratza Encore presets
 - [ ] **Phase 5: Integration Tests + FastAPI Backend** - Cross-method fast/accurate tolerance suite, /simulate endpoint, deployment
 - [ ] **Phase 6: Mobile Core Screens** - Expo/React Native input screens, simulation trigger, TDS/EY/SCA results
@@ -68,8 +68,8 @@ Plans:
   4. All 6 brew methods (French Press, V60, Kalita, Espresso, Moka Pot, AeroPress) pass `pytest`: each returns a complete SimulationOutput without errors in both fast and accurate modes
 
 Plans:
-- [ ] 03-01: Pressure solver accurate mode (Moroney 2016 ODE + thermal coupling 6-ODE system) + Moka Pot method config + fast mode
-- [ ] 03-02: AeroPress hybrid solver (immersion steep → pressure push) + cross-method smoke tests (all 6 methods, both modes)
+- [x] 03-01: Pressure solver accurate mode (Moroney 2016 ODE + thermal coupling 6-ODE system) + Moka Pot method config + fast mode
+- [x] 03-02: AeroPress hybrid solver (immersion steep → pressure push) + cross-method smoke tests (all 6 methods, both modes)
 
 ### Phase 4: Extended Outputs + Grinder Presets
 **Goal**: All 13 simulation outputs (7 core + 6 extended) are populated for every applicable method; 1Zpresso and Baratza Encore presets are functional
@@ -139,7 +139,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 |-------|----------------|--------|-----------|
 | 1. Immersion Solver + Core Engine | 3/3 | Complete   | 2026-03-26 |
 | 2. Percolation Solver | 0/2 | Not started | - |
-| 3. Pressure Solver | 0/2 | Not started | - |
+| 3. Pressure Solver | 2/2 | Complete   | 2026-03-27 |
 | 4. Extended Outputs + Grinder Presets | 0/2 | Not started | - |
 | 5. Integration Tests + FastAPI Backend | 0/2 | Not started | - |
 | 6. Mobile Core Screens | 0/2 | Not started | - |
