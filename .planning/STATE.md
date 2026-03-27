@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Executing Phase 04
-stopped_at: Completed 04-extended-outputs-grinder-presets/04-01-PLAN.md
-last_updated: "2026-03-27T22:33:15Z"
+status: Phase complete — ready for verification
+stopped_at: Completed 04-extended-outputs-grinder-presets/04-02-PLAN.md
+last_updated: "2026-03-27T22:45:44.280Z"
 progress:
   total_phases: 7
-  completed_phases: 3
-  total_plans: 9
+  completed_phases: 2
+  total_plans: 7
   completed_plans: 8
 ---
 
@@ -54,6 +54,7 @@ Plan: 2 of 2
 | Phase 03-pressure-solver P01 | 6 | 2 tasks | 5 files |
 | Phase 03-pressure-solver P02 | 7 | 2 tasks | 3 files |
 | Phase 04-extended-outputs-grinder-presets P01 | 5 | 7 tasks | 11 files |
+| Phase 04 P02 | 3 | 5 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -83,6 +84,7 @@ Recent decisions affecting current work:
 - [Phase 04-extended-outputs-grinder-presets]: k_vessel=0.0 for moka pot (isothermal, active stove heating); puck_resistance=None for moka (not user-meaningful)
 - [Phase 04-extended-outputs-grinder-presets]: EUI=None for fast mode percolation (no spatial nodes); EUI=1.0 for immersion/AeroPress (well-mixed assumption)
 - [Phase 04-extended-outputs-grinder-presets]: Extended output fields always Optional with None default for backward compatibility
+- [Phase 04]: Used pathlib relative to __file__ for portable grinder JSON path in tests
 
 ### Pending Todos
 
@@ -96,6 +98,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-27T22:33:15Z
-Stopped at: Completed 04-extended-outputs-grinder-presets/04-01-PLAN.md
+Last session: 2026-03-27T22:45:44.277Z
+Stopped at: Completed 04-extended-outputs-grinder-presets/04-02-PLAN.md
 Resume file: None

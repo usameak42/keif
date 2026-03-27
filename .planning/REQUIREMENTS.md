@@ -45,8 +45,8 @@
 
 - [x] **GRND-01**: Grinder database loader: looks up median particle size AND full PSD from grinder JSON given grinder_name + grinder_setting
 - [x] **GRND-02**: Comandante C40 MK4 grinder preset complete (setting-to-micron mapping, bimodal PSD params, source documented)
-- [ ] **GRND-05**: 1Zpresso (at least one model) preset complete
-- [ ] **GRND-10**: Baratza Encore preset complete
+- [x] **GRND-05**: 1Zpresso (at least one model) preset complete
+- [x] **GRND-10**: Baratza Encore preset complete
 - [x] **GRND-11**: Generic log-normal PSD fallback when only grind_size (μm) is provided manually
 
 ### Engine — Validation
@@ -168,13 +168,13 @@
 | SOLV-06 | Phase 3 | Complete |
 | METH-05 | Phase 3 | Complete |
 | METH-06 | Phase 3 | Complete |
-| OUT-07 | Phase 4 | Pending |
-| OUT-10 | Phase 4 | Pending |
-| OUT-11 | Phase 4 | Pending |
-| OUT-12 | Phase 4 | Pending |
-| OUT-13 | Phase 4 | Pending |
-| GRND-05 | Phase 4 | Pending |
-| GRND-10 | Phase 4 | Pending |
+| OUT-07 | Phase 4 | Complete |
+| OUT-10 | Phase 4 | Complete |
+| OUT-11 | Phase 4 | Complete |
+| OUT-12 | Phase 4 | Complete |
+| OUT-13 | Phase 4 | Complete |
+| GRND-05 | Phase 4 | Complete |
+| GRND-10 | Phase 4 | Complete |
 | VAL-03 | Phase 5 | Pending |
 | VAL-04 | Phase 5 | Pending |
 | API-01 | Phase 5 | Pending |
