@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready to execute
-stopped_at: Completed 02-percolation-solver/02-01-PLAN.md
-last_updated: "2026-03-27T00:41:26.380Z"
+status: Phase complete — ready for verification
+stopped_at: Completed 02-percolation-solver/02-02-PLAN.md
+last_updated: "2026-03-27T00:52:46.189Z"
 progress:
   total_phases: 7
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 5
-  completed_plans: 4
+  completed_plans: 5
 ---
 
 # Project State
@@ -50,6 +50,7 @@ Plan: 2 of 2
 | Phase 01-immersion-solver-core-engine P02 | 5 | 2 tasks | 5 files |
 | Phase 01-immersion-solver-core-engine P03 | 4 | 2 tasks | 6 files |
 | Phase 02-percolation-solver P01 | 5 | 2 tasks | 9 files |
+| Phase 02-percolation-solver P02 | 8 | 2 tasks | 11 files |
 
 ## Accumulated Context
 
@@ -68,6 +69,9 @@ Recent decisions affecting current work:
 - [Phase 01-immersion-solver-core-engine]: Click interpolation: exact preset uses JSON median_um; all other clicks use setting * microns_per_click
 - [Phase 01-immersion-solver-core-engine]: Flavor piecewise model with 5 zones at EY 16/18/22/24% anchored to SCA extraction order
 - [Phase 02-percolation-solver]: Percolation EY target = 20% (Batali 2020) instead of 21.51% (immersion Liang anchor); KB_PERCOLATION_FACTOR=3.0 for forced flow; method_defaults dict pattern for geometry/flow overrides
+- [Phase 02-percolation-solver]: Percolation biexponential: A1=0.55, tau1=2.0s, tau2=50.0s (shorter than immersion due to forced flow)
+- [Phase 02-percolation-solver]: Darcy velocity capped at 5mm/s; Kozeny-Carman overpredicts for fine espresso grind
+- [Phase 02-percolation-solver]: Method-specific ey_target_pct: V60=20.0%, Kalita=19.5%, Espresso=20.5% for distinct EY profiles
 
 ### Pending Todos
 
@@ -81,6 +85,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-27T00:41:26.376Z
-Stopped at: Completed 02-percolation-solver/02-01-PLAN.md
+Last session: 2026-03-27T00:52:46.186Z
+Stopped at: Completed 02-percolation-solver/02-02-PLAN.md
 Resume file: None

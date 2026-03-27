@@ -55,7 +55,7 @@ Plans:
 
 Plans:
 - [x] 02-01: Percolation solver accurate mode (Moroney 2015 1D PDE + Darcy flow + MOL discretization + espresso 9-bar params)
-- [ ] 02-02: Percolation fast mode + V60/Kalita/Espresso method configs + Lee 2023 channeling overlay + VAL-02 pytest suite
+- [x] 02-02: Percolation fast mode + V60/Kalita/Espresso method configs + Lee 2023 channeling overlay + VAL-02 pytest suite
 
 ### Phase 3: Pressure Solver
 **Goal**: Moka Pot and AeroPress work end-to-end with validated physics; all 6 brew methods produce a complete SimulationOutput
