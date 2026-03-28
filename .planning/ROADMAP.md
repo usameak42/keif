@@ -115,7 +115,7 @@ Plans:
 Plans:
 - [x] 06-01-PLAN.md — Expo project scaffold + design tokens + types + root layout + Wave 0 jest infrastructure
 - [x] 06-02-PLAN.md — Rotary Selector screen + Brew Dashboard screen + 9 components
-- [ ] 06-03-PLAN.md — API integration + loading states + results screen (TDS/EY callouts + SCA chart)
+- [x] 06-03-PLAN.md — API integration + loading states + results screen (TDS/EY callouts + SCA chart)
 
 ### Phase 7: Mobile Extended + Run History
 **Goal**: Users can explore all extended outputs and save/compare simulation runs

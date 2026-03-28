@@ -71,9 +71,9 @@
 - [x] **MOB-03**: User can enter brew parameters: coffee dose (g), water amount (g), water temperature (°C), brew time (s)
 - [x] **MOB-04**: User can select roast level (light / medium / dark)
 - [x] **MOB-05**: User can toggle fast mode vs accurate mode before running simulation
-- [ ] **MOB-06**: User can run simulation and see loading state while accurate mode computes
-- [ ] **MOB-07**: User can see TDS% and EY% as primary result callouts
-- [ ] **MOB-08**: User can see SCA brew chart with their result plotted against ideal zone (Victory Native)
+- [x] **MOB-06**: User can run simulation and see loading state while accurate mode computes
+- [x] **MOB-07**: User can see TDS% and EY% as primary result callouts
+- [x] **MOB-08**: User can see SCA brew chart with their result plotted against ideal zone (Victory Native)
 
 ### Mobile — Extended Output Screens
 
@@ -187,9 +187,9 @@
 | MOB-03 | Phase 6 | Complete |
 | MOB-04 | Phase 6 | Complete |
 | MOB-05 | Phase 6 | Complete |
-| MOB-06 | Phase 6 | Pending |
-| MOB-07 | Phase 6 | Pending |
-| MOB-08 | Phase 6 | Pending |
+| MOB-06 | Phase 6 | Complete |
+| MOB-07 | Phase 6 | Complete |
+| MOB-08 | Phase 6 | Complete |
 | MOB-09 | Phase 7 | Pending |
 | MOB-10 | Phase 7 | Pending |
 | MOB-11 | Phase 7 | Pending |
