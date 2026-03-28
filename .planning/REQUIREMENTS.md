@@ -53,16 +53,16 @@
 
 - [x] **VAL-01**: Accurate-mode immersion solver reproduces Liang 2021 / Melrose 2021 EY% within ±1.5% RMSE for standard test scenario (15g/250g/93°C/medium roast)
 - [x] **VAL-02**: Accurate-mode percolation solver validated against Batali 2020 pour-over dataset (EY% within ±1.5% RMSE)
-- [ ] **VAL-03**: Fast mode outputs within ±2% EY of accurate mode for standard parameters (documented tolerance)
-- [ ] **VAL-04**: pytest suite green: all solvers, all methods, equilibrium scaling, grinder lookup
+- [x] **VAL-03**: Fast mode outputs within ±2% EY of accurate mode for standard parameters (documented tolerance)
+- [x] **VAL-04**: pytest suite green: all solvers, all methods, equilibrium scaling, grinder lookup
 
 ### Backend — API
 
-- [ ] **API-01**: FastAPI app with POST /simulate endpoint accepting SimulationInput JSON, returning SimulationOutput JSON
-- [ ] **API-02**: Input validation errors return 422 with human-readable messages (not raw Pydantic stack traces)
-- [ ] **API-03**: CORS configured for React Native / Expo client
-- [ ] **API-04**: GET /health endpoint for keep-alive ping from mobile app on launch (mitigates cold start on free-tier hosting)
-- [ ] **API-05**: API deployable to Koyeb with documented deployment steps
+- [x] **API-01**: FastAPI app with POST /simulate endpoint accepting SimulationInput JSON, returning SimulationOutput JSON
+- [x] **API-02**: Input validation errors return 422 with human-readable messages (not raw Pydantic stack traces)
+- [x] **API-03**: CORS configured for React Native / Expo client
+- [x] **API-04**: GET /health endpoint for keep-alive ping from mobile app on launch (mitigates cold start on free-tier hosting)
+- [x] **API-05**: API deployable to Koyeb with documented deployment steps
 
 ### Mobile — Core Screens
 
@@ -175,13 +175,13 @@
 | OUT-13 | Phase 4 | Complete |
 | GRND-05 | Phase 4 | Complete |
 | GRND-10 | Phase 4 | Complete |
-| VAL-03 | Phase 5 | Pending |
-| VAL-04 | Phase 5 | Pending |
-| API-01 | Phase 5 | Pending |
-| API-02 | Phase 5 | Pending |
-| API-03 | Phase 5 | Pending |
-| API-04 | Phase 5 | Pending |
-| API-05 | Phase 5 | Pending |
+| VAL-03 | Phase 5 | Complete |
+| VAL-04 | Phase 5 | Complete |
+| API-01 | Phase 5 | Complete |
+| API-02 | Phase 5 | Complete |
+| API-03 | Phase 5 | Complete |
+| API-04 | Phase 5 | Complete |
+| API-05 | Phase 5 | Complete |
 | MOB-01 | Phase 6 | Pending |
 | MOB-02 | Phase 6 | Pending |
 | MOB-03 | Phase 6 | Pending |

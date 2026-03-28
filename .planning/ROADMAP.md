@@ -20,7 +20,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 2: Percolation Solver** - Moroney 2015 PDE via MOL, V60 + Kalita + Espresso methods, channeling overlay (Lee 2023), VAL-02
 - [x] **Phase 3: Pressure Solver** - Moka Pot thermo-fluid ODE + AeroPress hybrid solver, phase-specific validation (completed 2026-03-27)
 - [ ] **Phase 4: Extended Outputs + Grinder Presets** - All 6 extended outputs across all methods, 1Zpresso + Baratza Encore presets
-- [ ] **Phase 5: Integration Tests + FastAPI Backend** - Cross-method fast/accurate tolerance suite, /simulate endpoint, deployment
+- [x] **Phase 5: Integration Tests + FastAPI Backend** - Cross-method fast/accurate tolerance suite, /simulate endpoint, deployment (completed 2026-03-28)
 - [ ] **Phase 6: Mobile Core Screens** - Expo/React Native input screens, simulation trigger, TDS/EY/SCA results
 - [ ] **Phase 7: Mobile Extended + Run History** - Extended output charts, saved runs, side-by-side comparison
 
@@ -98,7 +98,7 @@ Plans:
 
 Plans:
 - [x] 05-01: Cross-solver validation suite (fast vs accurate ±2% tolerance for all 6 methods, full pytest coverage)
-- [ ] 05-02: FastAPI app (/simulate, /health, input validation errors, CORS) + Koyeb deployment
+- [x] 05-02: FastAPI app (/simulate, /health, input validation errors, CORS) + Koyeb deployment
 
 ### Phase 6: Mobile Core Screens
 **Goal**: A user can select a brew method, enter parameters, run a simulation via the API, and see TDS/EY/SCA chart results on their phone
@@ -141,6 +141,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | 2. Percolation Solver | 0/2 | Not started | - |
 | 3. Pressure Solver | 2/2 | Complete   | 2026-03-27 |
 | 4. Extended Outputs + Grinder Presets | 1/2 | In Progress | - |
-| 5. Integration Tests + FastAPI Backend | 0/2 | Not started | - |
+| 5. Integration Tests + FastAPI Backend | 2/2 | Complete   | 2026-03-28 |
 | 6. Mobile Core Screens | 0/2 | Not started | - |
 | 7. Mobile Extended + Run History | 0/2 | Not started | - |

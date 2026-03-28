@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Ready to plan
-stopped_at: Completed 05-integration-tests-fastapi-backend/05-01-PLAN.md
-last_updated: "2026-03-27T23:54:24.201Z"
+stopped_at: Completed 05-integration-tests-fastapi-backend/05-02-PLAN.md
+last_updated: "2026-03-28T00:09:07.928Z"
 progress:
   total_phases: 7
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 11
-  completed_plans: 10
+  completed_plans: 11
 ---
 
 # Project State
@@ -87,6 +87,8 @@ Recent decisions affecting current work:
 - [Phase 04-extended-outputs-grinder-presets]: Extended output fields always Optional with None default for backward compatibility
 - [Phase 04]: Used pathlib relative to __file__ for portable grinder JSON path in tests
 - [Phase 05-integration-tests-fastapi-backend]: Espresso fast mode test uses brew_time=90s: percolation TAU2_PERC=50s is V60-calibrated; at 25s the biexponential hasn't converged, giving 5.6pp gap vs accurate mode. Deferred: espresso-specific tau2 calibration.
+- [Phase 05-integration-tests-fastapi-backend]: BrewMethod enum required on SimulationInput; dispatch needs it and an unrouted request is not meaningful
+- [Phase 05-integration-tests-fastapi-backend]: Method modules imported at top level in api.py so scipy import cost is paid once at startup
 
 ### Pending Todos
 
@@ -100,6 +102,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-27T23:54:12.394Z
-Stopped at: Completed 05-integration-tests-fastapi-backend/05-01-PLAN.md
+Last session: 2026-03-28T00:09:03.131Z
+Stopped at: Completed 05-integration-tests-fastapi-backend/05-02-PLAN.md
 Resume file: None
