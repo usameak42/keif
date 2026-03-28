@@ -84,10 +84,10 @@
 
 ### Mobile — Run History
 
-- [ ] **MOB-13**: User can save a simulation run with a custom name
-- [ ] **MOB-14**: User can view list of saved runs
-- [ ] **MOB-15**: User can compare two saved runs side-by-side (TDS%, EY%, extraction curves overlaid, SCA chart with both points, flavor axis comparison)
-- [ ] **MOB-16**: User is prompted to archive when saved runs exceed 100 (local SQLite via expo-sqlite)
+- [x] **MOB-13**: User can save a simulation run with a custom name
+- [x] **MOB-14**: User can view list of saved runs
+- [x] **MOB-15**: User can compare two saved runs side-by-side (TDS%, EY%, extraction curves overlaid, SCA chart with both points, flavor axis comparison)
+- [x] **MOB-16**: User is prompted to archive when saved runs exceed 100 (local SQLite via expo-sqlite)
 
 ## v2 Requirements
 
@@ -194,10 +194,10 @@
 | MOB-10 | Phase 7 | Complete |
 | MOB-11 | Phase 7 | Complete |
 | MOB-12 | Phase 7 | Complete |
-| MOB-13 | Phase 7 | Pending |
-| MOB-14 | Phase 7 | Pending |
-| MOB-15 | Phase 7 | Pending |
-| MOB-16 | Phase 7 | Pending |
+| MOB-13 | Phase 7 | Complete |
+| MOB-14 | Phase 7 | Complete |
+| MOB-15 | Phase 7 | Complete |
+| MOB-16 | Phase 7 | Complete |
 
 **Coverage:**
 - v1 requirements: 57 total
