@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: Ready to plan
-stopped_at: Phase 6 UI-SPEC approved
-last_updated: "2026-03-28T02:33:34.472Z"
+status: Ready to execute
+stopped_at: Completed 06-01-PLAN.md
+last_updated: "2026-03-28T11:24:36.739Z"
 progress:
   total_phases: 7
   completed_phases: 5
-  total_plans: 11
-  completed_plans: 11
+  total_plans: 14
+  completed_plans: 12
 ---
 
 # Project State
@@ -19,12 +19,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-26)
 
 **Core value:** Physically accurate, real-time coffee extraction simulation -- predict TDS% and EY% from grinder settings, dose, and water parameters before brewing, across all 6 major brew methods.
-**Current focus:** Phase 04 — extended-outputs-grinder-presets
+**Current focus:** Phase 06 — mobile-core-screens
 
 ## Current Position
 
-Phase: 5
-Plan: Not started
+Phase: 06 (mobile-core-screens) — EXECUTING
+Plan: 2 of 3
 
 ## Performance Metrics
 
@@ -56,6 +56,7 @@ Plan: Not started
 | Phase 04-extended-outputs-grinder-presets P01 | 5 | 7 tasks | 11 files |
 | Phase 04 P02 | 3 | 5 tasks | 4 files |
 | Phase 05-integration-tests-fastapi-backend P01 | 15min | 2 tasks | 2 files |
+| Phase 06 P01 | 9 | 2 tasks | 24 files |
 
 ## Accumulated Context
 
@@ -89,6 +90,7 @@ Recent decisions affecting current work:
 - [Phase 05-integration-tests-fastapi-backend]: Espresso fast mode test uses brew_time=90s: percolation TAU2_PERC=50s is V60-calibrated; at 25s the biexponential hasn't converged, giving 5.6pp gap vs accurate mode. Deferred: espresso-specific tau2 calibration.
 - [Phase 05-integration-tests-fastapi-backend]: BrewMethod enum required on SimulationInput; dispatch needs it and an unrouted request is not meaningful
 - [Phase 05-integration-tests-fastapi-backend]: Method modules imported at top level in api.py so scipy import cost is paid once at startup
+- [Phase 06]: Jest 29 over Jest 30: jest-expo incompatible with Jest 30 module scoping
 
 ### Pending Todos
 
@@ -102,6 +104,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-28T02:33:34.462Z
-Stopped at: Phase 6 UI-SPEC approved
-Resume file: .planning/phases/06-mobile-core-screens/06-UI-SPEC.md
+Last session: 2026-03-28T11:24:36.735Z
+Stopped at: Completed 06-01-PLAN.md
+Resume file: None

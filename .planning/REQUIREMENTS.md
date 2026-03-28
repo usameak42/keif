@@ -66,10 +66,10 @@
 
 ### Mobile — Core Screens
 
-- [ ] **MOB-01**: User can select brew method from 6 options (French Press, V60, Kalita, Espresso, Moka Pot, AeroPress)
+- [x] **MOB-01**: User can select brew method from 6 options (French Press, V60, Kalita, Espresso, Moka Pot, AeroPress)
 - [ ] **MOB-02**: User can select grinder from preset database OR enter grind size manually in μm
 - [ ] **MOB-03**: User can enter brew parameters: coffee dose (g), water amount (g), water temperature (°C), brew time (s)
-- [ ] **MOB-04**: User can select roast level (light / medium / dark)
+- [x] **MOB-04**: User can select roast level (light / medium / dark)
 - [ ] **MOB-05**: User can toggle fast mode vs accurate mode before running simulation
 - [ ] **MOB-06**: User can run simulation and see loading state while accurate mode computes
 - [ ] **MOB-07**: User can see TDS% and EY% as primary result callouts
@@ -182,10 +182,10 @@
 | API-03 | Phase 5 | Complete |
 | API-04 | Phase 5 | Complete |
 | API-05 | Phase 5 | Complete |
-| MOB-01 | Phase 6 | Pending |
+| MOB-01 | Phase 6 | Complete |
 | MOB-02 | Phase 6 | Pending |
 | MOB-03 | Phase 6 | Pending |
-| MOB-04 | Phase 6 | Pending |
+| MOB-04 | Phase 6 | Complete |
 | MOB-05 | Phase 6 | Pending |
 | MOB-06 | Phase 6 | Pending |
 | MOB-07 | Phase 6 | Pending |

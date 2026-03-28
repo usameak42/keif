@@ -113,7 +113,7 @@ Plans:
 **Plans:** 3 plans
 
 Plans:
-- [ ] 06-01-PLAN.md — Expo project scaffold + design tokens + types + root layout + Wave 0 jest infrastructure
+- [x] 06-01-PLAN.md — Expo project scaffold + design tokens + types + root layout + Wave 0 jest infrastructure
 - [ ] 06-02-PLAN.md — Rotary Selector screen + Brew Dashboard screen + 9 components
 - [ ] 06-03-PLAN.md — API integration + loading states + results screen (TDS/EY callouts + SCA chart)
 
