@@ -77,10 +77,10 @@
 
 ### Mobile — Extended Output Screens
 
-- [ ] **MOB-09**: User can see time-resolved extraction curve chart (EY vs time, Victory Native)
-- [ ] **MOB-10**: User can see particle size distribution curve chart (Victory Native)
-- [ ] **MOB-11**: User can see flavor axis bar chart (sour / sweet / bitter, Victory Native)
-- [ ] **MOB-12**: User can see all extended outputs: channeling risk score, CO2 degassing estimate, water temp decay, extraction uniformity index, caffeine estimate
+- [x] **MOB-09**: User can see time-resolved extraction curve chart (EY vs time, Victory Native)
+- [x] **MOB-10**: User can see particle size distribution curve chart (Victory Native)
+- [x] **MOB-11**: User can see flavor axis bar chart (sour / sweet / bitter, Victory Native)
+- [x] **MOB-12**: User can see all extended outputs: channeling risk score, CO2 degassing estimate, water temp decay, extraction uniformity index, caffeine estimate
 
 ### Mobile — Run History
 
@@ -190,10 +190,10 @@
 | MOB-06 | Phase 6 | Complete |
 | MOB-07 | Phase 6 | Complete |
 | MOB-08 | Phase 6 | Complete |
-| MOB-09 | Phase 7 | Pending |
-| MOB-10 | Phase 7 | Pending |
-| MOB-11 | Phase 7 | Pending |
-| MOB-12 | Phase 7 | Pending |
+| MOB-09 | Phase 7 | Complete |
+| MOB-10 | Phase 7 | Complete |
+| MOB-11 | Phase 7 | Complete |
+| MOB-12 | Phase 7 | Complete |
 | MOB-13 | Phase 7 | Pending |
 | MOB-14 | Phase 7 | Pending |
 | MOB-15 | Phase 7 | Pending |

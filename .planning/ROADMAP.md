@@ -127,10 +127,11 @@ Plans:
   3. User can save a simulation run with a custom name, view saved runs list, and compare two runs side-by-side (overlaid extraction curves, both SCA chart points, flavor comparison)
   4. App prompts to archive when saved runs exceed 100 (SQLite via expo-sqlite)
 **UI hint**: yes
+**Plans:** 2 plans
 
 Plans:
-- [ ] 07-01: Extended output screens (extraction curve, PSD, flavor axis charts + extended detail view)
-- [ ] 07-02: Run history (save/name/list/compare side-by-side, SQLite storage, archive prompt at 100)
+- [x] 07-01-PLAN.md — SimulationResultContext + extended types + results.tsx CTAs + Extended Output screen (extraction curve, PSD, flavor bars, detail cards)
+- [ ] 07-02-PLAN.md — expo-sqlite hooks (useRunHistory, useRunComparison) + Run History screen + Compare View screen
 
 ## Progress
 
