@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
-import { View, Text, ScrollView, StyleSheet, useWindowDimensions } from "react-native";
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, useWindowDimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { Colors } from "../constants/colors";
 import { Typography } from "../constants/typography";
 import { Spacing } from "../constants/spacing";
 import { useSimulation } from "../hooks/useSimulation";
+import { useSimulationResult } from "../context/SimulationResultContext";
 import { ResultCalloutCard } from "../components/ResultCalloutCard";
 import { ZoneVerdict } from "../components/ZoneVerdict";
 import { SCAChart } from "../components/SCAChart";
@@ -19,13 +20,23 @@ export default function ResultsScreen() {
   const router = useRouter();
   const { width: screenWidth } = useWindowDimensions();
   const { simulate, loading, result, error } = useSimulation();
+  const { setCurrentInput, setCurrentOutput, setCurrentRunSaved } = useSimulationResult();
 
   const input: SimulationInput = JSON.parse(params.input as string);
 
   useEffect(() => {
+    setCurrentRunSaved(false);
     simulate(input);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (result) {
+      setCurrentInput(input);
+      setCurrentOutput(result);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [result]);
 
   const cardWidth = (screenWidth - Spacing.xl * 2 - Spacing.md) / 2;
   const chartSkeletonWidth = screenWidth - Spacing.xl * 2;
@@ -87,6 +98,25 @@ export default function ResultsScreen() {
                 Chart not available for this result range
               </Text>
             )}
+
+            <View style={styles.ctaGroup}>
+              <TouchableOpacity
+                style={styles.ctaPrimary}
+                onPress={() => router.push("/extended")}
+                accessibilityRole="button"
+                accessibilityLabel="View Details"
+              >
+                <Text style={styles.ctaPrimaryText}>View Details</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.ctaSecondary}
+                onPress={() => router.push("/history")}
+                accessibilityRole="button"
+                accessibilityLabel="Save & History"
+              >
+                <Text style={styles.ctaSecondaryText}>Save & History</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         )}
       </ScrollView>
@@ -140,5 +170,39 @@ const styles = StyleSheet.create({
     color: Colors.textSecondary,
     textAlign: "center",
     marginTop: Spacing.lg,
+  },
+  ctaGroup: {
+    marginTop: Spacing.md,
+    gap: Spacing.sm,
+  },
+  ctaPrimary: {
+    height: 44,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: Colors.accent,
+    backgroundColor: "transparent",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  ctaPrimaryText: {
+    fontSize: 16,
+    fontFamily: "Inter_600SemiBold",
+    lineHeight: 24,
+    color: Colors.accent,
+  },
+  ctaSecondary: {
+    height: 44,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: Colors.borderSubtle,
+    backgroundColor: "transparent",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  ctaSecondaryText: {
+    fontSize: 16,
+    fontFamily: "Inter_400Regular",
+    lineHeight: 24,
+    color: Colors.textSecondary,
   },
 });
