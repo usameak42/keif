@@ -16,7 +16,7 @@ export interface SimulationInput {
   grind_size: number | null;
 }
 
-// Mirrors brewos/models/outputs.py SimulationOutput (fields used in Phase 6)
+// Mirrors brewos/models/outputs.py SimulationOutput
 export interface SCAPosition {
   tds_percent: number;
   ey_percent: number;
@@ -24,12 +24,43 @@ export interface SCAPosition {
   on_chart: boolean;
 }
 
+export interface ExtractionPoint {
+  t: number;       // seconds
+  ey: number;      // extraction yield %
+}
+
+export interface PSDPoint {
+  size_um: number;  // particle size um
+  fraction: number; // volume fraction 0-1
+}
+
+export interface FlavorProfile {
+  sour: number;     // 0-1
+  sweet: number;    // 0-1
+  bitter: number;   // 0-1
+}
+
+export interface TempPoint {
+  t: number;        // seconds
+  temp_c: number;   // degrees C
+}
+
 export interface SimulationOutput {
   tds_percent: number;
   extraction_yield: number;
+  extraction_curve: ExtractionPoint[];
+  psd_curve: PSDPoint[];
+  flavor_profile: FlavorProfile;
+  brew_ratio: number;
+  brew_ratio_recommendation: string;
+  warnings: string[];
   mode_used: string;
   sca_position: SCAPosition | null;
-  warnings: string[];
+  channeling_risk: number | null;
+  extraction_uniformity_index: number | null;
+  temperature_curve: TempPoint[] | null;
+  puck_resistance: number | null;
+  caffeine_mg_per_ml: number | null;
 }
 
 export interface ApiError {

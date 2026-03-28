@@ -11,6 +11,7 @@ import type { ParamListBase } from "@react-navigation/native";
 import { useFonts, Inter_400Regular, Inter_600SemiBold } from "@expo-google-fonts/inter";
 import { StatusBar } from "expo-status-bar";
 import { Colors } from "../constants/colors";
+import { SimulationResultProvider } from "../context/SimulationResultContext";
 
 const { Navigator } = createStackNavigator();
 const JsStack = withLayoutContext<
@@ -68,7 +69,7 @@ export default function RootLayout() {
   }
 
   return (
-    <>
+    <SimulationResultProvider>
       <StatusBar style="light" />
       <JsStack
         screenOptions={{
@@ -88,7 +89,7 @@ export default function RootLayout() {
           gestureEnabled: true,
         }}
       />
-    </>
+    </SimulationResultProvider>
   );
 }
 
