@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: Ready to execute
-stopped_at: Completed 06-01-PLAN.md
-last_updated: "2026-03-28T11:24:36.739Z"
+stopped_at: Completed 06-02-PLAN.md
+last_updated: "2026-03-28T11:30:34.965Z"
 progress:
   total_phases: 7
   completed_phases: 5
   total_plans: 14
-  completed_plans: 12
+  completed_plans: 13
 ---
 
 # Project State
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-03-26)
 ## Current Position
 
 Phase: 06 (mobile-core-screens) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 
 ## Performance Metrics
 
@@ -57,6 +57,7 @@ Plan: 2 of 3
 | Phase 04 P02 | 3 | 5 tasks | 4 files |
 | Phase 05-integration-tests-fastapi-backend P01 | 15min | 2 tasks | 2 files |
 | Phase 06 P01 | 9 | 2 tasks | 24 files |
+| Phase 06 P02 | 4 | 2 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -91,6 +92,8 @@ Recent decisions affecting current work:
 - [Phase 05-integration-tests-fastapi-backend]: BrewMethod enum required on SimulationInput; dispatch needs it and an unrouted request is not meaningful
 - [Phase 05-integration-tests-fastapi-backend]: Method modules imported at top level in api.py so scipy import cost is paid once at startup
 - [Phase 06]: Jest 29 over Jest 30: jest-expo incompatible with Jest 30 module scoping
+- [Phase 06]: GrinderDropdown uses Modal overlay instead of inline expand to avoid layout shift in ScrollView
+- [Phase 06]: RotarySelector uses absolute positioning with animated translateY for smooth drum effect
 
 ### Pending Todos
 
@@ -104,6 +107,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-28T11:24:36.735Z
-Stopped at: Completed 06-01-PLAN.md
+Last session: 2026-03-28T11:30:34.962Z
+Stopped at: Completed 06-02-PLAN.md
 Resume file: None

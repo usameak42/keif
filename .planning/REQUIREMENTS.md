@@ -67,10 +67,10 @@
 ### Mobile — Core Screens
 
 - [x] **MOB-01**: User can select brew method from 6 options (French Press, V60, Kalita, Espresso, Moka Pot, AeroPress)
-- [ ] **MOB-02**: User can select grinder from preset database OR enter grind size manually in μm
-- [ ] **MOB-03**: User can enter brew parameters: coffee dose (g), water amount (g), water temperature (°C), brew time (s)
+- [x] **MOB-02**: User can select grinder from preset database OR enter grind size manually in μm
+- [x] **MOB-03**: User can enter brew parameters: coffee dose (g), water amount (g), water temperature (°C), brew time (s)
 - [x] **MOB-04**: User can select roast level (light / medium / dark)
-- [ ] **MOB-05**: User can toggle fast mode vs accurate mode before running simulation
+- [x] **MOB-05**: User can toggle fast mode vs accurate mode before running simulation
 - [ ] **MOB-06**: User can run simulation and see loading state while accurate mode computes
 - [ ] **MOB-07**: User can see TDS% and EY% as primary result callouts
 - [ ] **MOB-08**: User can see SCA brew chart with their result plotted against ideal zone (Victory Native)
@@ -183,10 +183,10 @@
 | API-04 | Phase 5 | Complete |
 | API-05 | Phase 5 | Complete |
 | MOB-01 | Phase 6 | Complete |
-| MOB-02 | Phase 6 | Pending |
-| MOB-03 | Phase 6 | Pending |
+| MOB-02 | Phase 6 | Complete |
+| MOB-03 | Phase 6 | Complete |
 | MOB-04 | Phase 6 | Complete |
-| MOB-05 | Phase 6 | Pending |
+| MOB-05 | Phase 6 | Complete |
 | MOB-06 | Phase 6 | Pending |
 | MOB-07 | Phase 6 | Pending |
 | MOB-08 | Phase 6 | Pending |
