@@ -70,7 +70,7 @@ Declared values (must be multiples of 4):
 
 Exceptions:
 - Touch targets for rotary selector items: 48x48px minimum (larger than standard 44px due to rotary gesture area).
-- Simulate button height: 52px (prominent CTA).
+- Run Simulation button height: 52px (prominent CTA).
 
 ---
 
@@ -78,12 +78,12 @@ Exceptions:
 
 | Role | Size | Weight | Line Height | Usage |
 |------|------|--------|-------------|-------|
-| Body | 16px | 400 (Regular) | 1.5 (24px) | Parameter labels, descriptions, warnings |
-| Label | 14px | 500 (Medium) | 1.4 (20px) | Form field labels, section headers, mode toggle labels |
-| Heading | 24px | 600 (SemiBold) | 1.2 (29px) | Screen titles, brew method name on Dashboard |
-| Display | 36px | 700 (Bold) | 1.1 (40px) | TDS% and EY% primary callout numbers on Results |
+| Label | 14px | 400 (Regular) | 1.4 (20px) | Form field labels, section headers, mode toggle labels, axis labels, accurate mode badge, select prompt |
+| Body | 16px | 400 (Regular) | 1.5 (24px) | Parameter labels, descriptions, warnings, zone verdict text, click spinner value, rotary unselected items |
+| Heading | 24px | 600 (SemiBold) | 1.2 (29px) | Screen titles, brew method name on Dashboard, rotary selected item |
+| Display | 36px | 600 (SemiBold) | 1.1 (40px) | TDS% and EY% primary callout numbers on Results |
 
-Note: Only 2 distinct weights used in practice -- Regular (400) for body text, SemiBold (600) for headings and emphasis. Medium (500) on labels is a font-level distinction but counts as the "regular" visual tier. Bold (700) is reserved exclusively for the two numeric callouts on Results.
+Exactly 4 sizes. Exactly 2 weights: 400 (Regular) and 600 (SemiBold).
 
 ---
 
@@ -98,7 +98,7 @@ Note: Only 2 distinct weights used in practice -- Regular (400) for body text, S
 
 ### Accent Reserved For
 
-- Simulate button background
+- Run Simulation button background
 - Active/selected brew method highlight on rotary selector
 - SCA ideal zone fill on the chart (at 20% opacity)
 - Zone verdict "Ideal" text color
@@ -138,7 +138,7 @@ Note: Only 2 distinct weights used in practice -- Regular (400) for body text, S
 **Rotary Component Spec:**
 - Visible items: 3 at a time (selected + 1 above + 1 below).
 - Selected item: 24px SemiBold, #C8A26E (accent).
-- Unselected items: 20px Regular, #808080, opacity 0.6.
+- Unselected items: 16px Regular, #808080, opacity 0.6.
 - Snap behavior: spring animation to nearest item on release. Damping: 0.7, stiffness: 150.
 - Each item is text-only (method name). No icons in v1.
 
@@ -150,7 +150,7 @@ Note: Only 2 distinct weights used in practice -- Regular (400) for body text, S
 - Moka Pot
 - AeroPress
 
-**Bottom of screen:** Subtle downward arrow or "Select" prompt in text-secondary, 14px Medium.
+**Bottom of screen:** Subtle downward arrow or "Select" prompt in text-secondary, 14px Regular.
 
 **Interaction:** Tap on selected item or swipe to confirm advances to Brew Dashboard with filtration-forward transition.
 
@@ -160,7 +160,7 @@ Note: Only 2 distinct weights used in practice -- Regular (400) for body text, S
 - Single scrollable screen.
 - Horizontal padding: 32px (xl token).
 - Top: Heading showing selected brew method name (24px SemiBold, text-primary).
-- Below heading: Back touch target ("Back" label, text-secondary, 14px Medium, 44x44px touch area) aligned left.
+- Below heading: Back touch target ("Back" label, text-secondary, 14px Regular, 44x44px touch area) aligned left.
 - Parameter form fills the rest of the scroll.
 
 **Parameter Order (top to bottom, per D-07):**
@@ -175,7 +175,7 @@ Note: Only 2 distinct weights used in practice -- Regular (400) for body text, S
 | 6 | Time | Numeric input | Suffix: "s". Default: 240. Numeric keyboard. |
 | 7 | Roast Level | Segmented control | 3 segments: Light / Medium / Dark. Default: Medium. |
 | 8 | Mode | Segmented control | 2 segments: Fast / Accurate. Default: Fast. |
-| 9 | Simulate | Button | Full-width, 52px height, accent background (#C8A26E), text "#0D0D0D" (dark on accent), 16px SemiBold. Label: "Simulate". |
+| 9 | Run Simulation | Button | Full-width, 52px height, accent background (#C8A26E), text "#0D0D0D" (dark on accent), 16px SemiBold. Label: "Run Simulation". |
 
 **Form Field Style:**
 - Background: #242424 (surface-field).
@@ -184,7 +184,7 @@ Note: Only 2 distinct weights used in practice -- Regular (400) for body text, S
 - Height: 48px for single-line inputs.
 - Text: 16px Regular, #F0F0F0.
 - Placeholder: 16px Regular, #808080.
-- Label above field: 14px Medium, #808080, margin-bottom 8px.
+- Label above field: 14px Regular, #808080, margin-bottom 8px.
 - Gap between fields: 16px (md token).
 
 **Segmented Control Style:**
@@ -196,8 +196,8 @@ Note: Only 2 distinct weights used in practice -- Regular (400) for body text, S
 - Segment transition: 200ms ease-out background color.
 
 **Click Spinner Style:**
-- Central value: 20px SemiBold, #F0F0F0, centered.
-- -/+ buttons: 44x44px touch targets, #333333 background circles, #F0F0F0 text, 20px.
+- Central value: 16px SemiBold, #F0F0F0, centered.
+- -/+ buttons: 44x44px touch targets, #333333 background circles, #F0F0F0 text, 16px.
 - Unit label: 14px Regular, #808080, right of value.
 
 **Grinder Dropdown Style:**
@@ -209,20 +209,20 @@ Note: Only 2 distinct weights used in practice -- Regular (400) for body text, S
 **Layout:**
 - Scrollable screen, dark background.
 - Horizontal padding: 32px (xl token).
-- Top-left: Back/tweak touch target ("Tweak" label, text-secondary, 14px Medium, 44x44px).
+- Top-left: Back/tweak touch target ("Tweak" label, text-secondary, 14px Regular, 44x44px).
 
 **Upper Portion -- Callouts (D-12, D-13):**
 - Two primary callout cards side by side, centered horizontally.
 - Left card: TDS%. Right card: EY%.
 - Each card: #1A1A1A background, border-radius 16px, padding 24px.
-- Number: 36px Bold (#F0F0F0). Suffix: 16px Regular (#808080) showing "%".
-- Label below number: 14px Medium, #808080. "TDS" or "Extraction Yield".
+- Number: 36px SemiBold (#F0F0F0). Suffix: 16px Regular (#808080) showing "%".
+- Label below number: 14px Regular, #808080. "TDS" or "Extraction Yield".
 - Below the two cards: Zone verdict line.
-- Zone verdict: 20px SemiBold, color mapped to zone:
+- Zone verdict: 16px SemiBold, color mapped to zone:
   - "Ideal" -> #C8A26E (accent) with checkmark icon
   - "Under-extracted" -> #5B9BD5
   - "Over-extracted" -> #D94F4F
-- If accurate mode: small badge below verdict, 12px Medium, #808080, text "Detailed simulation" (D-15).
+- If accurate mode: small badge below verdict, 14px Regular, #808080, text "Detailed simulation" (D-15).
 
 **Lower Portion -- SCA Brew Chart (D-14):**
 - Victory Native chart component.
@@ -230,7 +230,7 @@ Note: Only 2 distinct weights used in practice -- Regular (400) for body text, S
 - X-axis: EY% (range 14-26%). Y-axis: TDS% (range 0.8-1.6% for filter; 6-12% for espresso).
 - Ideal zone: filled rectangle, #C8A26E at 20% opacity, border #C8A26E at 40% opacity.
 - Result point: filled circle, 10px diameter, #C8A26E (accent), with a subtle glow/shadow.
-- Axis labels: 12px Regular, #808080.
+- Axis labels: 14px Regular, #808080.
 - Axis ticks: #333333.
 - Grid lines: #1A1A1A (barely visible, same as card -- effectively hidden. Chart relies on axis ticks).
 
@@ -254,13 +254,13 @@ Note: Only 2 distinct weights used in practice -- Regular (400) for body text, S
 
 | Element | Copy |
 |---------|------|
-| Primary CTA | "Simulate" |
+| Primary CTA | "Run Simulation" |
 | Rotary selector prompt | "Choose your brew method" (heading, 24px SemiBold, centered above rotary) |
-| Rotary confirm hint | "Swipe to browse, tap to select" (14px Medium, #808080, below rotary) |
+| Rotary confirm hint | "Swipe to browse, tap to select" (14px Regular, #808080, below rotary) |
 | Dashboard heading | "{Method Name}" (dynamic, e.g. "French Press") |
 | Empty state (Results) | Not applicable -- Results screen is only reached after simulation trigger |
 | Loading state heading | "Running detailed simulation..." |
-| Backend warming notice | "Warming up the engine..." (shown if /health fails on launch, 14px Medium, #808080, toast or banner at top) |
+| Backend warming notice | "Warming up the engine..." (shown if /health fails on launch, 14px Regular, #808080, toast or banner at top) |
 | Error state heading | "Simulation Failed" |
 | Error state body (422) | "{validation error from API}" (pass through human-readable message) |
 | Error state body (network) | "Could not reach the server. Check your connection and try again." |
@@ -288,7 +288,7 @@ Destructive actions: None in this phase. No delete, no destructive confirmation 
 | ClickSpinner | Dashboard | -/+ stepper for grinder setting (integer). |
 | SegmentedControl | Dashboard | Reusable for roast level (3 segments) and mode (2 segments). |
 | GrinderDropdown | Dashboard | Bottom sheet or modal picker for grinder selection. |
-| SimulateButton | Dashboard | Full-width accent CTA. |
+| SimulateButton | Dashboard | Full-width accent CTA. Label: "Run Simulation". |
 | ResultCalloutCard | Results | TDS% or EY% display card with label. |
 | ZoneVerdict | Results | Colored text + optional icon for SCA zone classification. |
 | SCAChart | Results | Victory Native chart: scatter point + zone rectangle overlay. |
@@ -309,7 +309,7 @@ Stored in `app.config.ts` or `.env` as `EXPO_PUBLIC_API_URL`. Never hardcoded in
 | Endpoint | When | Request | Response |
 |----------|------|---------|----------|
 | GET /health | App launch | -- | 200 = ready, timeout/error = show warming banner |
-| POST /simulate | User taps "Simulate" | SimulationInput JSON | SimulationOutput JSON (200) or ValidationError (422) |
+| POST /simulate | User taps "Run Simulation" | SimulationInput JSON | SimulationOutput JSON (200) or ValidationError (422) |
 
 ### SimulationInput Field Mapping (app form -> API)
 
