@@ -1,0 +1,16 @@
+export const Colors = {
+  dominant: "#16100D",
+  card: "#251D18",
+  accent: "#D97A26",
+  accentActive: "#EB9E47",
+  destructive: "#D94F4F",
+  textPrimary: "#EAE2D7",
+  textSecondary: "#808080",
+  surfaceField: "#28221F",
+  borderSubtle: "#3B322B",
+  zoneUnder: "#5B9BD5",
+  zoneOver: "#D94F4F",
+  zoneIdeal: "#D97A26",
+  spinnerTrack: "#3B322B",
+  spinnerActive: "#D97A26",
+} as const;
