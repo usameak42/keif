@@ -7,10 +7,13 @@ import { Typography } from "../constants/typography";
 import { Spacing } from "../constants/spacing";
 import { BREW_METHODS } from "../constants/brewMethods";
 import { RotarySelector } from "../components/RotarySelector";
+import { useHealthCheck } from "../hooks/useHealthCheck";
+import { WarmupBanner } from "../components/WarmupBanner";
 
 export default function RotarySelectorScreen() {
   const router = useRouter();
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const { backendReady } = useHealthCheck();
 
   const handleSelect = useCallback(
     (index: number) => {
@@ -25,6 +28,7 @@ export default function RotarySelectorScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
+      {!backendReady && <WarmupBanner />}
       <Text style={styles.heading}>Choose your brew method</Text>
 
       <View style={styles.selectorWrapper}>
