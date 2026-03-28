@@ -20,7 +20,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 2: Percolation Solver** - Moroney 2015 PDE via MOL, V60 + Kalita + Espresso methods, channeling overlay (Lee 2023), VAL-02
 - [x] **Phase 3: Pressure Solver** - Moka Pot thermo-fluid ODE + AeroPress hybrid solver, phase-specific validation (completed 2026-03-27)
 - [ ] **Phase 4: Extended Outputs + Grinder Presets** - All 6 extended outputs across all methods, 1Zpresso + Baratza Encore presets
-- [x] **Phase 5: Integration Tests + FastAPI Backend** - Cross-method fast/accurate tolerance suite, /simulate endpoint, deployment (completed 2026-03-28)
+- [x] **Phase 5: Integration Tests + FastAPI Backend** - Cross-method fast/accurate tolerance suite, /simulate endpoint, deployment (completed 2026-03-28)
 - [ ] **Phase 6: Mobile Core Screens** - Expo/React Native input screens, simulation trigger, TDS/EY/SCA results
 - [ ] **Phase 7: Mobile Extended + Run History** - Extended output charts, saved runs, side-by-side comparison
 
@@ -110,10 +110,12 @@ Plans:
   3. Results screen displays TDS% and EY% as primary callouts with SCA brew chart showing the result plotted against the ideal zone (Victory Native)
   4. App runs on both iOS simulator and Android emulator via Expo
 **UI hint**: yes
+**Plans:** 3 plans
 
 Plans:
-- [ ] 06-01: Expo project setup + brew method selection + parameter input screens
-- [ ] 06-02: API integration + loading states + results screen (TDS/EY callouts + SCA chart)
+- [ ] 06-01-PLAN.md — Expo project scaffold + design tokens + types + root layout + Wave 0 jest infrastructure
+- [ ] 06-02-PLAN.md — Rotary Selector screen + Brew Dashboard screen + 9 components
+- [ ] 06-03-PLAN.md — API integration + loading states + results screen (TDS/EY callouts + SCA chart)
 
 ### Phase 7: Mobile Extended + Run History
 **Goal**: Users can explore all extended outputs and save/compare simulation runs
@@ -142,5 +144,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | 3. Pressure Solver | 2/2 | Complete   | 2026-03-27 |
 | 4. Extended Outputs + Grinder Presets | 1/2 | In Progress | - |
 | 5. Integration Tests + FastAPI Backend | 2/2 | Complete   | 2026-03-28 |
-| 6. Mobile Core Screens | 0/2 | Not started | - |
+| 6. Mobile Core Screens | 0/3 | Not started | - |
 | 7. Mobile Extended + Run History | 0/2 | Not started | - |
