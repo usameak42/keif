@@ -37,9 +37,9 @@ Keif is a physics-based coffee extraction simulation engine delivered as a cross
 - [ ] Deployable to Koyeb
 
 **Mobile App (M4–M5)**
-- [ ] Expo/React Native input screens (brew method, grinder, dose, water, roast)
-- [ ] Simulation trigger → FastAPI → results display
-- [ ] Core outputs: TDS%, EY%, SCA brew chart (Victory Native)
+- [x] Expo/React Native input screens (brew method, grinder, dose, water, roast) — Validated in Phase 06: mobile-core-screens
+- [x] Simulation trigger → FastAPI → results display — Validated in Phase 06 (useSimulation POST /simulate, useHealthCheck GET /health)
+- [x] Core outputs: TDS%, EY%, SCA brew chart (Victory Native) — Validated in Phase 06 (CartesianChart + SkiaRect zone overlay)
 - [ ] Extended output screens: extraction curve, flavor axis, PSD curve
 - [ ] Run history: save/name/compare simulations (SQLite via expo-sqlite, max 100 runs)
 
@@ -63,6 +63,8 @@ Keif is a physics-based coffee extraction simulation engine delivered as a cross
 **Phase 02 complete (2026-03-27):** Percolation solver (V60, Kalita Wave, Espresso) fully implemented. Both modes working: accurate mode (Moroney 2015 MOL, 30 nodes, Radau, EY=20.000% — Batali 2020 validation passes), fast mode (Maille 2021 biexponential, 0.185ms). Lee 2023 channeling overlay live for espresso (risk=0.434 vs pour-over 0.023). Method distinction confirmed: V60=20.0%, Kalita=19.5%, Espresso=20.5%. Shared output_helpers.py eliminates duplication. 64 tests passing.
 
 **Phase 03 complete (2026-03-27):** Pressure and hybrid solvers implemented — Moka Pot (6-ODE Clausius-Clapeyron steam + Moroney extraction, EY=18% accurate, <1ms fast) and AeroPress (immersion.solve_accurate/fast steep → 1-ODE Darcy push, hybrid EY exceeds steep-only by ≥1%). All 6 brew methods × 2 modes verified via 18-test parametrized smoke suite. 98 tests passing, zero regressions.
+
+**Phase 06 complete (2026-03-28):** Mobile core screens delivered. Expo/React Native app at `keif-mobile/` with 3-screen flow: RotarySelector (animated drum picker, 6 methods), Brew Dashboard (9 form elements + GrinderDropdown), Results (3 states: shimmer/error/success). Design tokens, TypeScript simulation types, API hooks (useSimulation POST /simulate, useHealthCheck GET /health), SCA brew chart with Victory Native + Skia zone overlay. 7 Jest Wave 0 stubs passing. Requirements MOB-01–MOB-08 all closed.
 
 **Phase 04 complete (2026-03-28):** Extended outputs and grinder presets. Added 5 new optional fields to SimulationOutput (EUI, temperature_curve, sca_position, puck_resistance, caffeine_mg_per_ml) with helpers in output_helpers.py. All 6 solvers wire extended fields; percolation accurate mode computes EUI from real spatial ODE variance; espresso computes puck_resistance via Kozeny-Carman; moka_pot uses k_vessel=0.0 for isothermal flat curve. Added 1Zpresso J-Max (90-click) and Baratza Encore (40-setting) grinder presets. Performance: AeroPress fast path optimised with _biexponential_steep helper (< 1ms). 164 tests passing, 7 requirements (OUT-07, OUT-10, OUT-11, OUT-12, OUT-13, GRND-05, GRND-10) closed.
 
