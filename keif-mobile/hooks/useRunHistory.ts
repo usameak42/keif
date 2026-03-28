@@ -1,5 +1,6 @@
-import * as SQLite from "expo-sqlite";
-import { useCallback, useEffect, useRef, useState } from "react";
+import * as SQLite from "expo-sqlite/legacy";
+import type { SQLTransaction, SQLResultSet, SQLError } from "expo-sqlite/legacy";
+import { useCallback, useEffect, useState } from "react";
 import type { SimulationInput, SimulationOutput, BrewMethod } from "../types/simulation";
 
 export interface SavedRun {
@@ -33,95 +34,122 @@ const CREATE_TABLE_SQL = `
   )
 `;
 
+const db = SQLite.openDatabase("keif-runs.db");
+
 export function useRunHistory() {
-  const dbRef = useRef<SQLite.SQLiteDatabase | null>(null);
-  const initializedRef = useRef(false);
   const [runs, setRuns] = useState<SavedRun[]>([]);
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Initialize database
-  useEffect(() => {
-    (async () => {
-      try {
-        const db = await SQLite.openDatabaseAsync("keif-runs.db");
-        await db.execAsync(CREATE_TABLE_SQL);
-        dbRef.current = db;
-        initializedRef.current = true;
-        // Load initial data
-        const rows = await db.getAllAsync<SavedRun>(
-          "SELECT * FROM saved_runs WHERE archived = 0 ORDER BY created_at DESC"
-        );
-        setRuns(rows);
-        setCount(rows.length);
-        setLoading(false);
-      } catch (e) {
-        setError(`Database initialization failed: ${e instanceof Error ? e.message : String(e)}`);
-        setLoading(false);
-      }
-    })();
-  }, []);
-
-  const reload = useCallback(async () => {
-    if (!dbRef.current) return;
-    try {
-      const rows = await dbRef.current.getAllAsync<SavedRun>(
-        "SELECT * FROM saved_runs WHERE archived = 0 ORDER BY created_at DESC"
+  const reload = useCallback(() => {
+    db.transaction((tx: SQLTransaction) => {
+      tx.executeSql(
+        "SELECT * FROM saved_runs WHERE archived = 0 ORDER BY created_at DESC",
+        [],
+        (_tx: SQLTransaction, result: SQLResultSet) => {
+          const rows = result.rows._array as SavedRun[];
+          setRuns(rows);
+          setCount(rows.length);
+          setError(null);
+        },
+        (_tx: SQLTransaction, err: SQLError) => {
+          setError(`Failed to load runs: ${err.message}`);
+          return true;
+        },
       );
-      setRuns(rows);
-      setCount(rows.length);
-      setError(null);
-    } catch (e) {
-      setError(`Failed to load runs: ${e instanceof Error ? e.message : String(e)}`);
-    }
+    });
   }, []);
 
-  const save = useCallback(async (
+  // Initialize database: create table then load initial data
+  useEffect(() => {
+    db.transaction(
+      (tx: SQLTransaction) => {
+        tx.executeSql(CREATE_TABLE_SQL, [],
+          () => {},
+          () => true,
+        );
+      },
+      (err: SQLError) => {
+        setError(`Database initialization failed: ${err.message}`);
+        setLoading(false);
+      },
+      () => {
+        db.transaction((tx: SQLTransaction) => {
+          tx.executeSql(
+            "SELECT * FROM saved_runs WHERE archived = 0 ORDER BY created_at DESC",
+            [],
+            (_tx: SQLTransaction, result: SQLResultSet) => {
+              const rows = result.rows._array as SavedRun[];
+              setRuns(rows);
+              setCount(rows.length);
+              setLoading(false);
+            },
+            (_tx: SQLTransaction, err: SQLError) => {
+              setError(`Failed to load runs: ${err.message}`);
+              setLoading(false);
+              return true;
+            },
+          );
+        });
+      },
+    );
+  }, []);
+
+  const save = useCallback((
     name: string,
     input: SimulationInput,
     output: SimulationOutput,
-  ): Promise<number> => {
-    if (!dbRef.current) throw new Error("Database not initialized");
-    try {
-      const result = await dbRef.current.runAsync(
-        "INSERT INTO saved_runs (name, method, created_at, input_json, output_json, archived) VALUES (?, ?, ?, ?, ?, 0)",
-        name,
-        input.method,
-        new Date().toISOString(),
-        JSON.stringify(input),
-        JSON.stringify(output),
-      );
-      await reload();
-      return result.lastInsertRowId;
-    } catch (e) {
-      setError(`Failed to save run: ${e instanceof Error ? e.message : String(e)}`);
-      return -1;
-    }
+  ): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx: SQLTransaction) => {
+        tx.executeSql(
+          "INSERT INTO saved_runs (name, method, created_at, input_json, output_json, archived) VALUES (?, ?, ?, ?, ?, 0)",
+          [name, input.method, new Date().toISOString(), JSON.stringify(input), JSON.stringify(output)],
+          () => { reload(); resolve(); },
+          (_tx: SQLTransaction, err: SQLError) => {
+            setError(`Failed to save run: ${err.message}`);
+            reject(err);
+            return true;
+          },
+        );
+      });
+    });
   }, [reload]);
 
-  const deleteById = useCallback(async (id: number): Promise<void> => {
-    if (!dbRef.current) return;
-    try {
-      await dbRef.current.runAsync("DELETE FROM saved_runs WHERE id = ?", id);
-      await reload();
-    } catch (e) {
-      setError(`Failed to delete run: ${e instanceof Error ? e.message : String(e)}`);
-    }
+  const deleteById = useCallback((id: number): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx: SQLTransaction) => {
+        tx.executeSql(
+          "DELETE FROM saved_runs WHERE id = ?",
+          [id],
+          () => { reload(); resolve(); },
+          (_tx: SQLTransaction, err: SQLError) => {
+            setError(`Failed to delete run: ${err.message}`);
+            reject(err);
+            return true;
+          },
+        );
+      });
+    });
   }, [reload]);
 
-  const archiveOlderThan = useCallback(async (days: number): Promise<void> => {
-    if (!dbRef.current) return;
-    try {
-      const cutoff = new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString();
-      await dbRef.current.runAsync(
-        "UPDATE saved_runs SET archived = 1 WHERE created_at < ? AND archived = 0",
-        cutoff,
-      );
-      await reload();
-    } catch (e) {
-      setError(`Failed to archive runs: ${e instanceof Error ? e.message : String(e)}`);
-    }
+  const archiveOlderThan = useCallback((days: number): Promise<void> => {
+    const cutoff = new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString();
+    return new Promise((resolve, reject) => {
+      db.transaction((tx: SQLTransaction) => {
+        tx.executeSql(
+          "UPDATE saved_runs SET archived = 1 WHERE created_at < ? AND archived = 0",
+          [cutoff],
+          () => { reload(); resolve(); },
+          (_tx: SQLTransaction, err: SQLError) => {
+            setError(`Failed to archive runs: ${err.message}`);
+            reject(err);
+            return true;
+          },
+        );
+      });
+    });
   }, [reload]);
 
   return { runs, count, loading, error, save, deleteById, archiveOlderThan, reload };
