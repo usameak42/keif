@@ -1,0 +1,30 @@
+{
+  "model": "Comandante C40 MK4",
+  "type": "hand",
+  "burr": "N1 Nitro Blade",
+  "clicks_range": [1, 36],
+  "microns_per_click": 30,
+  "source": "honestcoffeeguide.com, Basic Barista grind chart, Coffee ad Astra 2023 PSD analysis",
+  "confidence": "medium",
+  "note": "Median sizes are approximate. PSD modeled as bimodal (fines + main peak). Fines fraction estimated from Coffee ad Astra.",
+  "settings": [
+    {"click": 5,  "median_um": 150,  "use": "espresso"},
+    {"click": 10, "median_um": 300,  "use": "moka_pot"},
+    {"click": 15, "median_um": 450,  "use": "aeropress"},
+    {"click": 18, "median_um": 540,  "use": "v60"},
+    {"click": 20, "median_um": 600,  "use": "kalita"},
+    {"click": 22, "median_um": 660,  "use": "v60_coarse"},
+    {"click": 25, "median_um": 750,  "use": "french_press"},
+    {"click": 28, "median_um": 840,  "use": "french_press_coarse"},
+    {"click": 30, "median_um": 900,  "use": "cold_brew"},
+    {"click": 36, "median_um": 1080, "use": "cupping"}
+  ],
+  "psd_model": {
+    "type": "bimodal_lognormal",
+    "fines_peak_um": 40,
+    "fines_sigma": 0.4,
+    "fines_fraction": 0.15,
+    "main_sigma": 0.35,
+    "note": "Main peak at median_um for the click setting. Fines peak fixed at 40um representing broken cell fragments."
+  }
+}

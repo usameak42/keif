@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+*.whl
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Obsidian
+.obsidian/
+
+# Plots in root (keep plots inside poc/outputs/)
+*.png
+
+# Local Claude Code config
+.claude/
+.mcp.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Mobile app
+keif-mobile/node_modules/
+keif-mobile/.expo/

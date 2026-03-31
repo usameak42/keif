@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "brewos-engine"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "scipy",
+    "numpy",
+    "pydantic>=2.0",
+    "fastapi>=0.115,<0.136",
+    "uvicorn>=0.29",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "httpx"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["brewos*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

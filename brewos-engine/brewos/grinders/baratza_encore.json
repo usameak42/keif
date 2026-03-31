@@ -1,0 +1,29 @@
+{
+  "model": "Baratza Encore",
+  "type": "electric",
+  "burr": "40mm conical steel",
+  "clicks_range": [1, 40],
+  "microns_per_click": 23,
+  "source": "Baratza official documentation, community measurements (coffeeadhoc.com, HomeBarista forum)",
+  "confidence": "medium",
+  "note": "40 settings at ~23 μm/step = 200–1120 μm range. Higher fines fraction than hand grinders due to conical geometry at lower RPM.",
+  "settings": [
+    {"click": 5,  "median_um": 200,  "use": "espresso"},
+    {"click": 8,  "median_um": 269,  "use": "moka_pot"},
+    {"click": 12, "median_um": 376,  "use": "aeropress"},
+    {"click": 15, "median_um": 445,  "use": "v60"},
+    {"click": 18, "median_um": 514,  "use": "kalita"},
+    {"click": 22, "median_um": 606,  "use": "french_press"},
+    {"click": 28, "median_um": 744,  "use": "french_press_coarse"},
+    {"click": 35, "median_um": 905,  "use": "cold_brew"},
+    {"click": 40, "median_um": 1120, "use": "cupping"}
+  ],
+  "psd_model": {
+    "type": "bimodal_lognormal",
+    "fines_peak_um": 50,
+    "fines_sigma": 0.45,
+    "fines_fraction": 0.20,
+    "main_sigma": 0.40,
+    "note": "Higher fines fraction (20%) reflects electric conical burr behavior. Fines peak at 50 μm. Main sigma broader than hand grinders."
+  }
+}
