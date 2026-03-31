@@ -1,0 +1,29 @@
+{
+  "model": "1Zpresso J-Max",
+  "type": "hand",
+  "burr": "48mm stainless steel",
+  "clicks_range": [1, 90],
+  "microns_per_click": 8.8,
+  "source": "1Zpresso official specifications, CoffeeGeek community measurements",
+  "confidence": "medium",
+  "note": "J-Max has 90 internal clicks with ~8.8 μm/click. Fines fraction lower than electric grinders due to precision burr geometry.",
+  "settings": [
+    {"click": 10, "median_um": 88,  "use": "espresso_fine"},
+    {"click": 18, "median_um": 158, "use": "espresso"},
+    {"click": 25, "median_um": 220, "use": "moka_pot"},
+    {"click": 35, "median_um": 308, "use": "aeropress"},
+    {"click": 45, "median_um": 396, "use": "v60"},
+    {"click": 55, "median_um": 484, "use": "kalita"},
+    {"click": 65, "median_um": 572, "use": "french_press"},
+    {"click": 75, "median_um": 660, "use": "french_press_coarse"},
+    {"click": 90, "median_um": 792, "use": "cold_brew"}
+  ],
+  "psd_model": {
+    "type": "bimodal_lognormal",
+    "fines_peak_um": 35,
+    "fines_sigma": 0.38,
+    "fines_fraction": 0.14,
+    "main_sigma": 0.32,
+    "note": "Fines peak fixed at 35 μm. Lower fines fraction than electric grinders. Main sigma tighter than Comandante due to precision alignment."
+  }
+}
