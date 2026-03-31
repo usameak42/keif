@@ -17,15 +17,16 @@ import { Spacing } from "../constants/spacing";
 
 export default function HistoryScreen() {
   const router = useRouter();
-  const { currentInput, currentOutput, currentRunSaved, setCurrentRunSaved } = useSimulationResult();
+  const { currentInput, currentOutput, currentRunSaved, setCurrentInput, setCurrentOutput, setCurrentRunSaved } = useSimulationResult();
   const { runs, count, loading, error, save, deleteById, archiveOlderThan, reload } = useRunHistory();
 
   const [selectionMode, setSelectionMode] = useState(false);
   const [selectedIds, setSelectedIds] = useState<number[]>([]);
   const [deleteTarget, setDeleteTarget] = useState<number | null>(null);
   const [showArchiveDismissed, setShowArchiveDismissed] = useState(false);
+  const [skippedThisVisit, setSkippedThisVisit] = useState(false);
 
-  const showSavePrompt = !currentRunSaved && currentOutput !== null;
+  const showSavePrompt = !currentRunSaved && !skippedThisVisit && currentOutput !== null;
 
   async function handleSave(name: string) {
     if (!currentInput || !currentOutput) return;
@@ -49,6 +50,19 @@ export default function HistoryScreen() {
         if (prev.length >= 2) return prev;
         return [...prev, id];
       });
+    } else {
+      const run = runs.find((r) => r.id === id);
+      if (!run) return;
+      try {
+        const input = JSON.parse(run.input_json);
+        const output = JSON.parse(run.output_json);
+        setCurrentInput(input);
+        setCurrentOutput(output);
+        setCurrentRunSaved(true);
+        router.push("/extended");
+      } catch {
+        // Corrupted run data; silently ignore
+      }
     }
   }
 
@@ -90,7 +104,7 @@ export default function HistoryScreen() {
               <SaveRunPrompt
                 method={currentInput!.method}
                 onSave={handleSave}
-                onSkip={() => setCurrentRunSaved(true)}
+                onSkip={() => setSkippedThisVisit(true)}
               />
             )}
           </View>

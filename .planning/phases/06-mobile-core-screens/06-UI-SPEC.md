@@ -89,12 +89,13 @@ Exactly 4 sizes. Exactly 2 weights: 400 (Regular) and 600 (SemiBold).
 
 ## Color
 
-| Role | Value | Usage |
-|------|-------|-------|
-| Dominant (60%) | #0D0D0D | App background, all screen surfaces |
-| Secondary (30%) | #1A1A1A | Cards, form field backgrounds, rotary selector track, chart background |
-| Accent (10%) | #C8A26E | See reserved list below |
-| Destructive | #D94F4F | Validation error text, API error banners |
+| Role | HSL | Hex | Usage |
+|------|-----|-----|-------|
+| Dominant (60%) | hsl(20, 25%, 7%) | #16100D | App background, all screen surfaces |
+| Card (30%) | hsl(20, 20%, 12%) | #251D18 | Cards, form field backgrounds, rotary selector track, chart background |
+| Accent (10%) | hsl(28, 70%, 50%) | #D97A26 | See reserved list below |
+| Accent Active | hsl(32, 80%, 60%) | #EB9E47 | Active/pressed states, selected items, pressed buttons |
+| Destructive | — | #D94F4F | Validation error text, API error banners |
 
 ### Accent Reserved For
 
@@ -105,22 +106,24 @@ Exactly 4 sizes. Exactly 2 weights: 400 (Regular) and 600 (SemiBold).
 - Active segment indicator on roast level and mode toggles
 - Result point dot on SCA chart
 
+Use **Accent Active (#EB9E47)** for pressed/selected variants of all the above.
+
 ### Additional Semantic Colors
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| text-primary | #F0F0F0 | All primary text (headings, body, labels) |
-| text-secondary | #808080 | Placeholder text, disabled labels, secondary descriptions |
-| text-accent | #C8A26E | Accent text (see reserved list) |
-| text-destructive | #D94F4F | Error messages, "Over-extracted" zone verdict |
-| surface-field | #242424 | Text input field background (slightly lighter than card) |
-| border-subtle | #333333 | Form field borders, dividers between form rows |
-| success | #6BBF6B | "Under-extracted" is not success, but this is reserved for future use |
-| zone-under | #5B9BD5 | "Under-extracted" zone verdict text |
-| zone-over | #D94F4F | "Over-extracted" zone verdict text (same as destructive) |
-| zone-ideal | #C8A26E | "Ideal" zone verdict text (same as accent) |
-| spinner-track | #333333 | Loading spinner track color |
-| spinner-active | #C8A26E | Loading spinner active arc color (accent) |
+| Token | HSL | Hex | Usage |
+|-------|-----|-----|-------|
+| text-primary | hsl(35, 30%, 88%) | #EAE2D7 | All primary text (headings, body, labels) |
+| text-secondary | — | #808080 | Placeholder text, disabled labels, secondary descriptions |
+| text-accent | hsl(28, 70%, 50%) | #D97A26 | Accent text (see reserved list) |
+| text-destructive | — | #D94F4F | Error messages, "Over-extracted" zone verdict |
+| surface-field | hsl(20, 12%, 14%) | #28221F | Text input field background (muted, slightly lighter than card) |
+| border-subtle | hsl(25, 15%, 20%) | #3B322B | Form field borders, dividers between form rows |
+| success | — | #6BBF6B | Reserved for future use |
+| zone-under | — | #5B9BD5 | "Under-extracted" zone verdict text |
+| zone-over | — | #D94F4F | "Over-extracted" zone verdict text (same as destructive) |
+| zone-ideal | hsl(28, 70%, 50%) | #D97A26 | "Ideal" zone verdict text (same as accent) |
+| spinner-track | hsl(25, 15%, 20%) | #3B322B | Loading spinner track color |
+| spinner-active | hsl(28, 70%, 50%) | #D97A26 | Loading spinner active arc color (accent) |
 
 ---
 
@@ -129,7 +132,7 @@ Exactly 4 sizes. Exactly 2 weights: 400 (Regular) and 600 (SemiBold).
 ### Screen 1: Rotary Selector (D-04, D-05)
 
 **Layout:**
-- Full-screen dark background (#0D0D0D).
+- Full-screen dark background (#16100D).
 - Centered vertically: a rotary/drum selector showing 6 brew methods.
 - The selected method is centered and scaled up (1.2x) with accent color text.
 - Methods above and below are smaller (0.85x), dimmed (#808080), and partially overlapped.
@@ -137,7 +140,7 @@ Exactly 4 sizes. Exactly 2 weights: 400 (Regular) and 600 (SemiBold).
 
 **Rotary Component Spec:**
 - Visible items: 3 at a time (selected + 1 above + 1 below).
-- Selected item: 24px SemiBold, #C8A26E (accent).
+- Selected item: 24px SemiBold, #D97A26 (accent).
 - Unselected items: 16px Regular, #808080, opacity 0.6.
 - Snap behavior: spring animation to nearest item on release. Damping: 0.7, stiffness: 150.
 - Each item is text-only (method name). No icons in v1.
@@ -175,33 +178,33 @@ Exactly 4 sizes. Exactly 2 weights: 400 (Regular) and 600 (SemiBold).
 | 6 | Time | Numeric input | Suffix: "s". Default: 240. Numeric keyboard. |
 | 7 | Roast Level | Segmented control | 3 segments: Light / Medium / Dark. Default: Medium. |
 | 8 | Mode | Segmented control | 2 segments: Fast / Accurate. Default: Fast. |
-| 9 | Run Simulation | Button | Full-width, 52px height, accent background (#C8A26E), text "#0D0D0D" (dark on accent), 16px SemiBold. Label: "Run Simulation". |
+| 9 | Run Simulation | Button | Full-width, 52px height, accent background (#D97A26), pressed: #EB9E47. Text "#16100D" (dark on accent), 16px SemiBold. Label: "Run Simulation". |
 
 **Form Field Style:**
-- Background: #242424 (surface-field).
-- Border: 1px solid #333333 (border-subtle).
+- Background: #28221F (surface-field).
+- Border: 1px solid #3B322B (border-subtle).
 - Border radius: 12px.
 - Height: 48px for single-line inputs.
-- Text: 16px Regular, #F0F0F0.
+- Text: 16px Regular, #EAE2D7.
 - Placeholder: 16px Regular, #808080.
 - Label above field: 14px Regular, #808080, margin-bottom 8px.
 - Gap between fields: 16px (md token).
 
 **Segmented Control Style:**
-- Background: #1A1A1A (secondary).
+- Background: #251D18 (secondary).
 - Border radius: 12px.
-- Active segment: #C8A26E background, #0D0D0D text, 14px SemiBold.
+- Active segment: #D97A26 background, #16100D text, 14px SemiBold. Pressed: #EB9E47 background.
 - Inactive segment: transparent background, #808080 text, 14px Regular.
 - Height: 40px.
 - Segment transition: 200ms ease-out background color.
 
 **Click Spinner Style:**
-- Central value: 16px SemiBold, #F0F0F0, centered.
-- -/+ buttons: 44x44px touch targets, #333333 background circles, #F0F0F0 text, 16px.
+- Central value: 16px SemiBold, #EAE2D7, centered.
+- -/+ buttons: 44x44px touch targets, #3B322B background circles, #EAE2D7 text, 16px.
 - Unit label: 14px Regular, #808080, right of value.
 
 **Grinder Dropdown Style:**
-- Collapsed: card showing selected grinder name, 16px Regular, #F0F0F0, right-aligned chevron icon (#808080).
+- Collapsed: card showing selected grinder name, 16px Regular, #EAE2D7, right-aligned chevron icon (#808080).
 - Expanded: bottom sheet or modal list with 4 options, each 48px row height, accent highlight on selected.
 
 ### Screen 3: Results (D-12 through D-15)
@@ -214,39 +217,39 @@ Exactly 4 sizes. Exactly 2 weights: 400 (Regular) and 600 (SemiBold).
 **Upper Portion -- Callouts (D-12, D-13):**
 - Two primary callout cards side by side, centered horizontally.
 - Left card: TDS%. Right card: EY%.
-- Each card: #1A1A1A background, border-radius 16px, padding 24px.
-- Number: 36px SemiBold (#F0F0F0). Suffix: 16px Regular (#808080) showing "%".
+- Each card: #251D18 background, border-radius 16px, padding 24px.
+- Number: 36px SemiBold (#EAE2D7). Suffix: 16px Regular (#808080) showing "%".
 - Label below number: 14px Regular, #808080. "TDS" or "Extraction Yield".
 - Below the two cards: Zone verdict line.
 - Zone verdict: 16px SemiBold, color mapped to zone:
-  - "Ideal" -> #C8A26E (accent) with checkmark icon
+  - "Ideal" -> #D97A26 (accent) with checkmark icon
   - "Under-extracted" -> #5B9BD5
   - "Over-extracted" -> #D94F4F
 - If accurate mode: small badge below verdict, 14px Regular, #808080, text "Detailed simulation" (D-15).
 
 **Lower Portion -- SCA Brew Chart (D-14):**
 - Victory Native chart component.
-- Chart background: #1A1A1A card with border-radius 16px, padding 16px.
+- Chart background: #251D18 card with border-radius 16px, padding 16px.
 - X-axis: EY% (range 14-26%). Y-axis: TDS% (range 0.8-1.6% for filter; 6-12% for espresso).
-- Ideal zone: filled rectangle, #C8A26E at 20% opacity, border #C8A26E at 40% opacity.
-- Result point: filled circle, 10px diameter, #C8A26E (accent), with a subtle glow/shadow.
+- Ideal zone: filled rectangle, #D97A26 at 20% opacity, border #D97A26 at 40% opacity.
+- Result point: filled circle, 10px diameter, #D97A26 (accent), with a subtle glow/shadow.
 - Axis labels: 14px Regular, #808080.
-- Axis ticks: #333333.
-- Grid lines: #1A1A1A (barely visible, same as card -- effectively hidden. Chart relies on axis ticks).
+- Axis ticks: #3B322B.
+- Grid lines: #251D18 (barely visible, same as card -- effectively hidden. Chart relies on axis ticks).
 
 **Loading State (D-06, D-10):**
 - When accurate mode is running (up to 4s):
   - Results screen appears immediately with filtration-forward transition.
-  - Callout area shows a pulsing skeleton: two card-shaped rectangles in #1A1A1A with a shimmer animation (#242424 highlight sweeping left-to-right, 1.5s loop).
+  - Callout area shows a pulsing skeleton: two card-shaped rectangles in #251D18 with a shimmer animation (#28221F highlight sweeping left-to-right, 1.5s loop).
   - Chart area shows same skeleton shimmer.
   - Text below skeleton: "Running detailed simulation..." 14px Regular, #808080.
 
 **API Error State:**
 - If /simulate returns 422 or network error:
-  - Callout area replaced with error card: #1A1A1A background, border-left 4px solid #D94F4F.
+  - Callout area replaced with error card: #251D18 background, border-left 4px solid #D94F4F.
   - Error heading: "Simulation Failed" 16px SemiBold, #D94F4F.
-  - Error body: API error message (from 422 detail) or "Could not reach the server. Check your connection and try again." 14px Regular, #F0F0F0.
-  - Below error: "Tweak & Retry" button, outlined style (1px border #C8A26E, transparent background, #C8A26E text, 16px SemiBold, 48px height).
+  - Error body: API error message (from 422 detail) or "Could not reach the server. Check your connection and try again." 14px Regular, #EAE2D7.
+  - Below error: "Tweak & Retry" button, outlined style (1px border #D97A26, transparent background, #D97A26 text, 16px SemiBold, 48px height).
 
 ---
 
@@ -367,7 +370,7 @@ No third-party component registries. All UI components are custom-built per this
 - Segmented controls: `accessibilityRole="radio"` on segments, `accessibilityState={{ selected }}`.
 - Zone verdict colors are paired with text labels -- color is never the sole indicator.
 - Chart: includes `accessibilityLabel` summarizing the result position (e.g., "TDS 1.35%, EY 20.1%, in the ideal zone").
-- Contrast ratios: #F0F0F0 on #0D0D0D = 18.1:1 (exceeds AAA). #808080 on #0D0D0D = 5.3:1 (exceeds AA). #C8A26E on #0D0D0D = 7.2:1 (exceeds AA).
+- Contrast ratios: #EAE2D7 on #16100D ≈ 15:1 (exceeds AAA). #808080 on #16100D ≈ 4.5:1 (meets AA). #D97A26 on #16100D ≈ 5.2:1 (exceeds AA). #EB9E47 on #16100D ≈ 6.5:1 (exceeds AA).
 
 ---
 

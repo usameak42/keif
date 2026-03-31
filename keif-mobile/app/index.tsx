@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { Colors } from "../constants/colors";
@@ -40,6 +40,15 @@ export default function RotarySelectorScreen() {
       </View>
 
       <Text style={styles.hint}>Swipe to browse, tap to select</Text>
+
+      <TouchableOpacity
+        style={styles.historyButton}
+        onPress={() => router.push("/history")}
+        accessibilityRole="button"
+        accessibilityLabel="Run History"
+      >
+        <Text style={styles.historyButtonText}>Run History</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }
@@ -66,6 +75,21 @@ const styles = StyleSheet.create({
     ...Typography.label,
     color: Colors.textSecondary,
     marginTop: Spacing.xxl,
+    textAlign: "center",
+  },
+  historyButton: {
+    marginTop: Spacing.xxl,
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: Colors.borderSubtle,
+  },
+  historyButtonText: {
+    fontSize: 14,
+    fontFamily: "Inter_400Regular",
+    lineHeight: 20,
+    color: Colors.textSecondary,
     textAlign: "center",
   },
 });

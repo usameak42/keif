@@ -29,7 +29,7 @@ function getEUIDescriptor(value: number): { label: string; color: string } {
 
 export default function ExtendedScreen() {
   const router = useRouter();
-  const { currentOutput } = useSimulationResult();
+  const { currentOutput, currentInput } = useSimulationResult();
 
   if (!currentOutput) {
     return (
@@ -136,12 +136,24 @@ export default function ExtendedScreen() {
           )}
 
           {/* 7. Caffeine (conditional) */}
-          {currentOutput.caffeine_mg_per_ml !== null && (
-            <ExtendedDetailCard
-              label="Caffeine"
-              value={`${currentOutput.caffeine_mg_per_ml.toFixed(2)} mg/mL`}
-            />
-          )}
+          {currentOutput.caffeine_mg_per_ml !== null && (() => {
+            const waterMl = currentInput?.water_amount ?? null;
+            if (waterMl !== null) {
+              const mgPerCup = currentOutput.caffeine_mg_per_ml * waterMl;
+              return (
+                <ExtendedDetailCard
+                  label="Caffeine"
+                  value={`${mgPerCup.toFixed(1)} mg/cup`}
+                />
+              );
+            }
+            return (
+              <ExtendedDetailCard
+                label="Caffeine"
+                value={`${currentOutput.caffeine_mg_per_ml.toFixed(4)} mg/mL`}
+              />
+            );
+          })()}
         </View>
       </ScrollView>
     </SafeAreaView>

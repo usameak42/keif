@@ -1,8 +1,9 @@
-import * as SQLite from "expo-sqlite/legacy";
-import type { SQLTransaction, SQLResultSet, SQLError } from "expo-sqlite/legacy";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
 import type { SimulationInput, SimulationOutput, BrewMethod } from "../types/simulation";
 import type { ParsedRun, SavedRun } from "./useRunHistory";
+
+const STORAGE_KEY = "keif_run_history";
 
 export interface ComparisonResult {
   runA: ParsedRun | null;
@@ -22,8 +23,6 @@ function parseRow(row: SavedRun): ParsedRun {
   };
 }
 
-const db = SQLite.openDatabase("keif-runs.db");
-
 export function useRunComparison(idA: number, idB: number): ComparisonResult {
   const [runA, setRunA] = useState<ParsedRun | null>(null);
   const [runB, setRunB] = useState<ParsedRun | null>(null);
@@ -33,49 +32,36 @@ export function useRunComparison(idA: number, idB: number): ComparisonResult {
   useEffect(() => {
     setLoading(true);
     setError(null);
-    let rowA: SavedRun | null = null;
-    let rowB: SavedRun | null = null;
 
-    db.transaction(
-      (tx: SQLTransaction) => {
-        tx.executeSql(
-          "SELECT * FROM saved_runs WHERE id = ?",
-          [idA],
-          (_tx: SQLTransaction, result: SQLResultSet) => {
-            rowA = result.rows.length > 0 ? (result.rows.item(0) as SavedRun) : null;
-          },
-          (_tx: SQLTransaction, err: SQLError) => {
-            setError(`Couldn't load run A: ${err.message}`);
-            return true;
-          },
-        );
-        tx.executeSql(
-          "SELECT * FROM saved_runs WHERE id = ?",
-          [idB],
-          (_tx: SQLTransaction, result: SQLResultSet) => {
-            rowB = result.rows.length > 0 ? (result.rows.item(0) as SavedRun) : null;
-          },
-          (_tx: SQLTransaction, err: SQLError) => {
-            setError(`Couldn't load run B: ${err.message}`);
-            return true;
-          },
-        );
-      },
-      (err: SQLError) => {
-        setError(`Couldn't load runs: ${err.message}`);
-        setLoading(false);
-      },
-      () => {
-        if (!rowA || !rowB) {
-          setError("Couldn't load runs. One or both runs may have been deleted.");
-          setLoading(false);
+    (async () => {
+      try {
+        const raw = await AsyncStorage.getItem(STORAGE_KEY);
+        if (!raw) {
+          setError("Couldn't load runs. No saved runs found.");
+          setRunA(null);
+          setRunB(null);
           return;
         }
-        setRunA(parseRow(rowA));
-        setRunB(parseRow(rowB));
+
+        const allRuns = JSON.parse(raw) as SavedRun[];
+        const rowA = allRuns.find((r) => r.id === idA) ?? null;
+        const rowB = allRuns.find((r) => r.id === idB) ?? null;
+
+        if (!rowA || !rowB) {
+          setError("Couldn't load runs. One or both runs may have been deleted.");
+          setRunA(null);
+          setRunB(null);
+        } else {
+          setRunA(parseRow(rowA));
+          setRunB(parseRow(rowB));
+        }
+      } catch (err: unknown) {
+        const message = err instanceof Error ? err.message : String(err);
+        setError(`Couldn't load runs: ${message}`);
+      } finally {
         setLoading(false);
-      },
-    );
+      }
+    })();
   }, [idA, idB]);
 
   return { runA, runB, loading, error };

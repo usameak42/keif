@@ -16,7 +16,7 @@ Keif is a physics-based coffee extraction simulation engine delivered as a cross
 - **Physics**: All models must be traceable to published papers — portfolio-grade codebase
 - **Accuracy**: Accurate mode must reproduce published EY% within ±1.5% RMSE (SciPy backend)
 - **Performance**: Fast mode < 1ms, Accurate mode < 4s end-to-end
-- **Sub-repo**: Application code lives in `brewos-engine/` (separate git repo); `.planning/` lives at root
+- **Repo**: `brewos-engine/` is the GitHub repo containing both the engine and mobile app; `.planning/` lives at root (local-only)
 <!-- GSD:project-end -->
 
 <!-- GSD:stack-start source:codebase/STACK.md -->
@@ -211,6 +211,20 @@ Keif is a physics-based coffee extraction simulation engine delivered as a cross
 - **Output Layer**: Warnings list in SimulationOutput flags over-extraction, channeling risk, out-of-range brew ratios
 ## Cross-Cutting Concerns
 <!-- GSD:architecture-end -->
+
+## Project Structure
+
+- Engine: `brewos-engine/brewos/`
+- Mobile: `brewos-engine/keif-mobile/`
+- Planning: `D:\Coding\Keif\.planning\` (local-only, never pushed)
+
+## Git
+
+- Repo root: `D:\Coding\Keif\brewos-engine\`
+- Remote: `https://github.com/usameak42/keif.git`
+- Branch: `main`
+- Always `cd` to `brewos-engine/` before any git operations
+- The outer `D:\Coding\Keif\` folder is local-only, never pushed
 
 <!-- GSD:workflow-start source:GSD defaults -->
 ## GSD Workflow Enforcement

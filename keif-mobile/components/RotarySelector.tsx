@@ -124,12 +124,14 @@ function RotaryItem({ label, index, translateY, onPress }: RotaryItemProps) {
 
 const styles = StyleSheet.create({
   container: {
+    width: "100%",
     height: VISIBLE_COUNT * ITEM_HEIGHT,
     overflow: "hidden",
     justifyContent: "center",
     alignItems: "center",
   },
   window: {
+    width: "100%",
     height: VISIBLE_COUNT * ITEM_HEIGHT,
     justifyContent: "center",
     alignItems: "center",

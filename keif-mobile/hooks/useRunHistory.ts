@@ -1,7 +1,8 @@
-import * as SQLite from "expo-sqlite/legacy";
-import type { SQLTransaction, SQLResultSet, SQLError } from "expo-sqlite/legacy";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useCallback, useEffect, useState } from "react";
 import type { SimulationInput, SimulationOutput, BrewMethod } from "../types/simulation";
+
+const STORAGE_KEY = "keif_run_history";
 
 export interface SavedRun {
   id: number;
@@ -22,19 +23,15 @@ export interface ParsedRun {
   output: SimulationOutput;
 }
 
-const CREATE_TABLE_SQL = `
-  CREATE TABLE IF NOT EXISTS saved_runs (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
-    method TEXT NOT NULL,
-    created_at TEXT NOT NULL,
-    input_json TEXT NOT NULL,
-    output_json TEXT NOT NULL,
-    archived INTEGER NOT NULL DEFAULT 0
-  )
-`;
+async function loadAllRuns(): Promise<SavedRun[]> {
+  const raw = await AsyncStorage.getItem(STORAGE_KEY);
+  if (!raw) return [];
+  return JSON.parse(raw) as SavedRun[];
+}
 
-const db = SQLite.openDatabase("keif-runs.db");
+async function saveAllRuns(runs: SavedRun[]): Promise<void> {
+  await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(runs));
+}
 
 export function useRunHistory() {
   const [runs, setRuns] = useState<SavedRun[]>([]);
@@ -42,114 +39,94 @@ export function useRunHistory() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const reload = useCallback(() => {
-    db.transaction((tx: SQLTransaction) => {
-      tx.executeSql(
-        "SELECT * FROM saved_runs WHERE archived = 0 ORDER BY created_at DESC",
-        [],
-        (_tx: SQLTransaction, result: SQLResultSet) => {
-          const rows = result.rows._array as SavedRun[];
-          setRuns(rows);
-          setCount(rows.length);
-          setError(null);
-        },
-        (_tx: SQLTransaction, err: SQLError) => {
-          setError(`Failed to load runs: ${err.message}`);
-          return true;
-        },
-      );
-    });
+  const reload = useCallback(async () => {
+    try {
+      const allRuns = await loadAllRuns();
+      const active = allRuns
+        .filter((r) => r.archived === 0)
+        .sort((a, b) => b.created_at.localeCompare(a.created_at));
+      setRuns(active);
+      setCount(active.length);
+      setError(null);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : String(err);
+      setError(`Failed to load runs: ${message}`);
+    }
   }, []);
 
-  // Initialize database: create table then load initial data
   useEffect(() => {
-    db.transaction(
-      (tx: SQLTransaction) => {
-        tx.executeSql(CREATE_TABLE_SQL, [],
-          () => {},
-          () => true,
-        );
-      },
-      (err: SQLError) => {
-        setError(`Database initialization failed: ${err.message}`);
+    (async () => {
+      try {
+        const allRuns = await loadAllRuns();
+        const active = allRuns
+          .filter((r) => r.archived === 0)
+          .sort((a, b) => b.created_at.localeCompare(a.created_at));
+        setRuns(active);
+        setCount(active.length);
+      } catch (err: unknown) {
+        const message = err instanceof Error ? err.message : String(err);
+        setError(`Storage initialization failed: ${message}`);
+      } finally {
         setLoading(false);
-      },
-      () => {
-        db.transaction((tx: SQLTransaction) => {
-          tx.executeSql(
-            "SELECT * FROM saved_runs WHERE archived = 0 ORDER BY created_at DESC",
-            [],
-            (_tx: SQLTransaction, result: SQLResultSet) => {
-              const rows = result.rows._array as SavedRun[];
-              setRuns(rows);
-              setCount(rows.length);
-              setLoading(false);
-            },
-            (_tx: SQLTransaction, err: SQLError) => {
-              setError(`Failed to load runs: ${err.message}`);
-              setLoading(false);
-              return true;
-            },
-          );
-        });
-      },
-    );
+      }
+    })();
   }, []);
 
-  const save = useCallback((
+  const save = useCallback(async (
     name: string,
     input: SimulationInput,
     output: SimulationOutput,
   ): Promise<void> => {
-    return new Promise((resolve, reject) => {
-      db.transaction((tx: SQLTransaction) => {
-        tx.executeSql(
-          "INSERT INTO saved_runs (name, method, created_at, input_json, output_json, archived) VALUES (?, ?, ?, ?, ?, 0)",
-          [name, input.method, new Date().toISOString(), JSON.stringify(input), JSON.stringify(output)],
-          () => { reload(); resolve(); },
-          (_tx: SQLTransaction, err: SQLError) => {
-            setError(`Failed to save run: ${err.message}`);
-            reject(err);
-            return true;
-          },
-        );
-      });
-    });
+    try {
+      const allRuns = await loadAllRuns();
+      const newRun: SavedRun = {
+        id: Date.now(),
+        name,
+        method: input.method,
+        created_at: new Date().toISOString(),
+        input_json: JSON.stringify(input),
+        output_json: JSON.stringify(output),
+        archived: 0,
+      };
+      allRuns.push(newRun);
+      await saveAllRuns(allRuns);
+      await reload();
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : String(err);
+      setError(`Failed to save run: ${message}`);
+      throw err;
+    }
   }, [reload]);
 
-  const deleteById = useCallback((id: number): Promise<void> => {
-    return new Promise((resolve, reject) => {
-      db.transaction((tx: SQLTransaction) => {
-        tx.executeSql(
-          "DELETE FROM saved_runs WHERE id = ?",
-          [id],
-          () => { reload(); resolve(); },
-          (_tx: SQLTransaction, err: SQLError) => {
-            setError(`Failed to delete run: ${err.message}`);
-            reject(err);
-            return true;
-          },
-        );
-      });
-    });
+  const deleteById = useCallback(async (id: number): Promise<void> => {
+    try {
+      const allRuns = await loadAllRuns();
+      const filtered = allRuns.filter((r) => r.id !== id);
+      await saveAllRuns(filtered);
+      await reload();
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : String(err);
+      setError(`Failed to delete run: ${message}`);
+      throw err;
+    }
   }, [reload]);
 
-  const archiveOlderThan = useCallback((days: number): Promise<void> => {
+  const archiveOlderThan = useCallback(async (days: number): Promise<void> => {
     const cutoff = new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString();
-    return new Promise((resolve, reject) => {
-      db.transaction((tx: SQLTransaction) => {
-        tx.executeSql(
-          "UPDATE saved_runs SET archived = 1 WHERE created_at < ? AND archived = 0",
-          [cutoff],
-          () => { reload(); resolve(); },
-          (_tx: SQLTransaction, err: SQLError) => {
-            setError(`Failed to archive runs: ${err.message}`);
-            reject(err);
-            return true;
-          },
-        );
-      });
-    });
+    try {
+      const allRuns = await loadAllRuns();
+      const updated = allRuns.map((r) =>
+        r.created_at < cutoff && r.archived === 0
+          ? { ...r, archived: 1 as const }
+          : r
+      );
+      await saveAllRuns(updated);
+      await reload();
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : String(err);
+      setError(`Failed to archive runs: ${message}`);
+      throw err;
+    }
   }, [reload]);
 
   return { runs, count, loading, error, save, deleteById, archiveOlderThan, reload };
