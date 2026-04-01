@@ -1,5 +1,4 @@
-import * as SQLite from "expo-sqlite/legacy";
-import type { SQLTransaction, SQLResultSet, SQLError } from "expo-sqlite/legacy";
+import * as SQLite from "expo-sqlite";
 import { useEffect, useState } from "react";
 import type { SimulationInput, SimulationOutput, BrewMethod } from "../types/simulation";
 import type { ParsedRun, SavedRun } from "./useRunHistory";
@@ -22,7 +21,14 @@ function parseRow(row: SavedRun): ParsedRun {
   };
 }
 
-const db = SQLite.openDatabase("keif-runs.db");
+let dbPromise: Promise<SQLite.SQLiteDatabase> | null = null;
+
+function getDb(): Promise<SQLite.SQLiteDatabase> {
+  if (!dbPromise) {
+    dbPromise = SQLite.openDatabaseAsync("keif-runs.db");
+  }
+  return dbPromise;
+}
 
 export function useRunComparison(idA: number, idB: number): ComparisonResult {
   const [runA, setRunA] = useState<ParsedRun | null>(null);
@@ -33,49 +39,27 @@ export function useRunComparison(idA: number, idB: number): ComparisonResult {
   useEffect(() => {
     setLoading(true);
     setError(null);
-    let rowA: SavedRun | null = null;
-    let rowB: SavedRun | null = null;
 
-    db.transaction(
-      (tx: SQLTransaction) => {
-        tx.executeSql(
-          "SELECT * FROM saved_runs WHERE id = ?",
-          [idA],
-          (_tx: SQLTransaction, result: SQLResultSet) => {
-            rowA = result.rows.length > 0 ? (result.rows.item(0) as SavedRun) : null;
-          },
-          (_tx: SQLTransaction, err: SQLError) => {
-            setError(`Couldn't load run A: ${err.message}`);
-            return true;
-          },
-        );
-        tx.executeSql(
-          "SELECT * FROM saved_runs WHERE id = ?",
-          [idB],
-          (_tx: SQLTransaction, result: SQLResultSet) => {
-            rowB = result.rows.length > 0 ? (result.rows.item(0) as SavedRun) : null;
-          },
-          (_tx: SQLTransaction, err: SQLError) => {
-            setError(`Couldn't load run B: ${err.message}`);
-            return true;
-          },
-        );
-      },
-      (err: SQLError) => {
-        setError(`Couldn't load runs: ${err.message}`);
-        setLoading(false);
-      },
-      () => {
+    (async () => {
+      try {
+        const db = await getDb();
+        const [rowA, rowB] = await Promise.all([
+          db.getFirstAsync<SavedRun>("SELECT * FROM saved_runs WHERE id = ?", [idA]),
+          db.getFirstAsync<SavedRun>("SELECT * FROM saved_runs WHERE id = ?", [idB]),
+        ]);
+
         if (!rowA || !rowB) {
           setError("Couldn't load runs. One or both runs may have been deleted.");
-          setLoading(false);
           return;
         }
         setRunA(parseRow(rowA));
         setRunB(parseRow(rowB));
+      } catch (e: unknown) {
+        setError(`Couldn't load runs: ${e instanceof Error ? e.message : String(e)}`);
+      } finally {
         setLoading(false);
-      },
-    );
+      }
+    })();
   }, [idA, idB]);
 
   return { runA, runB, loading, error };
