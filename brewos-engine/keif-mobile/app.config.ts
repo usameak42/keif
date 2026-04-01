@@ -9,6 +9,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   scheme: "keif",
   plugins: ["expo-router", "expo-font"],
   extra: {
-    EXPO_PUBLIC_API_URL: process.env.EXPO_PUBLIC_API_URL ?? "https://keif-api.koyeb.app",
+    EXPO_PUBLIC_API_URL: process.env.EXPO_PUBLIC_API_URL ?? "https://entire-ursa-4keif2-d4539572.koyeb.app",
   },
 });
