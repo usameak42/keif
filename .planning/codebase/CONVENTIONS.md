@@ -1,68 +1,104 @@
 # Coding Conventions
 
-**Analysis Date:** 2026-03-26
+**Analysis Date:** 2026-04-01
 
-## Naming Patterns
+---
 
-**Files:**
-- Module names: lowercase with underscores for multi-word names (e.g., `moroney_2016_immersion_ode.py`)
-- Class files match their primary class name or functional purpose
-- Init files use `__init__.py` with module docstrings
+## Python Engine Conventions
+
+### Naming Patterns
+
+**Module files:**
+- Lowercase with underscores: `moroney_2016_immersion_ode.py`, `co2_bloom.py`, `output_helpers.py`
+- Module name matches functional role (not a class name)
+- One module per solver/utility domain
+
+**Classes:**
+- PascalCase Pydantic models: `SimulationInput`, `SimulationOutput`, `FlavorProfile`, `ExtractionPoint`
+- String enums inherit `str, Enum`: `class RoastLevel(str, Enum)`, `class Mode(str, Enum)`, `class BrewMethod(str, Enum)`
+- Enum member values are lowercase strings matching the member name: `light = "light"`, `fast = "fast"`
 
 **Functions:**
-- Function names: lowercase with underscores (snake_case) — example: `moroney_ode()`, `grind_size_positive()`
-- Validator functions prefixed with intent: `must_be_positive()`, `temp_in_range()`, `grind_source_consistent()`
-- Private functions not explicitly marked; follow same snake_case convention
+- snake_case throughout: `solve_accurate()`, `solve_fast()`, `derive_immersion_params()`
+- Validator functions named by intent: `must_be_positive()`, `temp_in_range()`, `grind_size_positive()`, `grind_source_consistent()`
+- Internal helpers and module-level defaults prefixed with underscore: `_biexponential_steep()`, `_A1_DEFAULT`, `_TAU1_DEFAULT`
+- Parametric utilities use verb form: `derive_immersion_params()`, `resolve_psd()`, `estimate_flavor_profile()`
 
 **Variables:**
-- Local variables: lowercase snake_case (e.g., `coffee_dose`, `brew_time`, `scale_factor`)
-- Constants: UPPERCASE snake_case (e.g., `K_liang`, `E_max`, `rho_w`)
-- Physics parameters prefixed with scope: `k_sv1`, `k_sv2`, `phi_h`, `psi_s` (following domain convention)
-- Abbreviated variable names aligned with domain — extraction yields use `ey`, TDS uses `tds_percent`
+- Local: snake_case (`coffee_dose`, `brew_time`, `scale_factor`)
+- Physics constants: UPPERCASE_SNAKE (`K_liang`, `E_max`, `rho_w`, `V_DARCY_MAX`)
+- Physics parameters follow domain notation: `k_sv1`, `k_sv2`, `phi_h`, `psi_s`, `kA`, `kB`
+- Abbreviated domain names used directly: `ey`, `tds_percent`, `c_sat`, `c_h0`, `c_v0`
 
-**Types:**
-- Enum classes inherit from `str, Enum` for string-based enums (example: `class RoastLevel(str, Enum)`)
-- Pydantic BaseModel classes use CamelCase (e.g., `SimulationInput`, `ExtractionPoint`, `FlavorProfile`)
-- Optional types explicitly annotated with `Optional[Type]` from typing
+**Test fixtures (module-level):**
+- UPPERCASE: `STANDARD_INPUT`, `STANDARD_FAST`, `V60_STANDARD`, `AEROPRESS_STANDARD`
+- Scenario dicts use lowercase keys matching `SimulationInput` field names
 
-## Code Style
+### Code Style
 
 **Formatting:**
-- No linting or formatting tool configured (no .eslintrc, .prettierrc, or similar)
+- No formatter configured (no `.prettierrc`; `pyproject.toml` has no `[tool.ruff]` or `[tool.black]`)
 - Indentation: 4 spaces (Python standard)
-- Line lengths: not constrained; longest observed line is ~95 characters in PoC
-- Two blank lines between module-level definitions (between classes, between function groups)
-- One blank line within class definitions between method definitions
+- Two blank lines between module-level definitions (classes, functions, constant groups)
+- One blank line between method definitions inside a class
 
-**Comments:**
-- Inline comments on same line with right-alignment (e.g., `coffee_dose: float          # g`)
-- Comments indicate units or clarifications, right-padded with spaces for alignment
-- Block comments introduce conceptual sections with multiple `#` delimiter lines
-- Section headers use format: `# ─────────────────────────────────────────────────────────`
+**Inline comments:**
+- Right-aligned with spaces after type annotation, indicating units: `coffee_dose: float          # g`
+- Physics constant comments include source paper and vault path:
+  ```python
+  K_liang = 0.717         # Equilibrium desorption constant [-]
+  ```
+- Section divider lines use unicode box-drawing character:
+  ```python
+  # ─────────────────────────────────────────────────────────────────────────────
+  # SECTION TITLE
+  # ─────────────────────────────────────────────────────────────────────────────
+  ```
 
-## Import Organization
+**Docstrings:**
+- Module-level: single-line in double quotes (no triple): `"Pydantic input model for BrewOS simulation — per architecture_spec.md §3."`
+- Class-level: triple-quoted, immediately after `class` statement: `"""All parameters required to run a BrewOS extraction simulation."""`
+- Function-level: triple-quoted with `Args:`, `Returns:`, `Raises:` sections for non-trivial functions. Simple helpers use inline comments only.
+
+### Import Organization
 
 **Order:**
-1. Standard library imports (`sys`, `os`, `re`, `subprocess`)
-2. Third-party imports (`numpy`, `scipy`, `pydantic`, `matplotlib`)
-3. Local/relative imports (none observed in current codebase)
+1. Standard library (`from enum import Enum`, `from typing import Optional, List`, `import math`, `import time`)
+2. Third-party (`import numpy as np`, `from scipy.integrate import solve_ivp`, `from pydantic import BaseModel`)
+3. Internal (`from brewos.models.inputs import SimulationInput`, `from brewos.utils.params import ...`)
 
-**Path Aliases:**
-- Not used; relative imports via package structure
+**Style:**
+- `from module import Name` for specific imports (not `import module`)
+- `Optional[Type]` form, not `Type | None`
+- All type hints explicit: `from typing import Optional, List`
 
-**Import Style:**
-- `from module import Class, function` for specific imports
-- `from enum import Enum` (type imports explicit)
-- `from typing import Optional, List` (all type hints explicit)
+### Error Handling
 
-## Error Handling
+- Input validation via Pydantic `@field_validator` (single field) and `@model_validator(mode="after")` (cross-field)
+- Validator message format: `"field_name must be condition"` — lowercase, direct
+  - Example: `"pressure_bar must be >= 0"`, `"grind_size must be > 0 μm"`
+- ODE solver failures: `raise RuntimeError(f"ODE solver failed: {sol.message}")`
+- No try/except in business logic — validation delegated entirely to Pydantic
+- Out-of-range grinder settings: `raise ValueError("out of range")`
+- Unknown grinder names: `raise ValueError("not found")`
 
-**Patterns:**
-- Validation errors raised via Pydantic validators using `ValueError` with descriptive message
-- Validators use `@field_validator` for single-field rules and `@model_validator(mode="after")` for cross-field rules
-- Message format: `"field_name must be condition"` (lowercase, direct language)
-- ODE solver failures raised with `RuntimeError(f"message: {detail}")` for fatal errors
-- No try/catch blocks in business logic; validation delegated to Pydantic
+### Type Hints
+
+- All function parameters and return types explicitly annotated
+- `Optional[float] = None` (not `float | None`) — matches Python 3.9 compat pattern throughout
+- No implicit `Any`
+- Example signature: `def must_be_positive(cls, v: float) -> float:`
+
+### Pydantic Model Patterns
+
+- Inherit directly from `BaseModel`; no custom `__init__`
+- Required fields before optional fields
+- Optional fields annotated `Optional[Type] = None`
+- `@field_validator("field_name")` + `@classmethod` for single-field rules
+- `@model_validator(mode="after")` for cross-field consistency checks (see `grind_source_consistent` in `brewos/models/inputs.py`)
+- String enums inherit `str, Enum` for transparent JSON serialization
+- Output models use nested Pydantic objects: `ExtractionPoint`, `FlavorProfile`, `PSDPoint`, `TempPoint`, `SCAPosition`
+- Optional output fields default to `None` and are set by solvers where applicable (`channeling_risk`, `puck_resistance`)
 
 **Example from `brewos/models/inputs.py`:**
 ```python
@@ -74,83 +110,177 @@ def must_be_positive(cls, v: float) -> float:
     return v
 ```
 
-## Documentation
+### Numerical Code Patterns
 
-**Module Docstrings:**
-- One-line docstring at top of file in quotes (no triple-quotes unless multi-line needed)
-- Format: `"Description — reference if applicable"`
-- Example: `"Pydantic input model for BrewOS simulation — per architecture_spec.md §3."`
+- Physics constants defined at module level in `brewos/utils/params.py`, grouped by source paper with vault reference comments
+- Groups labeled: `# VAULT PARAMETERS —`, `# ESTIMATED PARAMETERS —`
+- Intermediate calculations stored in named variables for clarity (avoid chaining)
+- Bound clamping via `max(0.0, min(var, limit))` for scalars
+- `np.maximum(array, 0.0)` for array-level non-negativity enforcement
+- `np.linspace(0.0, t_end, n_pts)` for time evaluation grids
+- `solve_ivp` always called with `method='Radau'`, tolerances `rtol=1e-8, atol=1e-10`
+- Scale factors computed post-solve and applied to raw arrays before building output objects
 
-**Class Docstrings:**
-- Triple-quoted single or multi-line docstring immediately after class definition
-- Format: `"""Purpose of class."""` or multi-line with bullet points
-- Example: `"""All parameters required to run a BrewOS extraction simulation."""`
-
-**Field Docstrings:**
-- Inline comments after type annotation showing units and clarifications
-- Format: `field_name: Type  # unit or description`
-
-**Function Docstrings:**
-- Inline comments describing purpose if needed; full docstring only for complex functions
-
-## Type Hints
-
-**Usage:**
-- All function parameters and return types explicitly type-hinted
-- Pydantic model fields include type annotations with Optional for nullable fields
-- No implicit `Any` types
-- Example: `def must_be_positive(cls, v: float) -> float:`
-
-**Optional Pattern:**
-- Used explicitly: `Optional[float] = None` (not `float | None`)
-- Used for grinder parameters that can be None: `grinder_name: Optional[str] = None`
-
-## Model Design
-
-**Pydantic Models:**
-- Inherit from `BaseModel` directly
-- No custom `__init__` methods; Pydantic handles initialization
-- Validators use `@field_validator` (single field) and `@model_validator` (multi-field)
-- Fields with defaults must come after required fields
-- Model classes used for both input (`SimulationInput`) and output (`SimulationOutput`) contracts
-
-**Enum Design:**
-- String enums inherit from `str, Enum` for JSON serialization
-- Enum values are lowercase strings matching the enum member name
-- Example: `light = "light"` (member and value identical)
-
-## Numerical Code Patterns
-
-**Constants:**
-- Physics constants defined as module-level variables
-- Grouped by source (VAULT PARAMETERS, ESTIMATED PARAMETERS, etc.)
-- Includes source comments with paper references and vault locations
-
-**Computations:**
-- Intermediate calculations stored in named variables for clarity
-- Clamping/clipping done via `max(0.0, min(var, limit))` pattern
-- ODE systems defined in separate functions
-- Array operations use NumPy with type-checking (non-negative enforcement)
-
-**Example from `poc/moroney_2016_immersion_ode.py`:**
+**Example bound clamping (from `brewos/solvers/immersion.py`):**
 ```python
-c_h   = max(0.0, min(c_h,   c_sat))      # Clamp to valid range
+c_h   = max(0.0, min(c_h,   c_sat))
 c_v   = max(0.0, min(c_v,   c_sat))
 psi_s = max(0.0, min(psi_s, 1.0))
 ```
 
-## Spacing & Whitespace
+### Method Module Pattern
 
-**Blank Lines:**
-- Two blank lines between module-level class and function definitions
-- One blank line between methods in classes
-- Blank lines within functions to separate logical blocks (optional)
-
-**Within Declarations:**
-- Inline comments right-aligned using spaces: `field: Type  # comment`
-- Alignment in Pydantic models creates visual column structure
-- Function signatures on single line unless very long
+Each method module in `brewos/methods/` exports:
+- `simulate(inp: SimulationInput) -> SimulationOutput` — dispatches to fast or accurate solver based on `inp.mode`
+- A `{METHOD_UPPER}_DEFAULTS` dict with keys: `brew_time`, `water_temp`, `brew_ratio_min`, `brew_ratio_max`, plus method-specific keys
+- Example: `brewos/methods/french_press.py` exports `FRENCH_PRESS_DEFAULTS`; `brewos/methods/moka_pot.py` exports `MOKA_POT_DEFAULTS`
 
 ---
 
-*Convention analysis: 2026-03-26*
+## TypeScript / React Native Conventions
+
+### Naming Patterns
+
+**Files:**
+- Screen files (in `app/`): lowercase filename, default export: `dashboard.tsx`, `results.tsx`, `history.tsx`
+- Component files: PascalCase matching the exported function name: `FormField.tsx`, `SCAChart.tsx`, `RotarySelector.tsx`
+- Hook files: camelCase prefixed `use`: `useSimulation.ts`, `useRunHistory.ts`, `useHealthCheck.ts`
+- Constant files: camelCase: `colors.ts`, `typography.ts`, `spacing.ts`, `brewMethods.ts`, `api.ts`
+- Test files: `ComponentName.test.tsx` or `hookName.test.ts` in `brewos-engine/keif-mobile/__tests__/unit/`
+
+**Components:**
+- Named exports (not default): `export function SCAChart(...)`, `export function FormField(...)`
+- Screen files (in `app/`) use default exports: `export default function DashboardScreen()`
+- Props interface named `{ComponentName}Props`: `SCAChartProps`, `FormFieldProps`
+
+**Variables and state:**
+- camelCase: `selectedGrinder`, `grinderSetting`, `isManualGrinder`
+- Boolean state: descriptive — `loading`, `backendReady`, `currentRunSaved`
+- Handler functions: `handle` prefix — `handleSimulate`, `handleSelect`
+
+**Constants:**
+- UPPER_SNAKE for chart zone config objects: `FILTER_ZONE`, `ESPRESSO_ZONE`
+- Exported constant objects: UPPER for collections — `Colors`, `Typography`, `Spacing`, `BREW_METHODS`, `GRINDER_PRESETS`
+
+### Code Style
+
+**TypeScript:**
+- TypeScript 5.3 (see `brewos-engine/keif-mobile/package.json`)
+- `interface` for component props and data shapes: `interface FormFieldProps { ... }`
+- `type` for union types and aliases: `type GrinderPreset = (typeof GRINDER_PRESETS)[number]`
+- `as const` on all exported constant objects: `export const Colors = { ... } as const`
+- `import type` for type-only imports: `import type { SimulationInput } from "../types/simulation"`
+
+**Formatting:**
+- 2-space indentation
+- Double quotes for JSX string props; template literals for dynamic strings
+- Arrow functions with `useCallback` for handlers that appear in dependency arrays or are passed as props
+
+### Component Patterns
+
+**Structure order within a file:**
+1. Imports (React, RN primitives, Expo/navigation, third-party, local constants, local components, type imports)
+2. Interface definitions for props
+3. Module-level constants (zone configs, etc.)
+4. Helper functions (e.g., `getChartConfig()`)
+5. Named component export function
+6. `StyleSheet.create({})` at bottom of file
+
+**StyleSheet:**
+- Always use `StyleSheet.create({})` — never inline style objects
+- Styles defined at module level (not inside the component function body)
+- Style keys: camelCase — `container`, `fieldRow`, `historyButtonText`
+- Spread Typography presets: `...Typography.label`, `...Typography.body` — never repeat font values inline
+- Color references always from `Colors` — never hardcoded hex strings in styles
+- Spacing references from `Spacing` — `Spacing.sm`, `Spacing.md`, `Spacing.xl`, `Spacing.xxl`
+
+**Example from `brewos-engine/keif-mobile/components/FormField.tsx`:**
+```typescript
+const styles = StyleSheet.create({
+  label: {
+    ...Typography.label,
+    color: Colors.textSecondary,
+    marginBottom: Spacing.sm,
+  },
+  fieldRow: {
+    flexDirection: "row",
+    backgroundColor: Colors.surfaceField,
+    borderColor: Colors.borderSubtle,
+    borderRadius: 12,
+    height: 48,
+  },
+});
+```
+
+**Accessibility:**
+- `accessibilityLabel` on interactive elements and charts
+- `accessibilityRole="button"` on `TouchableOpacity` components
+- Charts include descriptive label with rendered values: `` `SCA brew chart. TDS ${tds.toFixed(2)}%, EY ${ey.toFixed(1)}%` ``
+
+### Hook Patterns
+
+- Function name: `use{Domain}` — `useSimulation`, `useRunHistory`, `useHealthCheck`
+- Returns an object (not an array) for multi-value hooks
+- `useCallback` wraps all functions referenced in dependency arrays or passed to children
+- State typed with explicit generics: `useState<SimulationOutput | null>(null)`
+
+**Error state convention:**
+- `error` is `string | null` — human-readable message, not an `Error` object
+- `clearError` callback exposed from hook: `const clearError = useCallback(() => setError(null), [])`
+
+**Example from `brewos-engine/keif-mobile/hooks/useSimulation.ts`:**
+```typescript
+export function useSimulation() {
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState<SimulationOutput | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const simulate = useCallback(async (input: SimulationInput) => {
+    setLoading(true);
+    setError(null);
+    // ...
+  }, []);
+
+  return { simulate, loading, result, error, clearError, clearResult };
+}
+```
+
+### Context Pattern
+
+- Context value typed with an explicit interface: `interface SimulationResultContextValue { ... }`
+- Created with `createContext<Type | null>(null)`
+- Provider exported as `{Domain}Provider`: `export function SimulationResultProvider(...)`
+- Consumer hook throws if used outside provider:
+  ```typescript
+  if (!context) throw new Error("useSimulationResult must be used within a SimulationResultProvider");
+  ```
+- Files live in `brewos-engine/keif-mobile/context/` — e.g., `context/SimulationResultContext.tsx`
+
+### Constants Organization
+
+All constants use `as const` and are referenced by name throughout the app — never copy-paste values:
+
+- `constants/colors.ts` — `Colors` — all UI colors by semantic name
+- `constants/typography.ts` — `Typography` — `label`, `body`, `heading`, `display` presets
+- `constants/spacing.ts` — `Spacing` — named spacing sizes
+- `constants/brewMethods.ts` — `BREW_METHODS` array, `GRINDER_PRESETS` array
+- `constants/api.ts` — `API_BASE_URL`
+
+### Import Organization (TypeScript)
+
+**Order:**
+1. React and React Native: `import React from "react"`, `import { View, Text } from "react-native"`
+2. Expo and navigation: `import { useRouter } from "expo-router"`
+3. Third-party libraries: `import { CartesianChart } from "victory-native"`
+4. Local constants: `import { Colors } from "../constants/colors"`
+5. Local components: `import { FormField } from "../components/FormField"`
+6. Local hooks: `import { useSimulation } from "../hooks/useSimulation"`
+7. Type imports last: `import type { SimulationInput } from "../types/simulation"`
+
+**Path style:**
+- Relative paths with `../` prefix; no path aliases configured
+- `"../constants/..."`, `"../components/..."`, `"../hooks/..."`, `"../types/..."`
+
+---
+
+*Convention analysis: 2026-04-01*

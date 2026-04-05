@@ -102,6 +102,10 @@ Recent decisions affecting current work:
 - [Phase 07]: SimulationResultContext wraps entire navigator in _layout.tsx for cross-screen state sharing
 - [Phase 07]: expo-sqlite ~14.0.6 async API for SDK 52; nearest-t merge for dual extraction curves; Skia Circle for per-run SCA scatter points
 
+### Roadmap Evolution
+
+- Phase 08 added: Run History trash bin — soft delete with restore and expiry
+
 ### Pending Todos
 
 None yet.

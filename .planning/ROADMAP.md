@@ -147,3 +147,13 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7
 | 5. Integration Tests + FastAPI Backend | 2/2 | Complete   | 2026-03-28 |
 | 6. Mobile Core Screens | 0/3 | Not started | - |
 | 7. Mobile Extended + Run History | 0/2 | Not started | - |
+
+### Phase 8: Run History trash bin — soft delete with restore and expiry
+
+**Goal:** [To be planned]
+**Requirements**: TBD
+**Depends on:** Phase 7
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd:plan-phase 8 to break down)

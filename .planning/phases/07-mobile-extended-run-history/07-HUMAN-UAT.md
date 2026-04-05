@@ -8,7 +8,11 @@ updated: 2026-03-28T00:00:00Z
 
 ## Current Test
 
-[awaiting human testing]
+number: 1
+name: Extended Output Screen Navigation
+expected: |
+  Run a simulation. On Results screen, tap "View Details." Should navigate to Extended Output screen showing extraction curve chart, PSD chart, flavor bars, and detail cards — all populated with real simulation data.
+awaiting: user response
 
 ## Tests
 
