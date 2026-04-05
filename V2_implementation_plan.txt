@@ -1,0 +1,69 @@
+# Keif v2 Roadmap
+**Defined:** 2026-04-05
+**Status:** Planning
+
+---
+
+## Milestone 1: Production Build + Polish
+*Priority: FIRST — v1 works but nobody can use it without APK*
+
+- [ ] Production APK build (EAS or local)
+- [ ] README overhaul — project description, architecture, setup, screenshots
+- [ ] GitHub Releases APK upload
+- [ ] Final bug fix pass — charts, SQLite, navigation
+- [ ] CI APK build automation (on release tag)
+
+## Milestone 2: JS Solver — Offline Engine
+*Priority: SECOND — biggest technical differentiator, removes backend dependency*
+
+- [ ] Port immersion solver to JS (3 ODE, RK45) — French Press + AeroPress-steep
+- [ ] Python vs JS result comparison test suite
+- [ ] Port pressure solver to JS (6 ODE) — Moka Pot
+- [ ] Port percolation solver to JS (20-node MOL) — V60, Kalita, Espresso
+- [ ] Port fast mode (biexponential formula) to JS
+- [ ] Port grinder database + output assembly + flavor profile to JS
+- [ ] Make backend optional: online → backend, offline → on-device
+- [ ] Offline mode UI indicator
+
+## Milestone 3: Freemium Infrastructure
+*Priority: THIRD — monetization layer on top of offline-capable app*
+
+- [ ] Free vs Premium feature gate system
+- [ ] Free tier: fast mode, French Press + V60, 1 grinder, 5 saved runs
+- [ ] Premium tier: all methods, accurate mode, all grinders, unlimited history, compare
+- [ ] Payment integration (RevenueCat)
+- [ ] Premium unlock screen UI
+
+## Milestone 4: Grinder Presets + Community
+*Priority: FOURTH — more grinders = more users*
+
+- [ ] Timemore C2/C3 preset
+- [ ] Niche Zero preset
+- [ ] DF64 preset
+- [ ] Eureka Mignon preset
+- [ ] Fellow Ode preset
+- [ ] GitHub PR workflow for community grinder presets
+- [ ] Grinder preset validation script (PSD shape check, range check)
+
+## Milestone 5: Engine Improvements
+*Priority: FIFTH — accuracy improvements on working engine*
+
+- [ ] Re-adsorption term fix (BREWOS-TODO-001)
+- [ ] Espresso pre-infusion pressure ramp
+- [ ] CO2 model upgrade (3-component, replacing v1 simplified version)
+- [ ] Independent validation: Batali 2020 time-series, Liang multi-grind
+- [ ] Bean density input (optional, requires refractometer data)
+
+## Milestone 6: Hardware Integration
+*Priority: SIXTH — most complex, most hardware-dependent*
+
+- [ ] Bluetooth scale integration (live weight → real-time simulation feed)
+- [ ] Bluetooth thermometer (real temp → replaces temp decay model)
+- [ ] Refractometer calibration flow ("calibrate with your own TDS measurement")
+
+## Milestone 7: Store Release
+*Priority: FUTURE — when app is polished and monetization is working*
+
+- [ ] App Store + Play Store submission
+- [ ] Store listing, screenshots, description
+- [ ] Privacy policy, terms of service
