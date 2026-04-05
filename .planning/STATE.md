@@ -106,6 +106,12 @@ Recent decisions affecting current work:
 
 None yet.
 
+### Quick Tasks Completed
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| 260405-o3p | Remove temperature curve toggle on Extended Output screen — always show chart | 2026-04-05 | ac21934 | [260405-o3p-remove-temperature-curve-toggle-on-exten](./quick/260405-o3p-remove-temperature-curve-toggle-on-exten/) |
+
 ### Blockers/Concerns
 
 - Pressure solver confidence is MEDIUM-LOW for Moka Pot (Siregar 2026 is a preprint, dimensionless params need re-dimensionalization)
@@ -113,6 +119,8 @@ None yet.
 - alpha_n/beta_n Moroney params may need recalibration for espresso regime (no espresso-specific published values)
 
 ## Session Continuity
+
+Last activity: 2026-04-05 - Completed quick task 260405-o3p: Remove temperature curve toggle on Extended Output screen — always show chart
 
 Last session: 2026-03-28T20:03:49.769Z
 Stopped at: Completed 07-02-PLAN.md
