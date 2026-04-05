@@ -9,6 +9,8 @@ import type {
 import type { StackNavigationState } from "@react-navigation/native";
 import type { ParamListBase } from "@react-navigation/native";
 import { useFonts, Inter_400Regular, Inter_600SemiBold } from "@expo-google-fonts/inter";
+import { Bitter_400Regular, Bitter_700Bold } from "@expo-google-fonts/bitter";
+import { JetBrainsMono_600SemiBold, JetBrainsMono_700Bold } from "@expo-google-fonts/jetbrains-mono";
 import { StatusBar } from "expo-status-bar";
 import { Colors } from "../constants/colors";
 import { SimulationResultProvider } from "../context/SimulationResultContext";
@@ -62,6 +64,10 @@ export default function RootLayout() {
   const [fontsLoaded] = useFonts({
     Inter_400Regular,
     Inter_600SemiBold,
+    Bitter_400Regular,
+    Bitter_700Bold,
+    JetBrainsMono_600SemiBold,
+    JetBrainsMono_700Bold,
   });
 
   if (!fontsLoaded) {
