@@ -115,6 +115,7 @@ None yet.
 | # | Description | Date | Commit | Directory |
 |---|-------------|------|--------|-----------|
 | 260405-o3p | Remove temperature curve toggle on Extended Output screen — always show chart | 2026-04-05 | ac21934 | [260405-o3p-remove-temperature-curve-toggle-on-exten](./quick/260405-o3p-remove-temperature-curve-toggle-on-exten/) |
+| 260406-lgu | Add comprehensive README.md for BrewOS Engine repository | 2026-04-06 | 1f58326 | [260406-lgu-check-the-codebase-and-update-readme-md-](./quick/260406-lgu-check-the-codebase-and-update-readme-md-/) |
 
 ### Blockers/Concerns
 
@@ -124,8 +125,8 @@ None yet.
 
 ## Session Continuity
 
-Last activity: 2026-04-05 - Completed quick task 260405-o3p: Remove temperature curve toggle on Extended Output screen — always show chart
+Last activity: 2026-04-06 - Completed quick task 260406-lgu: Add comprehensive README.md for BrewOS Engine repository
 
-Last session: 2026-03-28T20:03:49.769Z
-Stopped at: Completed 07-02-PLAN.md
+Last session: 2026-04-06T12:30:41Z
+Stopped at: Completed quick task 260406-lgu
 Resume file: None
