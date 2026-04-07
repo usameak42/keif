@@ -22,24 +22,34 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 4: Extended Outputs + Grinder Presets** - All 6 extended outputs across all methods, 1Zpresso + Baratza Encore presets
 - [x] **Phase 5: Integration Tests + FastAPI Backend** - Cross-method fast/accurate tolerance suite, /simulate endpoint, deployment (completed 2026-03-28)
 - [ ] **Phase 6: Mobile Core Screens** - Expo/React Native input screens, simulation trigger, TDS/EY/SCA results
-- [ ] **Phase 7: Mobile Extended + Run History** - Extended output charts, saved runs, side-by-side comparison
-- [ ] **Phase 8: Run History Trash Bin** - Soft delete with restore and expiry
+- [x] **Phase 7: Mobile Extended + Run History** - Extended output charts, saved runs, side-by-side comparison
+
+**Engine & Feature Expansion** *(new phases — engine parameters and features before JS port)*
+
+- [ ] **Phase 8: 5-Tier Roast Level** - Add medium-light and medium-dark to the roast enum; CO2 content, bean density, moisture, Agtron parameter tables from Physics/v2-research/roast-levels/
+- [ ] **Phase 9: Geek Mode UI** - Settings toggle; when enabled, brew dashboard exposes vessel type, water TDS, and bloom override input fields
+- [ ] **Phase 10: Vessel Thermal Parameters** - Newton cooling k-values per vessel type added to engine; temperature decay curve updated based on vessel selection (data: Physics/v2-research/vessel-thermal/)
+- [ ] **Phase 11: Roast Date & Bean Age Model** - CO2 decay curve (Shimoni & Labuza), resting period recommendations, freshness score output — Fernandez-Rosillo 2025 zero-order polyphenol model (data: Physics/v2-research/roast-date-harvest/)
+- [ ] **Phase 12: Processing Type & Origin Parameters** - Processing modifier (washed/natural/honey/anaerobic), altitude → bean density mapping, variety ranking added to engine (data: Physics/v2-research/processing-types/ and region-altitude-variety/)
+- [ ] **Phase 13: Tasting Notes & Flavor Engine** - Compound kinetics, EY threshold mapping, flavor → brew parameter recommendation engine (data: Physics/v2-research/tasting-notes-brew/)
+- [ ] **Phase 14: Brew Recommendation Page** - User inputs bean details; app recommends brew parameters (grind size, ratio, temp, time) based on engine model
+- [ ] **Phase 15: Cross-Brew Recommendations** - "Brew this filter bean as espresso" feature; engine adapts parameters across brew methods for the same bean
 
 **Milestone 2: v2 — Production to Store** *(source: V2_implementation_plan.txt)*
 
-- [ ] **Phase 9: Production APK + Release Pipeline** - EAS build, README, GitHub Releases, CI (V2 M1)
-- [ ] **Phase 10: JS Immersion Solver** - Port 3-ODE immersion solver to JS, French Press + AeroPress, parity tests (V2 M2)
-- [ ] **Phase 11: JS Pressure + Percolation Solvers** - Port 6-ODE pressure and 20-node MOL percolation to JS (V2 M2)
-- [ ] **Phase 12: JS Fast Mode + Grinder DB + Output Assembly** - Full JS engine parity, all 13 outputs (V2 M2)
-- [ ] **Phase 13: Offline Mode + Backend Toggle** - Online/offline routing, offline UI indicator (V2 M2)
-- [ ] **Phase 14: Freemium Feature Gates** - Free/Premium tier enforcement (V2 M3)
-- [ ] **Phase 15: RevenueCat + Premium UI** - Payment integration, unlock screen (V2 M3)
-- [ ] **Phase 16: Community Grinder Presets** - 5 new presets, PR workflow, validation script (V2 M4)
-- [ ] **Phase 17: Engine Accuracy Improvements** - Re-adsorption fix, pre-infusion, CO2 upgrade, bean density (V2 M5)
-- [ ] **Phase 18: Independent Validation Suite** - Batali 2020, Liang multi-grind RMSE validation (V2 M5)
-- [ ] **Phase 19: Bluetooth Scale + Thermometer** - BLE hardware integration, real-time simulation feed (V2 M6)
-- [ ] **Phase 20: Refractometer Calibration Flow** - User TDS calibration per grinder (V2 M6)
-- [ ] **Phase 21: Store Release** - App Store + Play Store submission (V2 M7)
+- [ ] **Phase 16: Production APK + Release Pipeline** - EAS build, README, GitHub Releases, CI (V2 M1)
+- [ ] **Phase 17: JS Immersion Solver** - Port 3-ODE immersion solver to JS, French Press + AeroPress, parity tests (V2 M2)
+- [ ] **Phase 18: JS Pressure + Percolation Solvers** - Port 6-ODE pressure and 20-node MOL percolation to JS (V2 M2)
+- [ ] **Phase 19: JS Fast Mode + Grinder DB + Output Assembly** - Full JS engine parity, all 13 outputs (V2 M2)
+- [ ] **Phase 20: Offline Mode + Backend Toggle** - Online/offline routing, offline UI indicator (V2 M2)
+- [ ] **Phase 21: Freemium Feature Gates** - Free/Premium tier enforcement (V2 M3)
+- [ ] **Phase 22: RevenueCat + Premium UI** - Payment integration, unlock screen (V2 M3)
+- [ ] **Phase 23: Community Grinder Presets** - 5 new presets, PR workflow, validation script (V2 M4)
+- [ ] **Phase 24: Engine Accuracy Improvements** - Re-adsorption fix, pre-infusion, CO2 upgrade, bean density (V2 M5)
+- [ ] **Phase 25: Independent Validation Suite** - Batali 2020, Liang multi-grind RMSE validation (V2 M5)
+- [ ] **Phase 26: Bluetooth Scale + Thermometer** - BLE hardware integration, real-time simulation feed (V2 M6)
+- [ ] **Phase 27: Refractometer Calibration Flow** - User TDS calibration per grinder (V2 M6)
+- [ ] **Phase 28: Store Release** - App Store + Play Store submission (V2 M7)
 
 ## Phase Details
 
@@ -150,33 +160,144 @@ Plans:
 - [x] 07-01-PLAN.md — SimulationResultContext + extended types + results.tsx CTAs + Extended Output screen (extraction curve, PSD, flavor bars, detail cards)
 - [x] 07-02-PLAN.md — expo-sqlite hooks (useRunHistory, useRunComparison) + Run History screen + Compare View screen
 
+### Phase 8: 5-Tier Roast Level
+**Goal**: Engine supports 5 roast levels (light, medium-light, medium, medium-dark, dark); all parameter tables updated with research-backed values per tier
+**Depends on**: Phase 5 (Python engine stable), Phase 7 (mobile app for UI update)
+**Research data**: Physics/v2-research/roast-levels/
+**Plans:** 2 plans
+**Success Criteria** (what must be TRUE):
+  1. RoastLevel enum extended to 5 values: light, medium_light, medium, medium_dark, dark
+  2. CO2 content at t=0, bean density, moisture content, and Agtron number tables populated for all 5 tiers (from research data)
+  3. All existing solvers accept the new roast levels without errors; CO2 bloom modifier and mass-transfer coefficient use tier-specific parameters
+  4. Mobile brew dashboard roast selector shows all 5 options
+  5. `pytest` green: all 6 methods × 5 roast levels produce physically plausible SimulationOutput
+
+Plans:
+- [ ] 08-01-PLAN.md — 5-tier RoastLevel enum + CO2 bloom recalibration (Smrke 2018) + roast-dependent density + Agtron output + 6x5 test matrix
+- [ ] 08-02-PLAN.md — RoastPillSelector component + AsyncStorage persistence + dashboard wiring
+
+### Phase 9: Geek Mode UI
+**Goal**: Advanced users can access additional input fields via a Geek Mode toggle in settings
+**Depends on**: Phase 7 (mobile app complete)
+**Success Criteria** (what must be TRUE):
+  1. Settings screen has a "Geek Mode" toggle (off by default); state persists across sessions
+  2. When Geek Mode is on, brew dashboard shows: vessel type selector, water TDS input (ppm), and bloom duration override field
+  3. When Geek Mode is off, these fields are hidden and engine uses default values
+  4. Vessel type and water TDS inputs pass through to SimulationInput and are accepted by the API
+  5. No UI regression in standard (non-geek) mode
+
+Plans:
+- [ ] TBD (run /gsd:plan-phase 9 to break down)
+
+### Phase 10: Vessel Thermal Parameters
+**Goal**: Engine uses measured Newton cooling k-values per vessel type; temperature decay curve reflects actual vessel physics
+**Depends on**: Phase 4 (temperature decay curve infrastructure), Phase 9 (vessel type selector in UI)
+**Research data**: Physics/v2-research/vessel-thermal/
+**Success Criteria** (what must be TRUE):
+  1. Newton cooling k-values defined for all supported vessel types (ceramic V60, glass V60, stainless AeroPress, stovetop Moka Pot, glass French Press, etc.)
+  2. Temperature decay curve T(t) in SimulationOutput uses vessel-specific k-value when vessel type is provided
+  3. Default vessel assigned per brew method when not specified
+  4. `pytest`: temperature at end of brew time is physically plausible for each vessel type (not identical across vessel types)
+  5. Mobile results screen shows temperature decay curve label reflecting vessel type
+
+Plans:
+- [ ] TBD (run /gsd:plan-phase 10 to break down)
+
+### Phase 11: Roast Date & Bean Age Model
+**Goal**: Engine models CO2 decay over days-since-roast and outputs a freshness score; resting period recommendations shown per brew method
+**Depends on**: Phase 8 (5-tier roast level, roast-specific CO2 at t=0), Phase 9 (Geek Mode for roast date input field)
+**Research data**: Physics/v2-research/roast-date-harvest/ (Shimoni & Labuza 2000, Fernandez-Rosillo 2025)
+**Success Criteria** (what must be TRUE):
+  1. SimulationInput accepts optional `days_since_roast` integer field
+  2. CO2 content at brew time computed from Shimoni & Labuza exponential decay: C(t) = C0 · e^(−D_eff·t) with roast-level-specific C0 and D_eff values
+  3. Freshness score (0–100) computed from Fernandez-Rosillo 2025 zero-order polyphenol model; included in SimulationOutput
+  4. Resting period recommendation (e.g. "Too fresh — rest 3 more days for espresso") included in warnings when days_since_roast is below method-specific threshold
+  5. Mobile results screen shows freshness indicator when days_since_roast is provided
+
+Plans:
+- [ ] TBD (run /gsd:plan-phase 11 to break down)
+
+### Phase 12: Processing Type & Origin Parameters
+**Goal**: Engine accepts processing type and origin data; applies research-backed modifiers to bean density and extraction dynamics
+**Depends on**: Phase 8 (roast level infrastructure as pattern for new input parameters)
+**Research data**: Physics/v2-research/processing-types/, Physics/v2-research/region-altitude-variety/
+**Success Criteria** (what must be TRUE):
+  1. SimulationInput accepts `processing_type` enum (washed, natural, honey_yellow, honey_red, honey_black, anaerobic, carbonic_maceration, wet_hulled) and optional `altitude_m` integer
+  2. Processing type applies modifiers to intrinsic bean density and solubility parameters; anaerobic/CM apply finer grind and lower temp recommendations
+  3. Altitude → bean density lookup table applied when altitude_m is provided
+  4. Processing type and altitude modifiers documented in SimulationOutput.warnings when they meaningfully change results
+  5. `pytest`: washed vs anaerobic produce different recommended parameters for identical other inputs
+
+Plans:
+- [ ] TBD (run /gsd:plan-phase 12 to break down)
+
+### Phase 13: Tasting Notes & Flavor Engine
+**Goal**: Engine maps EY% and TDS% to predicted flavor descriptors; outputs a structured tasting note prediction with confidence levels
+**Depends on**: Phase 12 (full bean parameter set feeding flavor prediction)
+**Research data**: Physics/v2-research/tasting-notes-brew/
+**Success Criteria** (what must be TRUE):
+  1. Flavor prediction model maps EY% thresholds to under-extracted / balanced / over-extracted zones with associated flavor descriptors (sour, bright, sweet, balanced, bitter, astringent)
+  2. Compound kinetics (chlorogenic acid, sucrose, Maillard products) modeled as sequential extraction windows based on EY%
+  3. SimulationOutput.flavor_profile extended with descriptor labels and EY% zone classification
+  4. Mobile results screen shows predicted tasting notes alongside flavor axis chart
+  5. `pytest`: standard balanced extraction (18–22% EY) produces "sweet/balanced" descriptors; under-extraction (<16%) produces "sour" descriptors
+
+Plans:
+- [ ] TBD (run /gsd:plan-phase 13 to break down)
+
+### Phase 14: Brew Recommendation Page
+**Goal**: Users can describe their bean and get recommended brew parameters from the engine
+**Depends on**: Phase 13 (flavor engine complete), Phase 12 (processing/origin parameters)
+**Success Criteria** (what must be TRUE):
+  1. New "Brew Setup" screen: user inputs roast level, processing type, and optionally altitude and days-since-roast
+  2. Engine computes recommended grind size, dose, water temp, brew time, and brew ratio for each available method
+  3. Recommendations displayed as a list; user can tap a method to pre-fill the brew dashboard with recommended parameters
+  4. Recommendations adapt to available grinder presets
+  5. "Why this recommendation?" explanation shown for at least 2 key parameters
+
+Plans:
+- [ ] TBD (run /gsd:plan-phase 14 to break down)
+
+### Phase 15: Cross-Brew Recommendations
+**Goal**: Engine adapts brew parameters across methods for the same bean; "try this bean as espresso" feature
+**Depends on**: Phase 14 (brew recommendation infrastructure)
+**Success Criteria** (what must be TRUE):
+  1. From any saved run, user can tap "Try as [other method]" to get cross-method adapted parameters
+  2. Engine translates parameters (grind size, ratio, temp) across methods with physically grounded adjustments
+  3. Cross-brew suggestion shows predicted EY% delta vs original method
+  4. At minimum: filter → espresso and espresso → filter adaptations work for all compatible method pairs
+  5. Cross-brew result can be run as a simulation directly from the suggestion screen
+
+Plans:
+- [ ] TBD (run /gsd:plan-phase 15 to break down)
+
 ---
 
 ## Milestone 2: v2 — Production to Store
 
 *Source: V2_implementation_plan.txt (defined 2026-04-05)*
 
-Phases 9–21 take the working v1 app through production release, offline engine, freemium monetization, community grinder presets, physics improvements, hardware integration, and store submission.
+Phases 16–28 take the working v1 app through production release, offline engine, freemium monetization, community grinder presets, physics improvements, hardware integration, and store submission.
 
-- [ ] **Phase 9: Production APK + Release Pipeline** — EAS/local production build, README overhaul, GitHub Releases upload, final bug-fix pass, CI APK automation on release tag (V2 M1)
-- [ ] **Phase 10: JS Immersion Solver** — Port 3-ODE immersion solver (RK45) to JS; French Press + AeroPress-steep; Python vs JS result comparison test suite (V2 M2)
-- [ ] **Phase 11: JS Pressure + Percolation Solvers** — Port 6-ODE pressure solver (Moka Pot) and 20-node MOL percolation solver (V60, Kalita, Espresso) to JS (V2 M2)
-- [ ] **Phase 12: JS Fast Mode + Grinder DB + Output Assembly** — Port biexponential fast mode, grinder database, output assembly, and flavor profile to JS; parity tests vs Python (V2 M2)
-- [ ] **Phase 13: Offline Mode + Backend Toggle** — Make backend optional (online → backend, offline → on-device JS solver); offline mode UI indicator (V2 M2)
-- [ ] **Phase 14: Freemium Feature Gates** — Free vs Premium gate system; free tier (fast mode, French Press + V60, 1 grinder, 5 saved runs); premium tier (all methods, accurate mode, all grinders, unlimited history, compare) (V2 M3)
-- [ ] **Phase 15: RevenueCat + Premium UI** — RevenueCat payment integration; premium unlock screen UI (V2 M3)
-- [ ] **Phase 16: Community Grinder Presets** — Timemore C2/C3, Niche Zero, DF64, Eureka Mignon, Fellow Ode presets; GitHub PR workflow; preset validation script (V2 M4)
-- [ ] **Phase 17: Engine Accuracy Improvements** — Re-adsorption term fix (BREWOS-TODO-001); espresso pre-infusion pressure ramp; CO2 model upgrade (3-component); bean density input (V2 M5)
-- [ ] **Phase 18: Independent Validation Suite** — Batali 2020 time-series validation; Liang multi-grind validation; RMSE reporting (V2 M5)
-- [ ] **Phase 19: Bluetooth Scale + Thermometer** — Bluetooth scale integration (live weight → real-time simulation feed); Bluetooth thermometer (real temp → replaces temp decay model) (V2 M6)
-- [ ] **Phase 20: Refractometer Calibration Flow** — "Calibrate with your own TDS measurement" UI flow; calibration stored per-grinder (V2 M6)
-- [ ] **Phase 21: Store Release** — App Store + Play Store submission; store listings, screenshots, description; privacy policy + terms of service (V2 M7)
+- [ ] **Phase 16: Production APK + Release Pipeline** — EAS/local production build, README overhaul, GitHub Releases upload, final bug-fix pass, CI APK automation on release tag (V2 M1)
+- [ ] **Phase 17: JS Immersion Solver** — Port 3-ODE immersion solver (RK45) to JS; French Press + AeroPress-steep; Python vs JS result comparison test suite (V2 M2)
+- [ ] **Phase 18: JS Pressure + Percolation Solvers** — Port 6-ODE pressure solver (Moka Pot) and 20-node MOL percolation solver (V60, Kalita, Espresso) to JS (V2 M2)
+- [ ] **Phase 19: JS Fast Mode + Grinder DB + Output Assembly** — Port biexponential fast mode, grinder database, output assembly, and flavor profile to JS; parity tests vs Python (V2 M2)
+- [ ] **Phase 20: Offline Mode + Backend Toggle** — Make backend optional (online → backend, offline → on-device JS solver); offline mode UI indicator (V2 M2)
+- [ ] **Phase 21: Freemium Feature Gates** — Free vs Premium gate system; free tier (fast mode, French Press + V60, 1 grinder, 5 saved runs); premium tier (all methods, accurate mode, all grinders, unlimited history, compare) (V2 M3)
+- [ ] **Phase 22: RevenueCat + Premium UI** — RevenueCat payment integration; premium unlock screen UI (V2 M3)
+- [ ] **Phase 23: Community Grinder Presets** — Timemore C2/C3, Niche Zero, DF64, Eureka Mignon, Fellow Ode presets; GitHub PR workflow; preset validation script (V2 M4)
+- [ ] **Phase 24: Engine Accuracy Improvements** — Re-adsorption term fix (BREWOS-TODO-001); espresso pre-infusion pressure ramp; CO2 model upgrade (3-component); bean density input (V2 M5)
+- [ ] **Phase 25: Independent Validation Suite** — Batali 2020 time-series validation; Liang multi-grind validation; RMSE reporting (V2 M5)
+- [ ] **Phase 26: Bluetooth Scale + Thermometer** — Bluetooth scale integration (live weight → real-time simulation feed); Bluetooth thermometer (real temp → replaces temp decay model) (V2 M6)
+- [ ] **Phase 27: Refractometer Calibration Flow** — "Calibrate with your own TDS measurement" UI flow; calibration stored per-grinder (V2 M6)
+- [ ] **Phase 28: Store Release** — App Store + Play Store submission; store listings, screenshots, description; privacy policy + terms of service (V2 M7)
 
 ---
 
-### Phase 9: Production APK + Release Pipeline
+### Phase 16: Production APK + Release Pipeline
 **Goal**: A production APK is available for download via GitHub Releases; README documents the project; CI builds the APK on release tag
-**Depends on**: Phase 7 (working mobile app)
+**Depends on**: Phase 15 (all engine & feature expansion phases complete)
 **Success Criteria**:
   1. Production APK builds successfully via EAS or local Gradle build with no debug flags
   2. README covers project description, architecture, setup, and screenshots
@@ -185,9 +306,9 @@ Phases 9–21 take the working v1 app through production release, offline engine
   5. CI workflow triggers APK build on push to release tag
 
 Plans:
-- [ ] TBD (run /gsd:plan-phase 9 to break down)
+- [ ] TBD (run /gsd:plan-phase 16 to break down)
 
-### Phase 10: JS Immersion Solver
+### Phase 17: JS Immersion Solver
 **Goal**: Immersion extraction (French Press, AeroPress-steep) runs fully on-device in JS with results matching the Python engine within ±2%
 **Depends on**: Phase 5 (Python engine stable), Phase 7 (mobile app)
 **Success Criteria**:
@@ -196,22 +317,22 @@ Plans:
   3. No backend call required for immersion simulation in offline mode
 
 Plans:
-- [ ] TBD (run /gsd:plan-phase 10 to break down)
+- [ ] TBD (run /gsd:plan-phase 17 to break down)
 
-### Phase 11: JS Pressure + Percolation Solvers
+### Phase 18: JS Pressure + Percolation Solvers
 **Goal**: All remaining brew methods (Moka Pot, V60, Kalita, Espresso) run on-device in JS
-**Depends on**: Phase 10 (JS solver infrastructure established)
+**Depends on**: Phase 17 (JS solver infrastructure established)
 **Success Criteria**:
   1. JS 6-ODE pressure solver (Moka Pot) matches Python within ±2%
   2. JS 20-node MOL percolation solver (V60, Kalita, Espresso) matches Python within ±2%
   3. All 6 methods produce complete SimulationOutput from JS engine
 
 Plans:
-- [ ] TBD (run /gsd:plan-phase 11 to break down)
+- [ ] TBD (run /gsd:plan-phase 18 to break down)
 
-### Phase 12: JS Fast Mode + Grinder DB + Output Assembly
+### Phase 19: JS Fast Mode + Grinder DB + Output Assembly
 **Goal**: Full JS engine parity — fast mode, grinder lookup, output assembly, and flavor profile all work in JS
-**Depends on**: Phase 11
+**Depends on**: Phase 18
 **Success Criteria**:
   1. JS biexponential fast mode returns EY% within ±2% of JS accurate mode for all 6 methods
   2. JS grinder database returns correct median particle size and PSD for all presets
@@ -219,11 +340,11 @@ Plans:
   4. Cross-engine parity test suite (JS vs Python) passes for all methods, both modes
 
 Plans:
-- [ ] TBD (run /gsd:plan-phase 12 to break down)
+- [ ] TBD (run /gsd:plan-phase 19 to break down)
 
-### Phase 13: Offline Mode + Backend Toggle
+### Phase 20: Offline Mode + Backend Toggle
 **Goal**: App detects network availability and automatically routes to JS engine offline; UI indicates offline mode
-**Depends on**: Phase 12 (complete JS engine)
+**Depends on**: Phase 19 (complete JS engine)
 **Success Criteria**:
   1. Online: API backend used by default (accurate mode available)
   2. Offline: JS engine used automatically; fast mode and accurate mode both available on-device
@@ -231,11 +352,11 @@ Plans:
   4. Transition between modes is seamless with no crash or stale state
 
 Plans:
-- [ ] TBD (run /gsd:plan-phase 13 to break down)
+- [ ] TBD (run /gsd:plan-phase 20 to break down)
 
-### Phase 14: Freemium Feature Gates
+### Phase 21: Freemium Feature Gates
 **Goal**: Free and Premium tiers are enforced in the app; free users are gated to the defined free feature set
-**Depends on**: Phase 13 (offline engine complete — gates apply to on-device features too)
+**Depends on**: Phase 20 (offline engine complete — gates apply to on-device features too)
 **Success Criteria**:
   1. Free tier: fast mode only, French Press + V60, 1 grinder preset, max 5 saved runs
   2. Premium tier: all methods, accurate mode, all grinders, unlimited history, compare view
@@ -243,11 +364,11 @@ Plans:
   4. Gated UI elements show upgrade prompt, not blank/error state
 
 Plans:
-- [ ] TBD (run /gsd:plan-phase 14 to break down)
+- [ ] TBD (run /gsd:plan-phase 21 to break down)
 
-### Phase 15: RevenueCat + Premium UI
+### Phase 22: RevenueCat + Premium UI
 **Goal**: Users can purchase Premium through RevenueCat; unlock screen is polished and conversion-optimized
-**Depends on**: Phase 14 (feature gates in place)
+**Depends on**: Phase 21 (feature gates in place)
 **Success Criteria**:
   1. RevenueCat SDK integrated; subscription products configured for iOS and Android
   2. Premium unlock screen lists features with clear value proposition
@@ -255,9 +376,9 @@ Plans:
   4. Restore purchases works for returning users
 
 Plans:
-- [ ] TBD (run /gsd:plan-phase 15 to break down)
+- [ ] TBD (run /gsd:plan-phase 22 to break down)
 
-### Phase 16: Community Grinder Presets
+### Phase 23: Community Grinder Presets
 **Goal**: 5 new grinder presets ship; community can contribute via PR; presets are validated before merge
 **Depends on**: Phase 4 (grinder preset infrastructure)
 **Success Criteria**:
@@ -267,9 +388,9 @@ Plans:
   4. All 5 new presets pass validation script
 
 Plans:
-- [ ] TBD (run /gsd:plan-phase 16 to break down)
+- [ ] TBD (run /gsd:plan-phase 23 to break down)
 
-### Phase 17: Engine Accuracy Improvements
+### Phase 24: Engine Accuracy Improvements
 **Goal**: Known physics deficiencies fixed; espresso pre-infusion modeled; CO2 model upgraded to 3-component
 **Depends on**: Phase 5 (stable Python engine)
 **Success Criteria**:
@@ -279,22 +400,22 @@ Plans:
   4. Bean density accepted as optional input; affects PSD scaling when provided
 
 Plans:
-- [ ] TBD (run /gsd:plan-phase 17 to break down)
+- [ ] TBD (run /gsd:plan-phase 24 to break down)
 
-### Phase 18: Independent Validation Suite
+### Phase 25: Independent Validation Suite
 **Goal**: Engine accuracy verified against published experimental data sets
-**Depends on**: Phase 17 (engine improvements complete)
+**Depends on**: Phase 24 (engine improvements complete)
 **Success Criteria**:
   1. Batali 2020 pour-over time-series: model EY% curve matches published data within ±1.5% RMSE across full brew duration
   2. Liang 2021 multi-grind: EY% predictions for at least 3 grind settings match published values within ±1.5%
   3. Validation report generated as pytest output with per-scenario RMSE values
 
 Plans:
-- [ ] TBD (run /gsd:plan-phase 18 to break down)
+- [ ] TBD (run /gsd:plan-phase 25 to break down)
 
-### Phase 19: Bluetooth Scale + Thermometer
+### Phase 26: Bluetooth Scale + Thermometer
 **Goal**: App reads live weight from a Bluetooth scale and live temperature from a Bluetooth thermometer during brewing
-**Depends on**: Phase 13 (offline engine, real-time simulation feed makes sense)
+**Depends on**: Phase 20 (offline engine, real-time simulation feed makes sense)
 **Success Criteria**:
   1. Bluetooth scale detected and paired; live weight stream feeds into simulation in real time
   2. Bluetooth thermometer detected and paired; live temp replaces temperature decay model
@@ -302,11 +423,11 @@ Plans:
   4. Simulation updates reactively as weight/temp change during brew
 
 Plans:
-- [ ] TBD (run /gsd:plan-phase 19 to break down)
+- [ ] TBD (run /gsd:plan-phase 26 to break down)
 
-### Phase 20: Refractometer Calibration Flow
+### Phase 27: Refractometer Calibration Flow
 **Goal**: Users can calibrate the engine against their own TDS refractometer readings
-**Depends on**: Phase 19 or Phase 13 (needs working simulation output to calibrate against)
+**Depends on**: Phase 26 or Phase 20 (needs working simulation output to calibrate against)
 **Success Criteria**:
   1. Calibration flow prompts user to brew a reference cup and enter measured TDS%
   2. Scale factor computed and stored per-grinder in local DB
@@ -314,11 +435,11 @@ Plans:
   4. Calibration can be reset to default
 
 Plans:
-- [ ] TBD (run /gsd:plan-phase 20 to break down)
+- [ ] TBD (run /gsd:plan-phase 27 to break down)
 
-### Phase 21: Store Release
+### Phase 28: Store Release
 **Goal**: App submitted to and approved by App Store and Play Store
-**Depends on**: Phase 15 (monetization working), Phase 18 (physics validated), Phase 20 (full feature set)
+**Depends on**: Phase 22 (monetization working), Phase 25 (physics validated), Phase 27 (full feature set)
 **Success Criteria**:
   1. App Store submission approved; app live on iOS App Store
   2. Play Store submission approved; app live on Google Play
@@ -326,46 +447,44 @@ Plans:
   4. Privacy policy and terms of service published at accessible URLs
 
 Plans:
-- [ ] TBD (run /gsd:plan-phase 21 to break down)
+- [ ] TBD (run /gsd:plan-phase 28 to break down)
 
 ---
 
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → … → 8 (Milestone 1), then 9 → 21 (Milestone 2)
+Phases execute in numeric order: 1 → 2 → … → 15 (Engine & Feature Expansion), then 16 → 28 (Milestone 2)
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Immersion Solver + Core Engine | 3/3 | Complete   | 2026-03-26 |
+| 1. Immersion Solver + Core Engine | 3/3 | Complete | 2026-03-26 |
 | 2. Percolation Solver | 0/2 | Not started | - |
-| 3. Pressure Solver | 2/2 | Complete   | 2026-03-27 |
+| 3. Pressure Solver | 2/2 | Complete | 2026-03-27 |
 | 4. Extended Outputs + Grinder Presets | 1/2 | In Progress | - |
-| 5. Integration Tests + FastAPI Backend | 2/2 | Complete   | 2026-03-28 |
-| 6. Mobile Core Screens | 0/3 | Not started | - |
-| 7. Mobile Extended + Run History | 0/2 | Not started | - |
-| 8. Run History Trash Bin | 0/? | Not started | - |
+| 5. Integration Tests + FastAPI Backend | 2/2 | Complete | 2026-03-28 |
+| 6. Mobile Core Screens | 3/3 | Complete | - |
+| 7. Mobile Extended + Run History | 2/2 | Complete | - |
+| **— Engine & Feature Expansion —** | | | |
+| 8. 5-Tier Roast Level | 0/? | Not started | - |
+| 9. Geek Mode UI | 0/? | Not started | - |
+| 10. Vessel Thermal Parameters | 0/? | Not started | - |
+| 11. Roast Date & Bean Age Model | 0/? | Not started | - |
+| 12. Processing Type & Origin Parameters | 0/? | Not started | - |
+| 13. Tasting Notes & Flavor Engine | 0/? | Not started | - |
+| 14. Brew Recommendation Page | 0/? | Not started | - |
+| 15. Cross-Brew Recommendations | 0/? | Not started | - |
 | **— Milestone 2 —** | | | |
-| 9. Production APK + Release Pipeline | 0/? | Not started | - |
-| 10. JS Immersion Solver | 0/? | Not started | - |
-| 11. JS Pressure + Percolation Solvers | 0/? | Not started | - |
-| 12. JS Fast Mode + Grinder DB + Output Assembly | 0/? | Not started | - |
-| 13. Offline Mode + Backend Toggle | 0/? | Not started | - |
-| 14. Freemium Feature Gates | 0/? | Not started | - |
-| 15. RevenueCat + Premium UI | 0/? | Not started | - |
-| 16. Community Grinder Presets | 0/? | Not started | - |
-| 17. Engine Accuracy Improvements | 0/? | Not started | - |
-| 18. Independent Validation Suite | 0/? | Not started | - |
-| 19. Bluetooth Scale + Thermometer | 0/? | Not started | - |
-| 20. Refractometer Calibration Flow | 0/? | Not started | - |
-| 21. Store Release | 0/? | Not started | - |
-
-### Phase 8: Run History trash bin — soft delete with restore and expiry
-
-**Goal:** [To be planned]
-**Requirements**: TBD
-**Depends on:** Phase 7
-**Plans:** 0 plans
-
-Plans:
-- [ ] TBD (run /gsd:plan-phase 8 to break down)
+| 16. Production APK + Release Pipeline | 0/? | Not started | - |
+| 17. JS Immersion Solver | 0/? | Not started | - |
+| 18. JS Pressure + Percolation Solvers | 0/? | Not started | - |
+| 19. JS Fast Mode + Grinder DB + Output Assembly | 0/? | Not started | - |
+| 20. Offline Mode + Backend Toggle | 0/? | Not started | - |
+| 21. Freemium Feature Gates | 0/? | Not started | - |
+| 22. RevenueCat + Premium UI | 0/? | Not started | - |
+| 23. Community Grinder Presets | 0/? | Not started | - |
+| 24. Engine Accuracy Improvements | 0/? | Not started | - |
+| 25. Independent Validation Suite | 0/? | Not started | - |
+| 26. Bluetooth Scale + Thermometer | 0/? | Not started | - |
+| 27. Refractometer Calibration Flow | 0/? | Not started | - |
+| 28. Store Release | 0/? | Not started | - |
