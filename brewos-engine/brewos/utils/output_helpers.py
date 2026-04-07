@@ -208,6 +208,24 @@ def estimate_caffeine(coffee_dose_g: float, ey_percent: float,
     return round((coffee_dose_g * CAFFEINE_FRACTION * transfer_eff) / beverage_ml, 4)
 
 
+# ─────────────────────────────────────────────────────────────────────────────
+# AGTRON ROAST COLOR — SCA Gourmet scale midpoints
+# Source: SCA Gourmet scale from Obsidian roast_level_parameters.md, HIGH confidence.
+# ─────────────────────────────────────────────────────────────────────────────
+AGTRON_MIDPOINTS: dict = {
+    "light":        75,
+    "medium_light": 65,
+    "medium":       55,
+    "medium_dark":  45,
+    "dark":         35,
+}
+
+
+def get_agtron_number(roast_level: str) -> int:
+    """Return Agtron midpoint for roast level (SCA Gourmet scale)."""
+    return AGTRON_MIDPOINTS.get(roast_level, 55)  # fallback to medium
+
+
 def compute_puck_resistance(grind_size_um: float, porosity: float,
                             pressure_bar: float) -> float:
     """Normalised puck resistance [0, 1], 1 = tight/resistant puck.

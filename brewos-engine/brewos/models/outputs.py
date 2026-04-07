@@ -56,3 +56,4 @@ class SimulationOutput(BaseModel):
     sca_position: Optional[SCAPosition] = None              # OUT-11: SCA brew chart classification
     puck_resistance: Optional[float] = None                 # OUT-12: [0, 1], 1=tight puck; espresso only
     caffeine_mg_per_ml: Optional[float] = None             # OUT-13: empirical caffeine concentration
+    agtron_number: Optional[int] = None                    # SCA Gourmet scale midpoint for roast level

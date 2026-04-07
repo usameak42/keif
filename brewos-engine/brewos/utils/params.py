@@ -31,7 +31,33 @@ E_max   = 0.30          # Maximum achievable extraction yield (fraction) [-]
 # ─────────────────────────────────────────────────────────────────────────────
 phi_v_inf       = 0.40      # Final intragranular pore fraction [-] — estimated
 c_s             = 1050.0    # Solid coffee concentration [kg/m³] — estimated
-rho_bulk_ground = 450.0     # Ground coffee bulk density [kg/m³] — estimated, fine/medium grind
+rho_bulk_ground = 450.0     # Ground coffee bulk density [kg/m³] — DEPRECATED; use ROAST_DENSITY
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# ROAST-DEPENDENT BEAN DENSITY — synthesis doc via Obsidian roast_level_parameters.md
+# Midpoint of published ranges. MEDIUM confidence — ranges directionally correct.
+# ─────────────────────────────────────────────────────────────────────────────
+ROAST_DENSITY: dict = {
+    "light":        425.0,  # midpoint of 400-450 g/L
+    "medium_light": 390.0,  # midpoint of 380-400 g/L
+    "medium":       370.0,  # midpoint of 360-380 g/L
+    "medium_dark":  345.0,  # midpoint of 330-360 g/L
+    "dark":         315.0,  # midpoint of 300-330 g/L
+}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# ROAST-DEPENDENT MOISTURE CONTENT — dry-basis mass fraction
+# Sivetz & Foote 1963; SCA Green Coffee Grading Handbook
+# Engine-internal constant — not a user-facing simulation input.
+# ─────────────────────────────────────────────────────────────────────────────
+MOISTURE_CONTENT: dict = {
+    "light":        0.035,  # 3.5% (SCA target 3-5%)
+    "medium_light": 0.028,  # 2.8%
+    "medium":       0.022,  # 2.2%
+    "medium_dark":  0.016,  # 1.6%
+    "dark":         0.010,  # 1.0% (heavily degassed)
+}
 
 
 def kozeny_carman_permeability(d_particle_m: float, porosity: float) -> float:
@@ -53,7 +79,8 @@ def derive_percolation_params(coffee_dose_g: float, water_amount_g: float,
                               water_temp_c: float, grind_size_um: float,
                               bed_depth_m: float = 0.050,
                               pressure_bar: float = 0.0,
-                              porosity: float = 0.40) -> dict:
+                              porosity: float = 0.40,
+                              roast_level: str = "medium") -> dict:
     """Derive percolation ODE parameters including Darcy velocity and spatial grid.
 
     Extends immersion parameters with advection velocity and MOL grid setup.
@@ -73,7 +100,8 @@ def derive_percolation_params(coffee_dose_g: float, water_amount_g: float,
     """
     # Get base immersion params (kA, kB, kC, kD, c_sat, c_v0, etc.)
     base = derive_immersion_params(coffee_dose_g, water_amount_g,
-                                   water_temp_c, grind_size_um)
+                                   water_temp_c, grind_size_um,
+                                   roast_level=roast_level)
 
     # Darcy velocity via Kozeny-Carman
     d_particle_m = grind_size_um * 1e-6
@@ -111,7 +139,8 @@ def derive_percolation_params(coffee_dose_g: float, water_amount_g: float,
 
 
 def derive_immersion_params(coffee_dose_g: float, water_amount_g: float,
-                            water_temp_c: float, grind_size_um: float) -> dict:
+                            water_temp_c: float, grind_size_um: float,
+                            roast_level: str = "medium") -> dict:
     """Derive all ODE rate coefficients and initial conditions from brew inputs.
 
     Parameters computed dynamically from the scenario so that changing dose,
@@ -131,7 +160,8 @@ def derive_immersion_params(coffee_dose_g: float, water_amount_g: float,
     """
     # Volume fractions
     V_water_m3  = water_amount_g * 1e-3 / rho_w
-    V_coffee_m3 = coffee_dose_g  * 1e-3 / rho_bulk_ground
+    _rho = ROAST_DENSITY.get(roast_level, 370.0)  # fallback to medium density
+    V_coffee_m3 = coffee_dose_g  * 1e-3 / _rho
     phi_h       = V_water_m3 / (V_water_m3 + V_coffee_m3)  # intergranular porosity
 
     # phi_c0 derived from IC constraint (Moroney 2016, p.12):

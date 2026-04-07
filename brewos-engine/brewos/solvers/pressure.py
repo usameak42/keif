@@ -10,7 +10,7 @@ from brewos.utils.co2_bloom import co2_bloom_factor
 from brewos.utils.output_helpers import (resolve_psd, estimate_flavor_profile,
     generate_warnings, brew_ratio_recommendation,
     compute_eui, compute_temperature_curve, classify_sca_position,
-    estimate_caffeine, compute_puck_resistance)
+    estimate_caffeine, compute_puck_resistance, get_agtron_number)
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -130,7 +130,8 @@ def solve_accurate(inp: SimulationInput, method_defaults: dict = None) -> Simula
     grind_size_um, psd_curve = resolve_psd(inp)
 
     p = derive_immersion_params(inp.coffee_dose, inp.water_amount,
-                                inp.water_temp, grind_size_um)
+                                inp.water_temp, grind_size_um,
+                                roast_level=inp.roast_level.value)
 
     kA     = p["kA"]
     kB     = p["kB"]
@@ -328,6 +329,7 @@ def solve_accurate(inp: SimulationInput, method_defaults: dict = None) -> Simula
         sca_position=sca_pos,
         puck_resistance=None,
         caffeine_mg_per_ml=caffeine,
+        agtron_number=get_agtron_number(inp.roast_level.value),
     )
 
 
@@ -404,4 +406,5 @@ def solve_fast(inp: SimulationInput, method_defaults: dict = None) -> Simulation
         sca_position=sca_pos,
         puck_resistance=None,
         caffeine_mg_per_ml=caffeine,
+        agtron_number=get_agtron_number(inp.roast_level.value),
     )
