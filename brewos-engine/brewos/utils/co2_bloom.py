@@ -19,9 +19,19 @@ import math
 # beta: maximum extraction suppression factor (0 = no suppression, 1 = full block)
 # ─────────────────────────────────────────────────────────────────────────────
 CO2_PARAMS = {
-    "light":  {"tau_fast": 2*86400, "tau_slow": 10*86400, "A_fast": 0.4, "A_slow": 0.6, "beta": 0.15},
-    "medium": {"tau_fast": 3*86400, "tau_slow": 14*86400, "A_fast": 0.5, "A_slow": 0.5, "beta": 0.20},
-    "dark":   {"tau_fast": 5*86400, "tau_slow": 21*86400, "A_fast": 0.6, "A_slow": 0.4, "beta": 0.25},
+    # Tau values: Weibull-derived from Smrke 2018 Table 1, medium-speed average per tier.
+    # Conversion: tau = lambda_avg_hours * 3600 * amplitude_fraction.
+    # lambda averages: light=337.7h, medium_light=284.2h (interp), medium=230.7h,
+    #                  medium_dark=212.8h (interp), dark=195.0h.
+    # A_fast/A_slow: 0.20/0.80 from dark-fast biexponential fit (Smrke 2018).
+    # Beta: proportional to CO2 content midpoint (mg/g) from Obsidian roast_level_parameters.md.
+    # Scale factor: beta_medium=0.20 / CO2_medium=6.525 mg/g = 0.03065 per mg/g.
+    # Medium-Light and Medium-Dark lambdas interpolated from adjacent tier averages.
+    "light":        {"tau_fast": 243144, "tau_slow": 972576, "A_fast": 0.20, "A_slow": 0.80, "beta": 0.11},  # CO2 3.56 mg/g; lambda_avg 337.7h
+    "medium_light": {"tau_fast": 204624, "tau_slow": 818496, "A_fast": 0.20, "A_slow": 0.80, "beta": 0.15},  # CO2 4.75 mg/g; lambda_avg 284.2h (interp)
+    "medium":       {"tau_fast": 166104, "tau_slow": 664416, "A_fast": 0.20, "A_slow": 0.80, "beta": 0.20},  # CO2 6.53 mg/g; lambda_avg 230.7h
+    "medium_dark":  {"tau_fast": 153216, "tau_slow": 612864, "A_fast": 0.20, "A_slow": 0.80, "beta": 0.28},  # CO2 9.00 mg/g; lambda_avg 212.8h (interp)
+    "dark":         {"tau_fast": 140400, "tau_slow": 561600, "A_fast": 0.20, "A_slow": 0.80, "beta": 0.40},  # CO2 12.89 mg/g; lambda_avg 195.0h
 }
 
 # Bloom window: CO2 effect on extraction is only significant in first ~60s of brew
@@ -43,7 +53,7 @@ def co2_bloom_factor(t: float, roast_level: str, bean_age_days: float = 7.0) -> 
     t : float
         Brew time in seconds (0 = start of brew).
     roast_level : str
-        One of "light", "medium", "dark".
+        One of "light", "medium_light", "medium", "medium_dark", "dark".
     bean_age_days : float
         Days since roast. Default 7.0 (one week post-roast).
 

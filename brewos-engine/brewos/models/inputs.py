@@ -7,9 +7,11 @@ from pydantic import BaseModel, field_validator, model_validator
 
 
 class RoastLevel(str, Enum):
-    light = "light"
-    medium = "medium"
-    dark = "dark"
+    light        = "light"
+    medium_light = "medium_light"
+    medium       = "medium"
+    medium_dark  = "medium_dark"
+    dark         = "dark"
 
 
 class Mode(str, Enum):
