@@ -1,6 +1,6 @@
 // Mirrors brewos/models/inputs.py SimulationInput exactly
 export type BrewMethod = "french_press" | "v60" | "kalita" | "espresso" | "moka_pot" | "aeropress";
-export type RoastLevel = "light" | "medium" | "dark";
+export type RoastLevel = "light" | "medium_light" | "medium" | "medium_dark" | "dark";
 export type SimMode = "fast" | "accurate";
 
 export interface SimulationInput {
@@ -61,6 +61,7 @@ export interface SimulationOutput {
   temperature_curve: TempPoint[] | null;
   puck_resistance: number | null;
   caffeine_mg_per_ml: number | null;
+  agtron_number: number | null;
 }
 
 export interface ApiError {
