@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect, useCallback } from "react";
 import { ScrollView, View, Text, StyleSheet, KeyboardAvoidingView, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter, useLocalSearchParams } from "expo-router";
@@ -12,11 +12,13 @@ import { GrinderDropdown } from "../components/GrinderDropdown";
 import { ClickSpinner } from "../components/ClickSpinner";
 import { FormField } from "../components/FormField";
 import { SegmentedControl } from "../components/SegmentedControl";
+import RoastPillSelector from "../components/RoastPillSelector";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SimulateButton } from "../components/SimulateButton";
 
 type GrinderPreset = (typeof GRINDER_PRESETS)[number];
 
-const ROAST_LEVELS: RoastLevel[] = ["light", "medium", "dark"];
+const ROAST_LEVELS: RoastLevel[] = ["light", "medium_light", "medium", "medium_dark", "dark"];
 const SIM_MODES: SimMode[] = ["fast", "accurate"];
 
 export default function DashboardScreen() {
@@ -36,10 +38,23 @@ export default function DashboardScreen() {
   const [water, setWater] = useState(String(methodOption.defaultWater));
   const [temp, setTemp] = useState(String(methodOption.defaultTemp));
   const [time, setTime] = useState(String(methodOption.defaultTime));
-  const [roastLevel, setRoastLevel] = useState(1); // Medium
+  const [roastLevel, setRoastLevel] = useState<RoastLevel>("medium");
   const [modeIndex, setModeIndex] = useState(0); // Fast
 
   const isManualGrinder = selectedGrinder.value === null;
+
+  useEffect(() => {
+    AsyncStorage.getItem("lastRoastLevel").then((stored) => {
+      if (stored && ROAST_LEVELS.includes(stored as RoastLevel)) {
+        setRoastLevel(stored as RoastLevel);
+      }
+    });
+  }, []);
+
+  const handleRoastSelect = useCallback((level: RoastLevel) => {
+    setRoastLevel(level);
+    AsyncStorage.setItem("lastRoastLevel", level);
+  }, []);
 
   const handleSimulate = () => {
     const input: SimulationInput = {
@@ -48,7 +63,7 @@ export default function DashboardScreen() {
       water_amount: parseFloat(water),
       water_temp: parseFloat(temp),
       brew_time: parseFloat(time),
-      roast_level: ROAST_LEVELS[roastLevel],
+      roast_level: roastLevel,
       mode: SIM_MODES[modeIndex],
       grinder_name: selectedGrinder.value,
       grinder_setting: selectedGrinder.value ? grinderSetting : null,
@@ -155,10 +170,9 @@ export default function DashboardScreen() {
           {/* Roast Level */}
           <View style={styles.fieldGap}>
             <Text style={styles.sectionLabel}>Roast Level</Text>
-            <SegmentedControl
-              segments={["Light", "Medium", "Dark"]}
-              selectedIndex={roastLevel}
-              onSelect={setRoastLevel}
+            <RoastPillSelector
+              selectedLevel={roastLevel}
+              onSelect={handleRoastSelect}
             />
           </View>
 
