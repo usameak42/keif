@@ -10,7 +10,7 @@ from brewos.utils.params import kozeny_carman_permeability, K_liang, E_max, rho_
 from brewos.utils.output_helpers import (resolve_psd, estimate_flavor_profile,
     generate_warnings, brew_ratio_recommendation,
     compute_eui, compute_temperature_curve, classify_sca_position,
-    estimate_caffeine, compute_puck_resistance)
+    estimate_caffeine, compute_puck_resistance, get_agtron_number)
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -166,6 +166,7 @@ def _solve_hybrid_accurate(inp: SimulationInput) -> SimulationOutput:
         sca_position=sca_pos,
         puck_resistance=None,
         caffeine_mg_per_ml=caffeine,
+        agtron_number=get_agtron_number(inp.roast_level.value),
     )
 
 
@@ -267,6 +268,7 @@ def _solve_hybrid_fast(inp: SimulationInput) -> SimulationOutput:
         sca_position=sca_pos,
         puck_resistance=None,
         caffeine_mg_per_ml=caffeine,
+        agtron_number=get_agtron_number(inp.roast_level.value),
     )
 
 

@@ -8,8 +8,8 @@ from brewos.utils.co2_bloom import co2_bloom_factor, CO2_PARAMS
 class TestCO2ParamsStructure:
 
     def test_co2_params_structure(self):
-        """CO2_PARAMS has light/medium/dark keys with all 5 sub-keys."""
-        expected_roasts = {"light", "medium", "dark"}
+        """CO2_PARAMS has 5-tier roast keys with all 5 sub-keys."""
+        expected_roasts = {"light", "medium_light", "medium", "medium_dark", "dark"}
         expected_keys   = {"tau_fast", "tau_slow", "A_fast", "A_slow", "beta"}
 
         assert set(CO2_PARAMS.keys()) == expected_roasts
