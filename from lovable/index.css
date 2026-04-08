@@ -1,0 +1,163 @@
+@import url('https://fonts.googleapis.com/css2?family=Bitter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Dark espresso base with warm cream text */
+    --background: 20 25% 7%;
+    --foreground: 35 30% 88%;
+
+    --card: 20 20% 12%;
+    --card-foreground: 35 30% 88%;
+
+    --popover: 20 20% 12%;
+    --popover-foreground: 35 30% 88%;
+
+    --primary: 28 70% 50%;
+    --primary-foreground: 20 25% 7%;
+
+    --secondary: 20 15% 16%;
+    --secondary-foreground: 35 25% 75%;
+
+    --muted: 20 12% 14%;
+    --muted-foreground: 30 15% 50%;
+
+    --accent: 28 70% 50%;
+    --accent-foreground: 20 25% 7%;
+
+    --destructive: 0 60% 45%;
+    --destructive-foreground: 35 30% 92%;
+
+    --border: 25 15% 20%;
+    --input: 25 15% 20%;
+    --ring: 28 70% 50%;
+
+    --radius: 0.5rem;
+
+    /* Copper/brass accent */
+    --copper: 28 70% 50%;
+    --copper-glow: 32 80% 60%;
+    --cream: 35 30% 88%;
+    --espresso-dark: 20 30% 5%;
+
+    /* Method palettes — warmer, earthier */
+    --method-v60: 36 75% 50%;
+    --method-v60-glow: 38 85% 62%;
+    --method-v60-deep: 30 65% 22%;
+
+    --method-espresso: 350 55% 40%;
+    --method-espresso-glow: 348 65% 52%;
+    --method-espresso-deep: 345 45% 18%;
+
+    --method-french-press: 150 40% 32%;
+    --method-french-press-glow: 148 50% 45%;
+    --method-french-press-deep: 155 35% 14%;
+
+    --method-moka-pot: 18 55% 42%;
+    --method-moka-pot-glow: 16 65% 52%;
+    --method-moka-pot-deep: 22 45% 18%;
+
+    --method-kalita-wave: 275 35% 45%;
+    --method-kalita-wave-glow: 270 45% 55%;
+    --method-kalita-wave-deep: 278 30% 20%;
+
+    --method-aeropress: 200 50% 42%;
+    --method-aeropress-glow: 198 60% 52%;
+    --method-aeropress-deep: 205 40% 18%;
+
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-display: 'Bitter', serif;
+    --font-sans: 'Bitter', serif;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+  }
+}
+
+@layer utilities {
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+
+  .font-sans {
+    font-family: var(--font-sans);
+  }
+
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  /* Vintage paper card — warm, textured, embossed feel */
+  .card-vintage {
+    background: hsl(20, 20%, 11%);
+    border: 1px solid hsl(25, 20%, 18%);
+    box-shadow:
+      inset 0 1px 0 hsl(30, 15%, 18%),
+      0 2px 8px hsl(20, 30%, 4% / 0.5);
+  }
+
+  /* Stronger vintage card */
+  .card-vintage-strong {
+    background: hsl(20, 22%, 13%);
+    border: 1px solid hsl(25, 20%, 22%);
+    box-shadow:
+      inset 0 1px 0 hsl(30, 15%, 20%),
+      inset 0 -1px 0 hsl(20, 20%, 8%),
+      0 4px 16px hsl(20, 30%, 4% / 0.6);
+  }
+
+  /* Stamp/label border for method tiles */
+  .stamp-border {
+    border: 2px solid hsl(30, 15%, 22%);
+    box-shadow:
+      inset 0 0 0 1px hsl(30, 12%, 16%),
+      0 2px 8px hsl(20, 30%, 4% / 0.4);
+  }
+
+  /* Rotary selector viewing window */
+  .rotary-window {
+    border: 2px solid hsl(28, 50%, 30%);
+    border-radius: 0.5rem;
+    box-shadow:
+      inset 0 0 20px hsl(20, 30%, 4% / 0.6),
+      inset 0 2px 0 hsl(30, 40%, 25%),
+      inset 0 -2px 0 hsl(20, 25%, 10%),
+      0 0 30px hsl(28, 70%, 50% / 0.08);
+    background: linear-gradient(
+      to right,
+      hsl(20, 25%, 7% / 0.9),
+      transparent 30%,
+      transparent 70%,
+      hsl(20, 25%, 7% / 0.9)
+    );
+  }
+
+  /* Warm grain overlay */
+  .grain-overlay::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.04;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
