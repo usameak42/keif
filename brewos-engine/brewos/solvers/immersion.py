@@ -5,8 +5,7 @@ from scipy.integrate import solve_ivp
 
 from brewos.models.inputs import SimulationInput
 from brewos.models.outputs import SimulationOutput, ExtractionPoint
-from brewos.utils.params import (derive_immersion_params, K_liang, E_max, rho_w,
-                                  ROAST_DENSITY, MOISTURE_CONTENT)
+from brewos.utils.params import derive_immersion_params, K_liang, E_max, rho_w
 from brewos.utils.co2_bloom import co2_bloom_factor
 from brewos.utils.output_helpers import (resolve_psd, estimate_flavor_profile,
     generate_warnings, brew_ratio_recommendation,
@@ -40,12 +39,6 @@ def _biexponential_steep(inp: SimulationInput, n_points: int = 100):
     construction. Returns (ey_final, extraction_curve_list) only.
     """
     EY_eq = K_liang * E_max * 100.0
-    _roast          = inp.roast_level.value
-    _density_factor  = ROAST_DENSITY.get(_roast, 370.0) / 370.0
-    _moisture_factor = (1.0 - MOISTURE_CONTENT.get(_roast, 0.022)) / (1.0 - 0.022)
-    EY_eq *= _density_factor * _moisture_factor
-    if inp.bean_age_days is not None:
-        EY_eq *= co2_bloom_factor(0.0, _roast, inp.bean_age_days)
     A1, A2 = _A1_DEFAULT, 1.0 - _A1_DEFAULT
     t = np.linspace(0.0, inp.brew_time, n_points)
     EY_t = np.maximum(EY_eq * (1.0 - A1 * np.exp(-t / _TAU1_DEFAULT)
@@ -231,13 +224,6 @@ def solve_fast(inp: SimulationInput) -> SimulationOutput:
 
     R_brew  = inp.water_amount / inp.coffee_dose
     EY_eq   = K_liang * E_max * 100.0          # 21.51% — Liang 2021 equilibrium anchor
-    # Roast-level corrections: density → soluble mass; moisture → extractable fraction
-    _roast          = inp.roast_level.value
-    _density_factor  = ROAST_DENSITY.get(_roast, 370.0) / 370.0
-    _moisture_factor = (1.0 - MOISTURE_CONTENT.get(_roast, 0.022)) / (1.0 - 0.022)
-    EY_eq *= _density_factor * _moisture_factor
-    if inp.bean_age_days is not None:
-        EY_eq *= co2_bloom_factor(0.0, _roast, inp.bean_age_days)
 
     A1   = _A1_DEFAULT
     A2   = 1.0 - A1

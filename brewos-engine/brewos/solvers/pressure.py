@@ -5,8 +5,7 @@ from scipy.integrate import solve_ivp
 
 from brewos.models.inputs import SimulationInput
 from brewos.models.outputs import SimulationOutput, ExtractionPoint
-from brewos.utils.params import (derive_immersion_params, kozeny_carman_permeability, rho_w, K_liang, E_max,
-                                  ROAST_DENSITY, MOISTURE_CONTENT)
+from brewos.utils.params import derive_immersion_params, kozeny_carman_permeability, rho_w, K_liang, E_max
 from brewos.utils.co2_bloom import co2_bloom_factor
 from brewos.utils.output_helpers import (resolve_psd, estimate_flavor_profile,
     generate_warnings, brew_ratio_recommendation,
@@ -367,13 +366,6 @@ def solve_fast(inp: SimulationInput, method_defaults: dict = None) -> Simulation
     # EY equilibrium: moka-specific target
     ey_target_pct = defaults.get("ey_target_pct", EY_TARGET_MOKA_PCT)
     EY_eq = ey_target_pct                           # 18.0% for moka default
-    # Roast-level corrections: density → soluble mass; moisture → extractable fraction
-    _roast          = inp.roast_level.value
-    _density_factor  = ROAST_DENSITY.get(_roast, 370.0) / 370.0
-    _moisture_factor = (1.0 - MOISTURE_CONTENT.get(_roast, 0.022)) / (1.0 - 0.022)
-    EY_eq *= _density_factor * _moisture_factor
-    if inp.bean_age_days is not None:
-        EY_eq *= co2_bloom_factor(0.0, _roast, inp.bean_age_days)
 
     A1   = A1_MOKA
     A2   = 1.0 - A1
